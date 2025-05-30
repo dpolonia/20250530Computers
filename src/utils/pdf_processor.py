@@ -59,7 +59,7 @@ class PDFProcessor:
             # Identify potential section headers (uppercase, short lines)
             if (line.isupper() or (line[0].isupper() and len(line.split()) <= 5 and 
                 any(kw in line.lower() for kw in ['introduction', 'method', 'result', 'discussion', 
-                                                'conclusion', 'reference', 'abstract'])):
+                                                'conclusion', 'reference', 'abstract']))):
                 if current_content:
                     sections[current_section] = '\n'.join(current_content)
                     current_content = []

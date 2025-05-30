@@ -12,7 +12,7 @@ import time
 import argparse
 import datetime
 import json
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 from pathlib import Path
 from dotenv import load_dotenv
 import click
