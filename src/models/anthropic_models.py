@@ -31,13 +31,13 @@ CLAUDE_MODELS = {
     },
     "claude-3-5-haiku-20241022": {
         "description": "fast",
-        "max_tokens": 200000,
+        "max_tokens": 4096,
         "price_per_1k_input": 0.00025,
         "price_per_1k_output": 0.00125
     },
     "claude-3-haiku-20240307": {
         "description": "fastest & cheapest",
-        "max_tokens": 200000,
+        "max_tokens": 4096,
         "price_per_1k_input": 0.00025,
         "price_per_1k_output": 0.00125
     }
