@@ -12,6 +12,8 @@ import time
 import argparse
 import datetime
 import json
+import hashlib
+import re
 from typing import Dict, List, Any, Optional, Tuple
 from pathlib import Path
 from dotenv import load_dotenv
@@ -24,6 +26,123 @@ colorama_init()
 
 # Add src directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# Simple cache for API responses
+API_CACHE = {}
+MAX_CACHE_SIZE = 100  # Maximum number of entries in cache
+CACHE_DIR = os.path.join(os.path.dirname(__file__), ".cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+# Token budget settings
+DEFAULT_TOKEN_BUDGET = 100000  # Default token budget
+DEFAULT_COST_BUDGET = 5.0      # Default cost budget in dollars
+
+# Simple token counter estimation function
+def estimate_tokens(text: str) -> int:
+    """Estimate the number of tokens in a text string.
+    
+    Args:
+        text: Input text
+        
+    Returns:
+        Estimated token count
+    """
+    # Very rough estimation: ~4 characters per token
+    return len(text) // 4
+
+def calculate_tokens_per_prompt(provider: str, model: str) -> Dict[str, int]:
+    """Calculate max tokens per prompt based on provider/model.
+    
+    Args:
+        provider: Provider name ("anthropic", "openai", "google")
+        model: Model name
+        
+    Returns:
+        Dictionary with max token settings
+    """
+    if provider == "anthropic":
+        if "opus" in model:
+            return {"max_context": 150000, "max_per_prompt": 50000}
+        elif "sonnet" in model:
+            return {"max_context": 100000, "max_per_prompt": 30000}
+        elif "haiku" in model:
+            return {"max_context": 50000, "max_per_prompt": 15000}
+    elif provider == "openai":
+        if "4o" in model or "o1" in model or "o3" in model or "o4" in model:
+            return {"max_context": 100000, "max_per_prompt": 30000}
+        else:
+            return {"max_context": 16000, "max_per_prompt": 4000}
+    elif provider == "google":
+        return {"max_context": 32000, "max_per_prompt": 8000}
+    
+    return {"max_context": 16000, "max_per_prompt": 4000}  # Default values
+
+# Caching mechanism for API calls
+def get_cached_completion(client, prompt: str, system_prompt: str = None, **kwargs) -> Optional[str]:
+    """Get completion from cache if available.
+    
+    Args:
+        client: LLM client
+        prompt: User prompt
+        system_prompt: System prompt
+        **kwargs: Additional parameters
+        
+    Returns:
+        Cached response or None if not in cache
+    """
+    # Create a cache key from the request
+    cache_key = hashlib.md5(f"{client.provider}_{client.model}_{prompt}_{system_prompt}_{str(kwargs)}".encode()).hexdigest()
+    cache_file = os.path.join(CACHE_DIR, f"{cache_key}.json")
+    
+    # Check if we have this request cached
+    if os.path.exists(cache_file):
+        try:
+            with open(cache_file, 'r') as f:
+                cache_data = json.load(f)
+                return cache_data["response"]
+        except:
+            return None
+    
+    return None
+
+def save_to_cache(client, prompt: str, system_prompt: str, response: str, **kwargs) -> None:
+    """Save an API response to cache.
+    
+    Args:
+        client: LLM client
+        prompt: User prompt
+        system_prompt: System prompt
+        response: API response
+        **kwargs: Additional parameters
+    """
+    # Create a cache key from the request
+    cache_key = hashlib.md5(f"{client.provider}_{client.model}_{prompt}_{system_prompt}_{str(kwargs)}".encode()).hexdigest()
+    cache_file = os.path.join(CACHE_DIR, f"{cache_key}.json")
+    
+    # Save to cache
+    cache_data = {
+        "provider": client.provider,
+        "model": client.model,
+        "prompt": prompt,
+        "system_prompt": system_prompt,
+        "response": response,
+        "timestamp": time.time()
+    }
+    
+    with open(cache_file, 'w') as f:
+        json.dump(cache_data, f)
+    
+    # Prune cache if needed
+    cache_files = os.listdir(CACHE_DIR)
+    if len(cache_files) > MAX_CACHE_SIZE:
+        # Delete oldest cache files
+        cache_files = [os.path.join(CACHE_DIR, f) for f in cache_files if f.endswith('.json')]
+        cache_files.sort(key=os.path.getmtime)
+        for f in cache_files[:len(cache_files) - MAX_CACHE_SIZE]:
+            try:
+                os.remove(f)
+            except:
+                pass
 
 # Import model information
 try:
@@ -108,19 +227,35 @@ def get_max_tokens_for_model(provider, model_name):
 class PaperRevisionTool:
     """Main class for orchestrating the paper revision process."""
     
-    def __init__(self, provider: str, model_name: str, debug: bool = False):
+    def __init__(self, provider: str, model_name: str, debug: bool = False, 
+                 token_budget: int = DEFAULT_TOKEN_BUDGET, 
+                 cost_budget: float = DEFAULT_COST_BUDGET,
+                 max_papers_to_process: int = 3,
+                 optimize_costs: bool = True):
         """Initialize the paper revision tool.
         
         Args:
             provider: LLM provider ("anthropic", "openai", or "google")
             model_name: Name of the model to use
             debug: Enable debug mode for additional logging
+            token_budget: Maximum token budget for the entire process
+            cost_budget: Maximum cost budget in dollars
+            max_papers_to_process: Maximum number of papers to process for style analysis
+            optimize_costs: Whether to optimize costs (reduce context, use tiered approach)
         """
         self.provider = provider
         self.model_name = model_name
         self.debug = debug
         self.llm_client = None
         self.timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        self.token_budget = token_budget
+        self.cost_budget = cost_budget
+        self.max_papers_to_process = max_papers_to_process
+        self.optimize_costs = optimize_costs
+        
+        # Calculate token limits for prompts
+        self.token_limits = calculate_tokens_per_prompt(provider, model_name)
+        self.max_tokens_per_prompt = self.token_limits["max_per_prompt"]
         
         # Paths
         self.original_paper_path = "./asis/00.pdf"
@@ -160,11 +295,44 @@ class PaperRevisionTool:
             "cost": 0.0,
             "requests": 0,
             "files_processed": 0,
-            "files_created": 0
+            "files_created": 0,
+            "cached_requests": 0,
+            "token_budget_remaining": self.token_budget,
+            "cost_budget_remaining": self.cost_budget
         }
         
         # Initialize LLM client
         self._initialize_llm_client()
+        
+    def _check_budget(self, estimated_tokens: int, estimated_cost: float) -> bool:
+        """Check if the estimated tokens and cost are within budget.
+        
+        Args:
+            estimated_tokens: Estimated tokens for the request
+            estimated_cost: Estimated cost for the request
+            
+        Returns:
+            True if within budget, False otherwise
+        """
+        if self.process_statistics["token_budget_remaining"] < estimated_tokens:
+            self._log_warning(f"Token budget exceeded. Remaining: {self.process_statistics['token_budget_remaining']}, Required: {estimated_tokens}")
+            return False
+            
+        if self.process_statistics["cost_budget_remaining"] < estimated_cost:
+            self._log_warning(f"Cost budget exceeded. Remaining: ${self.process_statistics['cost_budget_remaining']:.4f}, Required: ${estimated_cost:.4f}")
+            return False
+            
+        return True
+        
+    def _update_budget(self, tokens_used: int, cost: float):
+        """Update budget after a request.
+        
+        Args:
+            tokens_used: Tokens used in the request
+            cost: Cost of the request
+        """
+        self.process_statistics["token_budget_remaining"] -= tokens_used
+        self.process_statistics["cost_budget_remaining"] -= cost
     
     def _initialize_llm_client(self):
         """Initialize the LLM client based on selected provider and model."""
@@ -218,9 +386,99 @@ class PaperRevisionTool:
         print(f"Tokens used: {self.process_statistics['tokens_used']:,}")
         print(f"Estimated cost: ${self.process_statistics['cost']:.4f}")
         print(f"API requests: {self.process_statistics['requests']}")
+        print(f"Cached requests: {self.process_statistics['cached_requests']}")
         print(f"Files processed: {self.process_statistics['files_processed']}")
         print(f"Files created: {self.process_statistics['files_created']}")
+        print(f"Token budget remaining: {self.process_statistics['token_budget_remaining']:,}")
+        print(f"Cost budget remaining: ${self.process_statistics['cost_budget_remaining']:.4f}")
         print(f"{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}\n")
+        
+    def _optimized_completion(self, prompt: str, system_prompt: Optional[str] = None, max_tokens: Optional[int] = None, **kwargs) -> str:
+        """Get a completion from the LLM with cost optimization and caching.
+        
+        Args:
+            prompt: The user prompt to send to the model
+            system_prompt: Optional system prompt
+            max_tokens: Optional max tokens parameter
+            **kwargs: Additional parameters for the model
+            
+        Returns:
+            The model's response as a string
+        """
+        # Check cache first
+        cached_response = get_cached_completion(self.llm_client, prompt, system_prompt, **kwargs)
+        if cached_response:
+            self._log_debug("Using cached response")
+            self.process_statistics["cached_requests"] += 1
+            return cached_response
+            
+        # Estimate tokens and cost
+        estimated_input_tokens = estimate_tokens(prompt)
+        if system_prompt:
+            estimated_input_tokens += estimate_tokens(system_prompt)
+            
+        # Rough estimation of output tokens (typically 50-70% of input size for analysis tasks)
+        estimated_output_tokens = estimated_input_tokens * 0.6
+        
+        # Get pricing for the current model
+        model_info = None
+        if self.provider == "anthropic":
+            from src.models.anthropic_models import get_claude_model_info
+            model_info = get_claude_model_info(self.model_name)
+        elif self.provider == "openai":
+            from src.models.openai_models import get_openai_model_info
+            model_info = get_openai_model_info(self.model_name)
+        elif self.provider == "google":
+            from src.models.google_models import get_gemini_model_info
+            model_info = get_gemini_model_info(self.model_name)
+            
+        # Calculate estimated cost
+        if model_info:
+            input_cost_per_1k = model_info.get("price_per_1k_input", 0.001)
+            output_cost_per_1k = model_info.get("price_per_1k_output", 0.002)
+            estimated_cost = (estimated_input_tokens / 1000) * input_cost_per_1k + (estimated_output_tokens / 1000) * output_cost_per_1k
+        else:
+            # Default conservative estimate
+            estimated_cost = (estimated_input_tokens + estimated_output_tokens) / 1000 * 0.01
+            
+        # Check if within budget
+        if not self._check_budget(estimated_input_tokens + estimated_output_tokens, estimated_cost):
+            self._log_warning("Budget exceeded. Using fallback response.")
+            return "Budget exceeded. Using fallback response."
+            
+        # If optimizing costs, truncate the prompt if it's too long
+        if self.optimize_costs and estimated_input_tokens > self.max_tokens_per_prompt * 0.8:
+            self._log_debug(f"Truncating prompt from {estimated_input_tokens} tokens")
+            # Simple truncation strategy - keep the first and last parts of the prompt
+            # This assumes prompt often has instructions at the beginning and key data at the end
+            words = prompt.split()
+            half_length = len(words) // 2
+            quarter_length = len(words) // 4
+            
+            # Keep first quarter and last quarter, dropping the middle
+            truncated_words = words[:half_length - quarter_length] + ["..."] + words[half_length + quarter_length:]
+            prompt = " ".join(truncated_words)
+            
+            estimated_input_tokens = estimate_tokens(prompt)
+            self._log_debug(f"Truncated to {estimated_input_tokens} tokens")
+            
+        # Get the response
+        response = self.llm_client.get_completion(
+            prompt=prompt,
+            system_prompt=system_prompt,
+            max_tokens=max_tokens or get_max_tokens_for_model(self.provider, self.model_name),
+            **kwargs
+        )
+        
+        # Save to cache
+        save_to_cache(self.llm_client, prompt, system_prompt, response, **kwargs)
+        
+        # Update budget based on actual usage
+        tokens_used = self.llm_client.total_tokens_used - self.process_statistics["tokens_used"]
+        cost = self.llm_client.total_cost - self.process_statistics["cost"]
+        self._update_budget(tokens_used, cost)
+        
+        return response
     
     def run(self):
         """Run the full paper revision process."""
@@ -311,6 +569,27 @@ class PaperRevisionTool:
         figures = pdf_processor.extract_figures()
         references = pdf_processor.extract_references()
         
+        # Extract only key sections to reduce token usage
+        key_sections = {
+            'Title': sections.get('Title', 'N/A'),
+            'Abstract': sections.get('Abstract', 'N/A'),
+            'Introduction': sections.get('Introduction', 'N/A')
+        }
+        
+        # For cost optimization, reduce the amount of text being processed
+        abstract_text = key_sections['Abstract']
+        introduction_text = key_sections['Introduction']
+        
+        # Truncate long sections if optimizing costs
+        if self.optimize_costs:
+            # Keep first 500 characters of abstract (roughly 125 tokens)
+            if len(abstract_text) > 500:
+                abstract_text = abstract_text[:500] + "..."
+                
+            # Keep first 1000 characters of introduction (roughly 250 tokens)
+            if len(introduction_text) > 1000:
+                introduction_text = introduction_text[:1000] + "..."
+        
         # Extract structured information using LLM
         prompt = f"""
         I'm analyzing a scientific paper from the journal Computers (ISSN: 2073-431X).
@@ -318,11 +597,11 @@ class PaperRevisionTool:
         
         Here's the paper content:
         
-        Title: {sections.get('Title', 'N/A')}
+        Title: {key_sections.get('Title', 'N/A')}
         
-        Abstract: {sections.get('Abstract', 'N/A')}
+        Abstract: {abstract_text}
         
-        {sections.get('Introduction', 'N/A')}
+        Introduction: {introduction_text}
         
         Provide a structured analysis with the following information:
         1. Title of the paper
@@ -332,15 +611,15 @@ class PaperRevisionTool:
         5. Key findings
         6. Limitations mentioned
         7. Future work suggested
-        8. Overall structure of the paper (list of sections)
-        9. Key terms and concepts
-        10. Publication details (if available)
+        8. Overall structure of the paper (inferred from the available sections)
         
         Format the response as a JSON object.
         """
         
         self._log_info("Analyzing paper structure and content")
-        paper_analysis_json = self.llm_client.get_completion(
+        
+        # Use optimized completion function
+        paper_analysis_json = self._optimized_completion(
             prompt=prompt,
             system_prompt="You are a scientific paper analysis assistant. Extract structured information from papers and format as JSON."
         )
@@ -369,7 +648,14 @@ class PaperRevisionTool:
         paper_analysis["sections"] = sections
         paper_analysis["tables"] = tables
         paper_analysis["figures"] = [caption for caption, _ in figures]
-        paper_analysis["references"] = references
+        
+        # Reduce token usage - only include a limited number of references
+        if self.optimize_costs and len(references) > 10:
+            # Keep only first 10 references to save tokens
+            paper_analysis["references"] = references[:10]
+            paper_analysis["references_count"] = len(references)
+        else:
+            paper_analysis["references"] = references
         
         self._log_success("Paper analysis completed")
         return paper_analysis
@@ -390,34 +676,51 @@ class PaperRevisionTool:
             
             text = pdf_processor.text
             
+            # Optimize token usage by focusing on key parts of the review
+            # This uses the heuristic that most important comments are often in the first third and last third
+            text_length = len(text)
+            if self.optimize_costs and text_length > 3000:
+                # For long reviews, take first 1000 chars + last 1000 chars
+                trimmed_text = text[:1000] + "\n...[content trimmed]...\n" + text[-1000:]
+                self._log_debug(f"Trimmed reviewer {i} text from {text_length} to {len(trimmed_text)} chars")
+            else:
+                # For shorter reviews or when not optimizing, take up to 3000 chars
+                max_length = 3000 if self.optimize_costs else 10000
+                trimmed_text = text[:max_length] + ("..." if len(text) > max_length else "")
+            
+            # Focus on the most important aspects to save tokens
             prompt = f"""
-            I'm analyzing reviewer comments for a scientific paper from the journal Computers (ISSN: 2073-431X).
-            Please extract and categorize the reviewer's comments.
+            I'm analyzing reviewer comments for a scientific paper. Please extract only the most critical feedback.
             
-            Here are the reviewer comments:
+            Here are the reviewer {i} comments:
             
-            {text[:10000]}  # Limit text length to avoid token limits
+            {trimmed_text}
             
-            Provide a structured analysis with the following:
+            Provide a concise structured analysis with just these key points:
             1. Overall assessment (positive, neutral, negative)
-            2. Main concerns
-            3. Required changes (must be addressed)
-            4. Suggested changes (optional)
-            5. Comments on methodology
-            6. Comments on results
-            7. Comments on writing/presentation
-            8. Comments on references/citations
+            2. Main concerns (3-5 bullet points)
+            3. Required changes (3-5 most important changes that must be addressed)
             
-            Format the response as a JSON object.
+            Format the response as a JSON object with only these fields.
             """
             
-            reviewer_analysis_json = self.llm_client.get_completion(
+            # Use optimized completion with reduced token usage
+            reviewer_analysis_json = self._optimized_completion(
                 prompt=prompt,
-                system_prompt=f"You are a scientific reviewer analysis assistant. Analyze reviewer {i}'s comments and format as JSON."
+                system_prompt=f"You are a scientific reviewer analysis assistant. Extract only the most critical feedback from reviewer {i}'s comments as JSON.",
+                max_tokens=1000  # Limit response size
             )
             
             try:
                 reviewer_analysis = json.loads(reviewer_analysis_json)
+                
+                # Add default empty fields for optional analysis components
+                reviewer_analysis.setdefault("suggested_changes", [])
+                reviewer_analysis.setdefault("methodology_comments", [])
+                reviewer_analysis.setdefault("results_comments", [])
+                reviewer_analysis.setdefault("writing_comments", [])
+                reviewer_analysis.setdefault("references_comments", [])
+                
             except json.JSONDecodeError:
                 # Fallback if LLM didn't return valid JSON
                 self._log_warning(f"LLM didn't return valid JSON for reviewer {i}. Using basic analysis.")
@@ -425,15 +728,20 @@ class PaperRevisionTool:
                     "overall_assessment": "Unknown",
                     "main_concerns": ["Unknown concerns"],
                     "required_changes": ["Unknown required changes"],
-                    "suggested_changes": ["Unknown suggested changes"],
-                    "methodology_comments": ["Unknown methodology comments"],
-                    "results_comments": ["Unknown results comments"],
-                    "writing_comments": ["Unknown writing comments"],
-                    "references_comments": ["Unknown references comments"]
+                    "suggested_changes": [],
+                    "methodology_comments": [],
+                    "results_comments": [],
+                    "writing_comments": [],
+                    "references_comments": []
                 }
             
-            # Add full text and reviewer number
-            reviewer_analysis["full_text"] = text
+            # To save memory/tokens, don't include full text when optimizing costs
+            if not self.optimize_costs:
+                reviewer_analysis["full_text"] = text
+            else:
+                # Just save the first 100 chars as a reference
+                reviewer_analysis["text_preview"] = text[:100] + "..."
+                
             reviewer_analysis["reviewer_number"] = i
             
             reviewer_comments.append(reviewer_analysis)
@@ -462,46 +770,86 @@ class PaperRevisionTool:
         prisma_text = prisma_pdf.text
         prisma_pdf.close()
         
+        # Optimize token usage
+        if self.optimize_costs:
+            # Editor text: Focus on first part of letter (usually contains key decisions)
+            editor_text_trimmed = editor_text[:1500]
+            
+            # For PRISMA: Extract just the main checklist items
+            prisma_lines = prisma_text.split('\n')
+            prisma_checklist = []
+            for line in prisma_lines:
+                # Look for lines that might be checklist items (often numbered or bulleted)
+                if re.search(r'^\s*(\d+[\.\)]|\*|\-|\•)', line) and len(line) < 200:
+                    prisma_checklist.append(line.strip())
+            
+            # If we found checklist items, use them; otherwise take the beginning
+            if prisma_checklist and len(prisma_checklist) > 5:
+                prisma_text_trimmed = "\n".join(prisma_checklist[:15])  # Take top 15 items
+            else:
+                prisma_text_trimmed = prisma_text[:1000]
+        else:
+            # If not optimizing, still limit size but keep more content
+            editor_text_trimmed = editor_text[:3000]
+            prisma_text_trimmed = prisma_text[:3000]
+        
+        # Focus prompt on just the essential information needed
         prompt = f"""
         I'm analyzing the editor letter and PRISMA requirements for a scientific paper revision.
+        Extract only the most critical information.
         
         Editor Letter:
-        {editor_text[:5000]}  # Limit text length to avoid token limits
+        {editor_text_trimmed}
         
         PRISMA Requirements:
-        {prisma_text[:5000]}  # Limit text length to avoid token limits
+        {prisma_text_trimmed}
         
-        Provide a structured analysis with the following:
-        1. Editor's main requirements
-        2. Editor's suggested changes
-        3. Editor's decision (reject, revise, accept with revisions, etc.)
-        4. PRISMA framework requirements
-        5. How the paper should be modified to meet PRISMA requirements
+        Provide a structured analysis with just these key points:
+        1. Editor's decision (reject, revise, accept with revisions, etc.)
+        2. Editor's top 3-5 main requirements (most critical changes requested)
+        3. Top 3-5 PRISMA framework requirements that must be met
         
-        Format the response as a JSON object.
+        Format the response as a JSON object with only these fields.
         """
         
-        editor_analysis_json = self.llm_client.get_completion(
+        editor_analysis_json = self._optimized_completion(
             prompt=prompt,
-            system_prompt="You are a scientific editor analysis assistant. Extract requirements from editor letters and PRISMA guidelines."
+            system_prompt="You are a scientific editor analysis assistant. Extract only the most critical requirements from editor letters and PRISMA guidelines.",
+            max_tokens=1000  # Limit response size
         )
         
         try:
             editor_requirements = json.loads(editor_analysis_json)
+            # Add default values for any missing fields
+            editor_requirements.setdefault("editor_decision", "Unknown decision")
+            editor_requirements.setdefault("editor_requirements", [])
+            editor_requirements.setdefault("prisma_requirements", [])
+            # Add backwards compatibility fields
+            editor_requirements.setdefault("editor_suggestions", 
+                                          editor_requirements.get("editor_requirements", [])[:2])
+            editor_requirements.setdefault("prisma_modifications", [
+                f"Ensure compliance with {req}" for req in editor_requirements.get("prisma_requirements", [])[:2]
+            ])
+            
         except json.JSONDecodeError:
             # Fallback if LLM didn't return valid JSON
             self._log_warning("LLM didn't return valid JSON for editor requirements. Using basic analysis.")
             editor_requirements = {
+                "editor_decision": "Unknown decision",
                 "editor_requirements": ["Unknown requirements"],
                 "editor_suggestions": ["Unknown suggestions"],
-                "editor_decision": "Unknown decision",
                 "prisma_requirements": ["Unknown PRISMA requirements"],
                 "prisma_modifications": ["Unknown PRISMA modifications"]
             }
         
-        # Add full texts
-        editor_requirements["editor_letter_text"] = editor_text
-        editor_requirements["prisma_text"] = prisma_text
+        # Add text previews (not full text) to save tokens
+        if self.optimize_costs:
+            editor_requirements["editor_letter_preview"] = editor_text[:200] + "..."
+            editor_requirements["prisma_preview"] = prisma_text[:200] + "..."
+        else:
+            # Add full texts when not optimizing
+            editor_requirements["editor_letter_text"] = editor_text
+            editor_requirements["prisma_text"] = prisma_text
         
         self._log_success("Editor requirements analysis completed")
         return editor_requirements
@@ -519,48 +867,56 @@ class PaperRevisionTool:
         journal_text = journal_pdf.text
         journal_pdf.close()
         
-        # Process Scopus information
+        # Process Scopus information (limit to save processing)
         scopus_text = ""
-        for path in self.scopus_info_paths:
+        for path in self.scopus_info_paths[:1 if self.optimize_costs else 2]:  # Only process first one if optimizing
             self._log_info(f"Processing Scopus information from {path}")
             scopus_pdf = PDFProcessor(path)
             self.process_statistics["files_processed"] += 1
-            scopus_text += scopus_pdf.text + "\n\n"
+            scopus_text += scopus_pdf.text[:2000] + "\n\n"  # Take just beginning of each
             scopus_pdf.close()
         
-        # Process highly cited papers for style analysis
+        # Process highly cited papers for style analysis - limit number based on max_papers_to_process
         self._log_info("Processing highly cited papers for style analysis")
         cited_papers_sample = []
-        for i, path in enumerate(self.cited_papers_paths[:3]):  # Process only first 3 to save time
+        max_papers = min(self.max_papers_to_process, 3)  # Use at most 3 papers
+        
+        # If optimizing costs, only process 1 paper
+        papers_to_process = 1 if self.optimize_costs else max_papers
+        
+        for i, path in enumerate(self.cited_papers_paths[:papers_to_process]):
             cited_pdf = PDFProcessor(path)
             self.process_statistics["files_processed"] += 1
             sections = cited_pdf.extract_sections()
-            # Get a sample of sections
+            
+            # Get smaller sample of sections when optimizing
+            abstract_limit = 250 if self.optimize_costs else 500
+            intro_limit = 250 if self.optimize_costs else 500
+            
             sample = {
                 "paper_number": i + 1,
                 "title": sections.get("Title", "Unknown Title"),
-                "abstract": sections.get("Abstract", "Unknown Abstract")[:500],  # Limit length
-                "introduction": sections.get("Introduction", "Unknown Introduction")[:500]  # Limit length
+                "abstract": sections.get("Abstract", "Unknown Abstract")[:abstract_limit],
+                "introduction": sections.get("Introduction", "Unknown Introduction")[:intro_limit]
             }
             cited_papers_sample.append(sample)
             cited_pdf.close()
         
-        # Process similar papers
-        self._log_info("Processing similar papers for style analysis")
+        # Process similar papers - only if not optimizing costs or needed for full analysis
         similar_papers_sample = []
-        for i, path in enumerate(self.similar_papers_paths[:2]):  # Process only first 2 to save time
-            similar_pdf = PDFProcessor(path)
-            self.process_statistics["files_processed"] += 1
-            sections = similar_pdf.extract_sections()
-            # Get a sample of sections
-            sample = {
-                "paper_number": i + 1,
-                "title": sections.get("Title", "Unknown Title"),
-                "abstract": sections.get("Abstract", "Unknown Abstract")[:500],  # Limit length
-                "introduction": sections.get("Introduction", "Unknown Introduction")[:500]  # Limit length
-            }
-            similar_papers_sample.append(sample)
-            similar_pdf.close()
+        if not self.optimize_costs:
+            self._log_info("Processing similar papers for style analysis")
+            for i, path in enumerate(self.similar_papers_paths[:1]):  # Just one even without optimization
+                similar_pdf = PDFProcessor(path)
+                self.process_statistics["files_processed"] += 1
+                sections = similar_pdf.extract_sections()
+                sample = {
+                    "paper_number": i + 1,
+                    "title": sections.get("Title", "Unknown Title"),
+                    "abstract": sections.get("Abstract", "Unknown Abstract")[:300],
+                }
+                similar_papers_sample.append(sample)
+                similar_pdf.close()
         
         # Analyze reference style
         self._log_info("Analyzing reference style")
@@ -568,56 +924,98 @@ class PaperRevisionTool:
         self.process_statistics["files_processed"] += 1
         citation_style = ref_validator.get_citation_style()
         
-        # Combine all information and use LLM to extract style guidelines
-        prompt = f"""
-        I'm analyzing the style requirements for a scientific paper to be published in the journal Computers (ISSN: 2073-431X).
+        # Use much more targeted prompt that focuses only on key info when optimizing costs
+        if self.optimize_costs:
+            prompt = f"""
+            I'm analyzing style requirements for a scientific paper for journal Computers (ISSN: 2073-431X).
+            Extract ONLY the 3 most critical style requirements in each category.
+            
+            Journal Information Excerpt:
+            {journal_text[:1000]}
+            
+            Citation Style:
+            {citation_style}
+            
+            Sample Paper Title and Abstract:
+            {cited_papers_sample[0]["title"] if cited_papers_sample else "Unknown"}
+            {cited_papers_sample[0]["abstract"] if cited_papers_sample else "Unknown"}
+            
+            Provide a BRIEF style guide with ONLY:
+            1. Top 3 formatting requirements (most important)
+            2. Standard section structure (list of section names only)
+            3. Citation style (brief description)
+            
+            Format as JSON with only these three fields.
+            """
+        else:
+            # More comprehensive prompt when not optimizing costs
+            prompt = f"""
+            I'm analyzing the style requirements for a scientific paper to be published in the journal Computers (ISSN: 2073-431X).
+            
+            Journal Information:
+            {journal_text[:2000]}
+            
+            Scopus Information:
+            {scopus_text[:1500]}
+            
+            Citation Style:
+            {citation_style}
+            
+            Sample of Highly Cited Papers from this Journal:
+            {json.dumps(cited_papers_sample, indent=2)}
+            
+            Sample of Similar Papers to the Current Paper:
+            {json.dumps(similar_papers_sample, indent=2)}
+            
+            Based on this information, provide a style guide for this journal, including:
+            1. General formatting requirements
+            2. Section structure
+            3. Figure and table presentation
+            4. Citation and reference style
+            5. Language and tone
+            
+            Format the response as a JSON object.
+            """
         
-        Journal Information:
-        {journal_text[:3000]}  # Limit text length
-        
-        Scopus Information:
-        {scopus_text[:3000]}  # Limit text length
-        
-        Citation Style:
-        {citation_style}
-        
-        Sample of Highly Cited Papers from this Journal:
-        {json.dumps(cited_papers_sample, indent=2)}
-        
-        Sample of Similar Papers to the Current Paper:
-        {json.dumps(similar_papers_sample, indent=2)}
-        
-        Based on this information, provide a comprehensive style guide for this journal, including:
-        1. General formatting requirements
-        2. Section structure
-        3. Figure and table presentation
-        4. Citation and reference style
-        5. Language and tone
-        6. Common elements in highly cited papers
-        7. Typical structure for papers similar to the current one
-        
-        Format the response as a JSON object.
-        """
-        
-        style_analysis_json = self.llm_client.get_completion(
+        # Use optimized completion
+        style_analysis_json = self._optimized_completion(
             prompt=prompt,
-            system_prompt="You are a scientific journal style analysis assistant. Extract style guidelines from journal information and sample papers."
+            system_prompt="You are a scientific journal style analysis assistant. Extract only the essential style guidelines.",
+            max_tokens=1500 if self.optimize_costs else 3000
         )
         
         try:
             journal_style = json.loads(style_analysis_json)
+            
+            # Ensure all required fields exist
+            journal_style.setdefault("formatting", ["Default formatting: 12pt Times New Roman, 1 inch margins"])
+            journal_style.setdefault("section_structure", ["Introduction", "Methods", "Results", "Discussion", "Conclusion"])
+            journal_style.setdefault("citation_style", citation_style)
+            
+            # Add these fields only when not optimizing
+            if not self.optimize_costs:
+                journal_style.setdefault("figures_and_tables", ["Figures and tables should be properly labeled"])
+                journal_style.setdefault("language_and_tone", ["Clear, formal academic writing"])
+                journal_style.setdefault("successful_papers", ["Novel contributions", "Rigorous methodology"])
+                journal_style.setdefault("similar_papers_structure", ["Standard IMRAD structure"])
+                
         except json.JSONDecodeError:
             # Fallback if LLM didn't return valid JSON
             self._log_warning("LLM didn't return valid JSON for journal style. Using basic analysis.")
             journal_style = {
-                "formatting": ["Unknown formatting requirements"],
-                "section_structure": ["Unknown section structure"],
-                "figures_and_tables": ["Unknown figure and table guidelines"],
-                "citation_style": citation_style,
-                "language_and_tone": ["Unknown language and tone guidelines"],
-                "successful_papers": ["Unknown successful paper elements"],
-                "similar_papers_structure": ["Unknown structure for similar papers"]
+                "formatting": ["12pt font", "1 inch margins", "Double spacing"],
+                "section_structure": ["Introduction", "Methods", "Results", "Discussion", "Conclusion"],
+                "citation_style": citation_style
             }
+            
+            # Add additional fields only when not optimizing
+            if not self.optimize_costs:
+                journal_style.update({
+                    "figures_and_tables": ["Label all figures and tables"],
+                    "language_and_tone": ["Formal academic writing"],
+                    "successful_papers": ["Novel contributions"],
+                    "similar_papers_structure": ["Standard IMRAD structure"]
+                })
         
         self._log_success("Journal style analysis completed")
         return journal_style
@@ -694,42 +1092,77 @@ class PaperRevisionTool:
             "citation_style": journal_style.get("citation_style", "Unknown")
         }
         
-        prompt = f"""
-        I'm developing a revision plan for a scientific paper based on reviewer comments, editor requirements, and journal style guidelines.
+        # Create a more targeted prompt when optimizing costs
+        if self.optimize_costs:
+            prompt = f"""
+            I'm developing a focused revision plan for a scientific paper based on the most critical feedback.
+            
+            Paper Title:
+            {paper_summary.get("title", "Unknown")}
+            
+            Top Reviewer Concerns:
+            {json.dumps([r.get("main_concerns", [])[:2] for r in reviewer_summary], indent=0)}
+            
+            Editor Decision:
+            {editor_summary.get("decision", "Unknown")}
+            
+            Top Requirements:
+            {json.dumps(editor_summary.get("requirements", [])[:3], indent=0)}
+            
+            Based on this focused information, generate:
+            
+            1. The 3-5 most critical issues that must be addressed, each with:
+               - title (concise description)
+               - source (reviewer number, editor, or style)
+               - severity (critical, major, minor)
+            
+            2. 3-5 specific solutions to address these issues, each with:
+               - title (concise description)
+               - implementation (brief explanation of changes needed)
+               - complexity (high, medium, low)
+            
+            Format the response as a JSON object with "issues" and "solutions" arrays.
+            """
+        else:
+            # More comprehensive prompt when not optimizing
+            prompt = f"""
+            I'm developing a revision plan for a scientific paper based on reviewer comments, editor requirements, and journal style guidelines.
+            
+            Paper Summary:
+            {json.dumps(paper_summary, indent=2)}
+            
+            Reviewer Comments:
+            {json.dumps(reviewer_summary, indent=2)}
+            
+            Editor Requirements:
+            {json.dumps(editor_summary, indent=2)}
+            
+            Journal Style:
+            {json.dumps(style_summary, indent=2)}
+            
+            Based on this information, generate:
+            
+            1. A list of issues that need to be addressed, with each issue having:
+               - title (short description)
+               - description (detailed explanation)
+               - source (reviewer number, editor, or style guidelines)
+               - severity (critical, major, minor)
+            
+            2. A list of solutions to address these issues, with each solution having:
+               - title (short description)
+               - implementation (detailed explanation of changes needed)
+               - complexity (high, medium, low)
+               - impact (how this addresses the issues)
+            
+            Ensure that each solution addresses one or more of the identified issues.
+            Format the response as a JSON object with "issues" and "solutions" arrays.
+            """
         
-        Paper Summary:
-        {json.dumps(paper_summary, indent=2)}
-        
-        Reviewer Comments:
-        {json.dumps(reviewer_summary, indent=2)}
-        
-        Editor Requirements:
-        {json.dumps(editor_summary, indent=2)}
-        
-        Journal Style:
-        {json.dumps(style_summary, indent=2)}
-        
-        Based on this information, generate:
-        
-        1. A list of issues that need to be addressed, with each issue having:
-           - title (short description)
-           - description (detailed explanation)
-           - source (reviewer number, editor, or style guidelines)
-           - severity (critical, major, minor)
-        
-        2. A list of solutions to address these issues, with each solution having:
-           - title (short description)
-           - implementation (detailed explanation of changes needed)
-           - complexity (high, medium, low)
-           - impact (how this addresses the issues)
-        
-        Ensure that each solution addresses one or more of the identified issues.
-        Format the response as a JSON object with "issues" and "solutions" arrays.
-        """
-        
-        revision_plan_json = self.llm_client.get_completion(
+        # Use optimized completion with appropriate token limits
+        revision_plan_json = self._optimized_completion(
             prompt=prompt,
-            system_prompt="You are a scientific paper revision assistant. Generate structured revision plans based on reviewer comments and requirements."
+            system_prompt="You are a scientific paper revision assistant. Generate structured revision plans based on reviewer comments and requirements.",
+            max_tokens=2000 if self.optimize_costs else 4000
         )
         
         try:
@@ -1422,6 +1855,16 @@ def main():
     parser.add_argument("--provider", choices=["anthropic", "openai", "google"], help="LLM provider")
     parser.add_argument("--model", help="Model name (specific to provider)")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
+    parser.add_argument("--token-budget", type=int, default=DEFAULT_TOKEN_BUDGET, 
+                        help=f"Maximum token budget (default: {DEFAULT_TOKEN_BUDGET})")
+    parser.add_argument("--cost-budget", type=float, default=DEFAULT_COST_BUDGET,
+                        help=f"Maximum cost budget in dollars (default: ${DEFAULT_COST_BUDGET:.2f})")
+    parser.add_argument("--optimize-costs", action="store_true", default=True,
+                        help="Enable cost optimization (default: True)")
+    parser.add_argument("--no-optimize-costs", action="store_false", dest="optimize_costs",
+                        help="Disable cost optimization")
+    parser.add_argument("--max-papers", type=int, default=3,
+                        help="Maximum number of papers to process for style analysis (default: 3)")
     args = parser.parse_args()
     
     # Choose model interactively if not specified via command line
@@ -1431,8 +1874,26 @@ def main():
         provider = args.provider
         model = args.model
     
-    # Create and run the paper revision tool
-    revision_tool = PaperRevisionTool(provider, model, args.debug)
+    # Create and run the paper revision tool with cost optimization parameters
+    revision_tool = PaperRevisionTool(
+        provider=provider,
+        model_name=model,
+        debug=args.debug,
+        token_budget=args.token_budget,
+        cost_budget=args.cost_budget,
+        max_papers_to_process=args.max_papers,
+        optimize_costs=args.optimize_costs
+    )
+    
+    # Print cost optimization status
+    if args.optimize_costs:
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost optimization enabled")
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Token budget: {args.token_budget:,}")
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost budget: ${args.cost_budget:.2f}")
+    else:
+        print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} Cost optimization disabled (may incur higher API costs)")
+    
+    # Run the tool
     results = revision_tool.run()
     
     if results:
