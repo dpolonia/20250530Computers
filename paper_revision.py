@@ -1929,47 +1929,119 @@ class PaperRevisionTool:
         self._log_success("Created letter to editor")
         return editor_letter_path
 
-def choose_model():
-    """Interactive model selection."""
+def choose_model(operation_mode=None, selected_provider=None):
+    """Interactive model selection with default recommendations based on operation mode.
+    
+    Args:
+        operation_mode: The operation mode to use for recommendations (training, finetuning, final)
+        selected_provider: Optional pre-selected provider to skip provider selection
+    
+    Returns:
+        Tuple of (provider, model)
+    """
     colorama_init()
     
-    print(f"{Fore.CYAN}Choose LLM Provider:{Style.RESET_ALL}")
-    print(f"{Fore.CYAN}1.{Style.RESET_ALL} Anthropic Claude")
-    print(f"{Fore.CYAN}2.{Style.RESET_ALL} OpenAI GPT")
-    print(f"{Fore.CYAN}3.{Style.RESET_ALL} Google Gemini")
+    # Get mode settings if provided
+    mode_settings = OPERATION_MODES.get(operation_mode, {}) if operation_mode else {}
+    provider_recommendations = mode_settings.get("provider_recommendations", {})
     
-    provider_choice = input("Enter choice (1-3): ")
-    
-    if provider_choice == "1":
-        provider = "anthropic"
-        models = get_claude_model_choices()
-    elif provider_choice == "2":
-        provider = "openai"
-        models = get_openai_model_choices()
-    elif provider_choice == "3":
-        provider = "google"
-        models = get_gemini_model_choices()
+    # If provider is not pre-selected, ask user to select one
+    if not selected_provider:
+        print(f"{Fore.CYAN}Choose LLM Provider:{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}1.{Style.RESET_ALL} Anthropic Claude" + 
+              (f" {Fore.GREEN}[Recommended: {provider_recommendations.get('anthropic', '')}]{Style.RESET_ALL}" 
+               if 'anthropic' in provider_recommendations else ""))
+        print(f"{Fore.CYAN}2.{Style.RESET_ALL} OpenAI GPT" + 
+              (f" {Fore.GREEN}[Recommended: {provider_recommendations.get('openai', '')}]{Style.RESET_ALL}" 
+               if 'openai' in provider_recommendations else ""))
+        print(f"{Fore.CYAN}3.{Style.RESET_ALL} Google Gemini" + 
+              (f" {Fore.GREEN}[Recommended: {provider_recommendations.get('google', '')}]{Style.RESET_ALL}" 
+               if 'google' in provider_recommendations else ""))
+        
+        provider_choice = input("Enter choice (1-3): ")
+        
+        if provider_choice == "1":
+            provider = "anthropic"
+        elif provider_choice == "2":
+            provider = "openai"
+        elif provider_choice == "3":
+            provider = "google"
+        else:
+            print(f"{Fore.RED}Invalid choice. Defaulting to Anthropic Claude.{Style.RESET_ALL}")
+            provider = "anthropic"
     else:
-        print(f"{Fore.RED}Invalid choice. Defaulting to Anthropic Claude.{Style.RESET_ALL}")
+        provider = selected_provider
+    
+    # Get models based on provider
+    if provider == "anthropic":
+        models = get_claude_model_choices()
+        recommended_model = provider_recommendations.get("anthropic")
+    elif provider == "openai":
+        models = get_openai_model_choices()
+        recommended_model = provider_recommendations.get("openai")
+    elif provider == "google":
+        models = get_gemini_model_choices()
+        recommended_model = provider_recommendations.get("google")
+    else:
+        print(f"{Fore.RED}Invalid provider. Defaulting to Anthropic Claude.{Style.RESET_ALL}")
         provider = "anthropic"
         models = get_claude_model_choices()
+        recommended_model = provider_recommendations.get("anthropic")
     
-    print(f"\n{Fore.CYAN}Choose Model:{Style.RESET_ALL}")
+    # Find the index of the recommended model if it exists
+    recommended_index = -1
+    if recommended_model:
+        for i, model in enumerate(models):
+            if recommended_model in model:
+                recommended_index = i
+                break
+    
+    print(f"\n{Fore.CYAN}Choose Model for {provider.capitalize()}:{Style.RESET_ALL}")
+    
+    # If we have a recommendation for this operation mode, highlight it prominently
+    if operation_mode and recommended_index >= 0:
+        print(f"{Fore.GREEN}Recommended model for {operation_mode.upper()} mode: {models[recommended_index]}{Style.RESET_ALL}")
+        
+    # List all models
     for i, model in enumerate(models, 1):
-        print(f"{Fore.CYAN}{i}.{Style.RESET_ALL} {model}")
+        model_text = f"{Fore.CYAN}{i}.{Style.RESET_ALL} {model}"
+        # Highlight the recommended model
+        if i - 1 == recommended_index:
+            model_text += f" {Fore.GREEN}[RECOMMENDED]{Style.RESET_ALL}"
+        print(model_text)
     
-    model_choice = input(f"Enter choice (1-{len(models)}): ")
+    # If there's a recommended model, use it as default
+    if recommended_index >= 0 and operation_mode:
+        model_choice = input(f"Enter choice (1-{len(models)}) or press Enter for recommended model: ")
+        if not model_choice.strip():  # User pressed Enter
+            return provider, models[recommended_index]
+    else:
+        model_choice = input(f"Enter choice (1-{len(models)}): ")
     
     try:
-        model_index = int(model_choice) - 1
-        if 0 <= model_index < len(models):
-            chosen_model = models[model_index]
-        else:
-            print(f"{Fore.RED}Invalid choice. Defaulting to first model.{Style.RESET_ALL}")
+        if model_choice.strip():  # Only try to parse if not empty
+            model_index = int(model_choice) - 1
+            if 0 <= model_index < len(models):
+                chosen_model = models[model_index]
+            else:
+                if recommended_index >= 0:
+                    print(f"{Fore.YELLOW}Invalid choice. Using recommended model.{Style.RESET_ALL}")
+                    chosen_model = models[recommended_index]
+                else:
+                    print(f"{Fore.RED}Invalid choice. Defaulting to first model.{Style.RESET_ALL}")
+                    chosen_model = models[0]
+        elif recommended_index >= 0:  # Empty input with recommendation
+            chosen_model = models[recommended_index]
+        else:  # Empty input without recommendation
+            print(f"{Fore.RED}No choice made. Defaulting to first model.{Style.RESET_ALL}")
             chosen_model = models[0]
     except ValueError:
-        print(f"{Fore.RED}Invalid input. Defaulting to first model.{Style.RESET_ALL}")
-        chosen_model = models[0]
+        if recommended_index >= 0:
+            print(f"{Fore.YELLOW}Invalid input. Using recommended model.{Style.RESET_ALL}")
+            chosen_model = models[recommended_index]
+        else:
+            print(f"{Fore.RED}Invalid input. Defaulting to first model.{Style.RESET_ALL}")
+            chosen_model = models[0]
     
     return provider, chosen_model
 
@@ -1979,8 +2051,19 @@ def choose_operation_mode():
     
     print(f"{Fore.CYAN}Choose Operation Mode:{Style.RESET_ALL}")
     print(f"{Fore.CYAN}1.{Style.RESET_ALL} {OPERATION_MODES['training']['description']}")
+    print(f"   Recommended models: {Fore.GREEN}Anthropic: {OPERATION_MODES['training']['provider_recommendations']['anthropic']}, " +
+          f"OpenAI: {OPERATION_MODES['training']['provider_recommendations']['openai']}, " +
+          f"Google: {OPERATION_MODES['training']['provider_recommendations']['google']}{Style.RESET_ALL}")
+    
     print(f"{Fore.CYAN}2.{Style.RESET_ALL} {OPERATION_MODES['finetuning']['description']}")
+    print(f"   Recommended models: {Fore.GREEN}Anthropic: {OPERATION_MODES['finetuning']['provider_recommendations']['anthropic']}, " +
+          f"OpenAI: {OPERATION_MODES['finetuning']['provider_recommendations']['openai']}, " +
+          f"Google: {OPERATION_MODES['finetuning']['provider_recommendations']['google']}{Style.RESET_ALL}")
+    
     print(f"{Fore.CYAN}3.{Style.RESET_ALL} {OPERATION_MODES['final']['description']}")
+    print(f"   Recommended models: {Fore.GREEN}Anthropic: {OPERATION_MODES['final']['provider_recommendations']['anthropic']}, " +
+          f"OpenAI: {OPERATION_MODES['final']['provider_recommendations']['openai']}, " +
+          f"Google: {OPERATION_MODES['final']['provider_recommendations']['google']}{Style.RESET_ALL}")
     
     mode_choice = input("Enter choice (1-3): ")
     
@@ -2041,38 +2124,49 @@ def main():
     
     # Choose model interactively if not specified via command line
     if not args.provider or not args.model:
-        if args.provider:
-            # If provider is specified but not model, suggest the mode's recommended model
+        # Pass the operation mode to the choose_model function to get appropriate recommendations
+        provider, model = choose_model(operation_mode=operation_mode)
+    else:
+        provider = args.provider
+        
+        # If model not specified but provider is, use the recommended model by default
+        if not args.model:
             recommended_model = mode_settings["provider_recommendations"].get(args.provider)
             if recommended_model:
                 print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Mode '{operation_mode}' recommends model: {recommended_model}")
                 use_recommended = input(f"Use recommended {args.provider} model? (Y/n): ").lower()
                 if use_recommended != 'n':
-                    provider, model = args.provider, recommended_model
-                else:
-                    provider, model = choose_model()
-            else:
-                provider, model = choose_model()
-        else:
-            # Choose both provider and model
-            provider, model = choose_model()
-            
-            # Offer recommendation after provider is chosen
-            recommended_model = mode_settings["provider_recommendations"].get(provider)
-            if recommended_model and model != recommended_model:
-                print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Mode '{operation_mode}' recommends: {recommended_model}")
-                use_recommended = input(f"Switch to recommended model? (Y/n): ").lower()
-                if use_recommended != 'n':
                     model = recommended_model
-    else:
-        provider = args.provider
-        model = args.model
+                else:
+                    # If user doesn't want the recommended model, let them choose interactively
+                    _, model = choose_model(operation_mode=operation_mode, selected_provider=provider)
+            else:
+                # If no recommendation exists for this provider, let user choose interactively
+                _, model = choose_model(operation_mode=operation_mode, selected_provider=provider)
+        else:
+            model = args.model
     
-    # Print operation mode banner
-    print(f"\n{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}")
+    # Print operation mode banner with detailed settings
+    print(f"\n{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}")
     print(f"{Fore.CYAN}OPERATION MODE: {operation_mode.upper()}{Style.RESET_ALL}")
     print(f"{Fore.CYAN}{mode_settings['description']}{Style.RESET_ALL}")
-    print(f"{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}\n")
+    print(f"{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}")
+    print(f"{Fore.BLUE}Settings for {operation_mode.upper()} mode:{Style.RESET_ALL}")
+    print(f"• Token budget: {Fore.YELLOW}{token_budget:,}{Style.RESET_ALL} tokens")
+    print(f"• Cost budget: {Fore.YELLOW}${cost_budget:.2f}{Style.RESET_ALL}")
+    print(f"• Max papers to analyze: {Fore.YELLOW}{max_papers}{Style.RESET_ALL}")
+    print(f"• Cost optimization: {Fore.GREEN if optimize_costs else Fore.RED}{optimize_costs}{Style.RESET_ALL}")
+    print(f"• Selected provider: {Fore.YELLOW}{provider.capitalize()}{Style.RESET_ALL}")
+    print(f"• Selected model: {Fore.YELLOW}{model}{Style.RESET_ALL}")
+    
+    # Show if the selected model matches the recommendation
+    recommended_model = mode_settings["provider_recommendations"].get(provider, "")
+    if recommended_model in model:
+        print(f"  {Fore.GREEN}✓ Using recommended model for {operation_mode} mode{Style.RESET_ALL}")
+    else:
+        print(f"  {Fore.YELLOW}⚠ Not using the recommended model ({recommended_model}){Style.RESET_ALL}")
+    
+    print(f"{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}\n")
     
     # Create and run the paper revision tool with parameters
     revision_tool = PaperRevisionTool(
@@ -2086,17 +2180,8 @@ def main():
         operation_mode=operation_mode
     )
     
-    # Print operation settings
-    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Provider: {provider}")
-    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Model: {model}")
-    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Token budget: {token_budget:,}")
-    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost budget: ${cost_budget:.2f}")
-    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Max papers to analyze: {max_papers}")
-    
-    if optimize_costs:
-        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost optimization enabled")
-    else:
-        print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} Cost optimization disabled (may incur higher API costs)")
+    # Print starting message
+    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Starting paper revision process...")
     
     # Run the tool
     results = revision_tool.run()
