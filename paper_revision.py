@@ -103,11 +103,13 @@ def calculate_tokens_per_prompt(provider: str, model: str) -> Dict[str, int]:
     """
     if provider == "anthropic":
         if "opus" in model:
-            return {"max_context": 150000, "max_per_prompt": 50000}
+            return {"max_context": 32768, "max_per_prompt": 16384}
+        elif "sonnet" in model and "3-5" in model:
+            return {"max_context": 16384, "max_per_prompt": 8192}
         elif "sonnet" in model:
-            return {"max_context": 100000, "max_per_prompt": 30000}
+            return {"max_context": 32768, "max_per_prompt": 16384}
         elif "haiku" in model:
-            return {"max_context": 50000, "max_per_prompt": 15000}
+            return {"max_context": 8192, "max_per_prompt": 4096}
     elif provider == "openai":
         if "4o" in model or "o1" in model or "o3" in model or "o4" in model:
             return {"max_context": 16000, "max_per_prompt": 8000}

@@ -7,37 +7,37 @@ import requests
 CLAUDE_MODELS = {
     "claude-opus-4-20250514": {
         "description": "most powerful",
-        "max_tokens": 200000,
+        "max_tokens": 32768,  # Reduced from 200000
         "price_per_1k_input": 0.015,
         "price_per_1k_output": 0.075
     },
     "claude-sonnet-4-20250514": {
         "description": "powerful",
-        "max_tokens": 200000,
+        "max_tokens": 16384,  # Reduced from 200000
         "price_per_1k_input": 0.003,
         "price_per_1k_output": 0.015
     },
     "claude-3-7-sonnet-20250219": {
         "description": "powerful",
-        "max_tokens": 200000,
+        "max_tokens": 16384,  # Reduced from 200000
         "price_per_1k_input": 0.003,
         "price_per_1k_output": 0.015
     },
     "claude-3-5-sonnet-20241022": {
         "description": "balanced",
-        "max_tokens": 200000,
+        "max_tokens": 8192,   # Reduced from 200000 to match API limits
         "price_per_1k_input": 0.0025,
         "price_per_1k_output": 0.0125
     },
     "claude-3-5-haiku-20241022": {
         "description": "fast",
-        "max_tokens": 4096,
+        "max_tokens": 4096,   # Already at correct limit
         "price_per_1k_input": 0.00025,
         "price_per_1k_output": 0.00125
     },
     "claude-3-haiku-20240307": {
         "description": "fastest & cheapest",
-        "max_tokens": 4096,
+        "max_tokens": 4096,   # Already at correct limit
         "price_per_1k_input": 0.00025,
         "price_per_1k_output": 0.00125
     }
