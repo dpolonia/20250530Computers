@@ -653,23 +653,44 @@ class PaperRevisionTool:
         
         reviewer_summary = []
         for i, reviewer in enumerate(reviewer_comments, 1):
+            main_concerns = reviewer.get("main_concerns", [])
+            if main_concerns is None:
+                main_concerns = []
+            required_changes = reviewer.get("required_changes", [])
+            if required_changes is None:
+                required_changes = []
+                
             summary = {
                 "reviewer": i,
                 "assessment": reviewer.get("overall_assessment", "Unknown"),
-                "main_concerns": reviewer.get("main_concerns", [])[:3],  # Limit to top 3
-                "required_changes": reviewer.get("required_changes", [])[:5]  # Limit to top 5
+                "main_concerns": main_concerns[:3] if len(main_concerns) > 0 else [],  # Limit to top 3
+                "required_changes": required_changes[:3] if len(required_changes) > 0 else []  # Limit to top 5
             }
             reviewer_summary.append(summary)
         
+        editor_reqs = editor_requirements.get("editor_requirements", [])
+        if editor_reqs is None:
+            editor_reqs = []
+        prisma_reqs = editor_requirements.get("prisma_requirements", [])
+        if prisma_reqs is None:
+            prisma_reqs = []
+            
         editor_summary = {
-            "requirements": editor_requirements.get("editor_requirements", [])[:5],  # Limit to top 5
+            "requirements": editor_reqs[:5] if len(editor_reqs) > 0 else [],  # Limit to top 5
             "decision": editor_requirements.get("editor_decision", "Unknown"),
-            "prisma_requirements": editor_requirements.get("prisma_requirements", [])[:5]  # Limit to top 5
+            "prisma_requirements": prisma_reqs[:5] if len(prisma_reqs) > 0 else []  # Limit to top 5
         }
         
+        formatting = journal_style.get("formatting", [])
+        if formatting is None:
+            formatting = []
+        section_structure = journal_style.get("section_structure", [])
+        if section_structure is None:
+            section_structure = []
+            
         style_summary = {
-            "formatting": journal_style.get("formatting", [])[:3],  # Limit to top 3
-            "section_structure": journal_style.get("section_structure", [])[:3],  # Limit to top 3
+            "formatting": formatting[:3] if len(formatting) > 0 else [],  # Limit to top 3
+            "section_structure": section_structure[:3] if len(section_structure) > 0 else [],  # Limit to top 3
             "citation_style": journal_style.get("citation_style", "Unknown")
         }
         
@@ -718,12 +739,21 @@ class PaperRevisionTool:
         except json.JSONDecodeError:
             # Fallback if LLM didn't return valid JSON
             self._log_warning("LLM didn't return valid JSON for revision plan. Using basic plan.")
-            issues = [{
-                "title": f"Reviewer {i+1} concern",
-                "description": ", ".join(reviewer.get("main_concerns", ["Unknown concerns"])[:2]),
-                "source": f"Reviewer {i+1}",
-                "severity": "major"
-            } for i, reviewer in enumerate(reviewer_comments)]
+            issues = []
+            for i, reviewer in enumerate(reviewer_comments):
+                main_concerns = reviewer.get("main_concerns", ["Unknown concerns"])
+                if main_concerns is None:
+                    main_concerns = ["Unknown concerns"]
+                
+                # Safely slice the list, ensuring it's not None
+                top_concerns = main_concerns[:2] if len(main_concerns) >= 2 else main_concerns
+                
+                issues.append({
+                    "title": f"Reviewer {i+1} concern",
+                    "description": ", ".join(top_concerns),
+                    "source": f"Reviewer {i+1}",
+                    "severity": "major"
+                })
             
             solutions = [{
                 "title": f"Address reviewer {i+1} concerns",
