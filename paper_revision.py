@@ -37,6 +37,46 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 DEFAULT_TOKEN_BUDGET = 100000  # Default token budget
 DEFAULT_COST_BUDGET = 5.0      # Default cost budget in dollars
 
+# Operation mode configurations
+OPERATION_MODES = {
+    "training": {
+        "description": "Training mode: Cheapest models to activate workflow",
+        "token_budget": 30000,
+        "cost_budget": 1.0,
+        "max_papers": 1,
+        "optimize_costs": True,
+        "provider_recommendations": {
+            "anthropic": "claude-3-haiku-20240307",
+            "openai": "gpt-4o-mini",
+            "google": "gemini-1.5-flash"
+        }
+    },
+    "finetuning": {
+        "description": "Fine-tuning mode: Mid-range models to optimize workflow",
+        "token_budget": 100000,
+        "cost_budget": 5.0,
+        "max_papers": 2,
+        "optimize_costs": True,
+        "provider_recommendations": {
+            "anthropic": "claude-3-5-sonnet-20241022",
+            "openai": "gpt-4o",
+            "google": "gemini-1.5-pro"
+        }
+    },
+    "final": {
+        "description": "Final mode: Best models available, no cost limits",
+        "token_budget": 500000,
+        "cost_budget": 25.0,
+        "max_papers": 5,
+        "optimize_costs": False,
+        "provider_recommendations": {
+            "anthropic": "claude-opus-4-20250514",
+            "openai": "gpt-4.5-preview",
+            "google": "gemini-2.5-pro-preview"
+        }
+    }
+}
+
 # Simple token counter estimation function
 def estimate_tokens(text: str) -> int:
     """Estimate the number of tokens in a text string.
@@ -231,7 +271,8 @@ class PaperRevisionTool:
                  token_budget: int = DEFAULT_TOKEN_BUDGET, 
                  cost_budget: float = DEFAULT_COST_BUDGET,
                  max_papers_to_process: int = 3,
-                 optimize_costs: bool = True):
+                 optimize_costs: bool = True,
+                 operation_mode: str = "custom"):
         """Initialize the paper revision tool.
         
         Args:
@@ -242,6 +283,7 @@ class PaperRevisionTool:
             cost_budget: Maximum cost budget in dollars
             max_papers_to_process: Maximum number of papers to process for style analysis
             optimize_costs: Whether to optimize costs (reduce context, use tiered approach)
+            operation_mode: The operation mode (training, finetuning, final, or custom)
         """
         self.provider = provider
         self.model_name = model_name
@@ -252,6 +294,7 @@ class PaperRevisionTool:
         self.cost_budget = cost_budget
         self.max_papers_to_process = max_papers_to_process
         self.optimize_costs = optimize_costs
+        self.operation_mode = operation_mode
         
         # Calculate token limits for prompts
         self.token_limits = calculate_tokens_per_prompt(provider, model_name)
@@ -388,6 +431,7 @@ class PaperRevisionTool:
         stats_lines = [
             f"{'=' * 50}",
             f"STATISTICS SUMMARY:",
+            f"Operation mode: {self.operation_mode.upper()}",
             f"Time elapsed: {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}",
             f"Tokens used: {self.process_statistics['tokens_used']:,}",
             f"Estimated cost: ${self.process_statistics['cost']:.4f}",
@@ -400,6 +444,7 @@ class PaperRevisionTool:
             f"Provider: {self.provider}",
             f"Model: {self.model_name}",
             f"Cost optimization: {'Enabled' if self.optimize_costs else 'Disabled'}",
+            f"Maximum papers analyzed: {self.max_papers_to_process}",
             f"{'=' * 50}"
         ]
         
@@ -1928,6 +1973,27 @@ def choose_model():
     
     return provider, chosen_model
 
+def choose_operation_mode():
+    """Interactive operation mode selection."""
+    colorama_init()
+    
+    print(f"{Fore.CYAN}Choose Operation Mode:{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}1.{Style.RESET_ALL} {OPERATION_MODES['training']['description']}")
+    print(f"{Fore.CYAN}2.{Style.RESET_ALL} {OPERATION_MODES['finetuning']['description']}")
+    print(f"{Fore.CYAN}3.{Style.RESET_ALL} {OPERATION_MODES['final']['description']}")
+    
+    mode_choice = input("Enter choice (1-3): ")
+    
+    if mode_choice == "1":
+        return "training"
+    elif mode_choice == "2":
+        return "finetuning"
+    elif mode_choice == "3":
+        return "final"
+    else:
+        print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} Invalid choice. Defaulting to finetuning mode.")
+        return "finetuning"
+
 def main():
     """Main entry point for the paper revision tool."""
     # Load environment variables
@@ -1935,44 +2001,99 @@ def main():
     
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Paper Revision Tool for Computers Journal")
-    parser.add_argument("--provider", choices=["anthropic", "openai", "google"], help="LLM provider")
+    parser.add_argument("--mode", choices=["training", "finetuning", "final"], 
+                        help="Operation mode (training, finetuning, or final)")
+    parser.add_argument("--provider", choices=["anthropic", "openai", "google"], 
+                        help="LLM provider")
     parser.add_argument("--model", help="Model name (specific to provider)")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
-    parser.add_argument("--token-budget", type=int, default=DEFAULT_TOKEN_BUDGET, 
-                        help=f"Maximum token budget (default: {DEFAULT_TOKEN_BUDGET})")
-    parser.add_argument("--cost-budget", type=float, default=DEFAULT_COST_BUDGET,
-                        help=f"Maximum cost budget in dollars (default: ${DEFAULT_COST_BUDGET:.2f})")
-    parser.add_argument("--optimize-costs", action="store_true", default=True,
-                        help="Enable cost optimization (default: True)")
+    parser.add_argument("--token-budget", type=int, 
+                        help="Maximum token budget (overrides mode setting)")
+    parser.add_argument("--cost-budget", type=float,
+                        help="Maximum cost budget in dollars (overrides mode setting)")
+    parser.add_argument("--optimize-costs", action="store_true", 
+                        help="Enable cost optimization (overrides mode setting)")
     parser.add_argument("--no-optimize-costs", action="store_false", dest="optimize_costs",
-                        help="Disable cost optimization")
-    parser.add_argument("--max-papers", type=int, default=3,
-                        help="Maximum number of papers to process for style analysis (default: 3)")
+                        help="Disable cost optimization (overrides mode setting)")
+    parser.add_argument("--max-papers", type=int,
+                        help="Maximum number of papers to process for style analysis (overrides mode setting)")
     args = parser.parse_args()
+    
+    # Choose operation mode if not specified
+    operation_mode = args.mode
+    if not operation_mode:
+        operation_mode = choose_operation_mode()
+    
+    # Get settings from operation mode
+    mode_settings = OPERATION_MODES[operation_mode]
+    
+    # Apply operation mode settings (can be overridden by explicit command line args)
+    token_budget = args.token_budget if args.token_budget is not None else mode_settings["token_budget"]
+    cost_budget = args.cost_budget if args.cost_budget is not None else mode_settings["cost_budget"]
+    max_papers = args.max_papers if args.max_papers is not None else mode_settings["max_papers"]
+    
+    # For optimize_costs, only override if explicitly set
+    if args.optimize_costs is not None:
+        optimize_costs = args.optimize_costs
+    else:
+        optimize_costs = mode_settings["optimize_costs"]
     
     # Choose model interactively if not specified via command line
     if not args.provider or not args.model:
-        provider, model = choose_model()
+        if args.provider:
+            # If provider is specified but not model, suggest the mode's recommended model
+            recommended_model = mode_settings["provider_recommendations"].get(args.provider)
+            if recommended_model:
+                print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Mode '{operation_mode}' recommends model: {recommended_model}")
+                use_recommended = input(f"Use recommended {args.provider} model? (Y/n): ").lower()
+                if use_recommended != 'n':
+                    provider, model = args.provider, recommended_model
+                else:
+                    provider, model = choose_model()
+            else:
+                provider, model = choose_model()
+        else:
+            # Choose both provider and model
+            provider, model = choose_model()
+            
+            # Offer recommendation after provider is chosen
+            recommended_model = mode_settings["provider_recommendations"].get(provider)
+            if recommended_model and model != recommended_model:
+                print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Mode '{operation_mode}' recommends: {recommended_model}")
+                use_recommended = input(f"Switch to recommended model? (Y/n): ").lower()
+                if use_recommended != 'n':
+                    model = recommended_model
     else:
         provider = args.provider
         model = args.model
     
-    # Create and run the paper revision tool with cost optimization parameters
+    # Print operation mode banner
+    print(f"\n{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}OPERATION MODE: {operation_mode.upper()}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}{mode_settings['description']}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}\n")
+    
+    # Create and run the paper revision tool with parameters
     revision_tool = PaperRevisionTool(
         provider=provider,
         model_name=model,
         debug=args.debug,
-        token_budget=args.token_budget,
-        cost_budget=args.cost_budget,
-        max_papers_to_process=args.max_papers,
-        optimize_costs=args.optimize_costs
+        token_budget=token_budget,
+        cost_budget=cost_budget,
+        max_papers_to_process=max_papers,
+        optimize_costs=optimize_costs,
+        operation_mode=operation_mode
     )
     
-    # Print cost optimization status
-    if args.optimize_costs:
+    # Print operation settings
+    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Provider: {provider}")
+    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Model: {model}")
+    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Token budget: {token_budget:,}")
+    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost budget: ${cost_budget:.2f}")
+    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Max papers to analyze: {max_papers}")
+    
+    if optimize_costs:
         print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost optimization enabled")
-        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Token budget: {args.token_budget:,}")
-        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost budget: ${args.cost_budget:.2f}")
     else:
         print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} Cost optimization disabled (may incur higher API costs)")
     
