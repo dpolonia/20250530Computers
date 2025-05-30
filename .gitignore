@@ -31,4 +31,4 @@ tobe/zz*.bib
 # Distribution / packaging
 dist/
 build/
-*.egg-info/
+*.egg-info/mytoken.txt
