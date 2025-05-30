@@ -2011,9 +2011,10 @@ def main():
                         help="Maximum token budget (overrides mode setting)")
     parser.add_argument("--cost-budget", type=float,
                         help="Maximum cost budget in dollars (overrides mode setting)")
-    parser.add_argument("--optimize-costs", action="store_true", 
+    cost_opt_group = parser.add_mutually_exclusive_group()
+    cost_opt_group.add_argument("--optimize-costs", action="store_true", dest="optimize_costs_arg",
                         help="Enable cost optimization (overrides mode setting)")
-    parser.add_argument("--no-optimize-costs", action="store_false", dest="optimize_costs",
+    cost_opt_group.add_argument("--no-optimize-costs", action="store_false", dest="optimize_costs_arg",
                         help="Disable cost optimization (overrides mode setting)")
     parser.add_argument("--max-papers", type=int,
                         help="Maximum number of papers to process for style analysis (overrides mode setting)")
@@ -2032,9 +2033,9 @@ def main():
     cost_budget = args.cost_budget if args.cost_budget is not None else mode_settings["cost_budget"]
     max_papers = args.max_papers if args.max_papers is not None else mode_settings["max_papers"]
     
-    # For optimize_costs, only override if explicitly set
-    if args.optimize_costs is not None:
-        optimize_costs = args.optimize_costs
+    # For optimize_costs, only override if explicitly set via command line
+    if hasattr(args, 'optimize_costs_arg') and args.optimize_costs_arg is not None:
+        optimize_costs = args.optimize_costs_arg
     else:
         optimize_costs = mode_settings["optimize_costs"]
     

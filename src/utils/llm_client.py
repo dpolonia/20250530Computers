@@ -108,13 +108,42 @@ class AnthropicClient(BaseLLMClient):
         temperature = kwargs.get("temperature", 0.7)
         
         start_time = time.time()
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=max_tokens,
-            temperature=temperature,
-            system=system,
-            messages=[{"role": "user", "content": prompt}]
-        )
+        
+        # Use streaming for longer operations to avoid timeouts
+        use_streaming = max_tokens > 1000 or len(prompt) > 4000
+        
+        if use_streaming:
+            # Streaming approach
+            full_response = ""
+            with self.client.messages.stream(
+                model=self.model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                system=system,
+                messages=[{"role": "user", "content": prompt}]
+            ) as stream:
+                print("Streaming response (this may take a moment)... ", end="", flush=True)
+                for chunk in stream:
+                    if chunk.delta.text:
+                        full_response += chunk.delta.text
+                        # Print progress indicator
+                        if len(full_response) % 500 == 0:
+                            print(".", end="", flush=True)
+                
+                # Get the final message for token counting
+                response = stream.get_final_message()
+                print(" Done!")
+        else:
+            # Non-streaming approach for shorter requests
+            response = self.client.messages.create(
+                model=self.model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                system=system,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            full_response = response.content[0].text
+            
         elapsed_time = time.time() - start_time
         
         # Update stats
@@ -128,7 +157,7 @@ class AnthropicClient(BaseLLMClient):
         # Log usage
         print(f"Request completed in {elapsed_time:.2f}s. Used {token_usage['total_tokens']} tokens, cost: ${input_cost + output_cost:.6f}")
         
-        return response.content[0].text
+        return full_response
     
     def get_tokens_from_response(self, response: Any) -> Dict[str, int]:
         """Extract token usage from an Anthropic response."""
