@@ -13,7 +13,7 @@ import argparse
 import datetime
 import json
 import hashlib
-import re
+import re  # Used for extracting dates from model names
 from typing import Dict, List, Any, Optional, Tuple
 from pathlib import Path
 from dotenv import load_dotenv
@@ -251,6 +251,72 @@ from src.utils.document_processor import DocumentProcessor
 from src.utils.reference_validator import ReferenceValidator
 from src.utils.llm_client import get_llm_client
 
+# Model version mapping tables (to maintain incremental numbering)
+# These tables map model identifiers to sequential numbers
+# As new models are added, they get higher numbers, but the sequence remains intact
+# even if older models are removed
+#
+# HOW TO UPDATE WHEN NEW MODELS ARE RELEASED:
+# 1. Never change existing codes - they must remain stable for consistent directory naming
+# 2. When a new model is released, add it to the appropriate table with the next available number
+# 3. When models are deprecated/removed by providers, keep their entries in these tables
+# 4. Reserved slots for future models can be used when new models are released
+# 5. Update every ~2 weeks when providers release new models
+ANTHROPIC_MODEL_VERSIONS = {
+    # Claude 3 Haiku (entry-level)
+    "claude-3-haiku-20240307": "01",
+    "claude-3-5-haiku-20241022": "02",
+    
+    # Claude 3 Sonnet (mid-range)
+    "claude-3-5-sonnet-20241022": "03",
+    "claude-3-7-sonnet-20250219": "04",
+    "claude-sonnet-4-20250514": "05",
+    
+    # Claude 3 Opus (high-end)
+    "claude-opus-4-20250514": "06",
+    
+    # Future model slots (reserved)
+    "claude-future-1": "07",
+    "claude-future-2": "08",
+    "claude-future-3": "09",
+}
+
+OPENAI_MODEL_VERSIONS = {
+    # GPT-4o mini (entry-level)
+    "gpt-4o-mini": "01",
+    "o4-mini": "02",
+    
+    # GPT-4o (mid-range)
+    "gpt-4o": "03",
+    
+    # GPT-4.5 and specialty models (high-end)
+    "o1": "04",
+    "o3": "05",
+    "gpt-4.5-preview": "06",
+    
+    # Future model slots (reserved)
+    "openai-future-1": "07",
+    "openai-future-2": "08",
+    "openai-future-3": "09",
+}
+
+GOOGLE_MODEL_VERSIONS = {
+    # Gemini Flash models (entry-level)
+    "gemini-1.5-flash": "01",
+    "gemini-2.0-flash-lite": "02",
+    "gemini-2.0-flash": "03",
+    "gemini-2.5-flash-preview": "04",
+    
+    # Gemini Pro models (high-end)
+    "gemini-1.5-pro": "05",
+    "gemini-2.5-pro-preview": "06",
+    
+    # Future model slots (reserved)
+    "gemini-future-1": "07",
+    "gemini-future-2": "08",
+    "gemini-future-3": "09",
+}
+
 # Model code generation function
 def get_model_code(provider, model_name):
     """Generate a standardized model code.
@@ -259,7 +325,8 @@ def get_model_code(provider, model_name):
     - A: Anthropic
     - B: OpenAI
     - C: Google
-    - Number: 01 (weakest/oldest) to 99 (strongest/newest)
+    - Number: Maintained in sequential order from 01 onwards
+      (new models get higher numbers, even if older models are removed)
     
     Args:
         provider: Provider name ("anthropic", "openai", or "google")
@@ -271,57 +338,98 @@ def get_model_code(provider, model_name):
     # Provider code
     if provider == "anthropic":
         provider_code = "A"
+        version_map = ANTHROPIC_MODEL_VERSIONS
     elif provider == "openai":
         provider_code = "B" 
+        version_map = OPENAI_MODEL_VERSIONS
     elif provider == "google":
         provider_code = "C"
+        version_map = GOOGLE_MODEL_VERSIONS
     else:
         provider_code = "X"  # Unknown provider
+        version_map = {}
     
-    # Model strength code
-    if provider == "anthropic":
-        if "opus" in model_name:
-            strength_code = "05"
-        elif "sonnet-4" in model_name:
-            strength_code = "04"
-        elif "3-7-sonnet" in model_name:
-            strength_code = "03"
-        elif "3-5-sonnet" in model_name:
-            strength_code = "02"
-        elif "haiku" in model_name:
-            strength_code = "01"
-        else:
-            strength_code = "00"
-    elif provider == "openai":
-        if "4.5-preview" in model_name:
-            strength_code = "05"
-        elif "o1" in model_name or "o3" in model_name:
-            strength_code = "04"
-        elif "gpt-4o" in model_name and "mini" not in model_name:
-            strength_code = "03"
-        elif "o4-mini" in model_name:
-            strength_code = "02"
-        elif "gpt-4o-mini" in model_name:
-            strength_code = "01"
-        else:
-            strength_code = "00"
-    elif provider == "google":
-        if "2.5-pro" in model_name:
-            strength_code = "05"
-        elif "2.5-flash" in model_name:
-            strength_code = "04"
-        elif "1.5-pro" in model_name:
-            strength_code = "03"
-        elif "2.0-flash" in model_name:
-            strength_code = "02"
-        elif "1.5-flash" in model_name or "2.0-flash-lite" in model_name:
-            strength_code = "01"
-        else:
-            strength_code = "00"
-    else:
-        strength_code = "00"
+    # Get the base model name without description
+    base_model = model_name.split(" (")[0]
     
-    return f"{provider_code}{strength_code}"
+    # Look up the sequential version code
+    for model_key, version in version_map.items():
+        if model_key in base_model:
+            return f"{provider_code}{version}"
+    
+    # Try to extract date from model name for unknown models
+    date_match = re.search(r'(\d{8})', base_model)
+    if date_match:
+        # If we find a date in the model name, use it to derive a version number
+        # This helps maintain chronological order for new models
+        date_str = date_match.group(1)
+        # Use last two digits as version number
+        version_num = date_str[-2:]
+        # Ensure it doesn't conflict with existing models
+        if version_num == "00":
+            version_num = "50"  # Use 50 as a safe middle ground for auto-detected models
+        return f"{provider_code}{version_num}"
+    
+    # If no match is found, generate a fallback code
+    # This preserves the sequence numbering even for unknown models
+    return f"{provider_code}00"
+
+# Helper function to update model version tables
+def update_model_version_tables(new_models):
+    """Update the model version tables with new models.
+    
+    This function can be used when new models are released to automatically
+    assign them the next available version numbers while preserving the
+    existing numbering scheme.
+    
+    Args:
+        new_models: Dictionary mapping provider names to lists of new model names
+                    Example: {"anthropic": ["claude-5-sonnet-20250801"], 
+                              "openai": ["gpt-5-turbo"]}
+    
+    Returns:
+        Dictionary with updates that should be made to the model version tables
+    """
+    updates = {}
+    
+    # Process each provider
+    for provider, models in new_models.items():
+        provider_updates = {}
+        
+        if provider == "anthropic":
+            # Find the highest current version number
+            max_version = max(int(v) for v in ANTHROPIC_MODEL_VERSIONS.values())
+            
+            # Assign new version numbers
+            for model in models:
+                max_version += 1
+                provider_updates[model] = f"{max_version:02d}"
+                
+            updates["anthropic"] = provider_updates
+            
+        elif provider == "openai":
+            # Find the highest current version number
+            max_version = max(int(v) for v in OPENAI_MODEL_VERSIONS.values())
+            
+            # Assign new version numbers
+            for model in models:
+                max_version += 1
+                provider_updates[model] = f"{max_version:02d}"
+                
+            updates["openai"] = provider_updates
+            
+        elif provider == "google":
+            # Find the highest current version number
+            max_version = max(int(v) for v in GOOGLE_MODEL_VERSIONS.values())
+            
+            # Assign new version numbers
+            for model in models:
+                max_version += 1
+                provider_updates[model] = f"{max_version:02d}"
+                
+            updates["google"] = provider_updates
+    
+    return updates
 
 # Unified function to get max tokens for any model
 def get_max_tokens_for_model(provider, model_name):
