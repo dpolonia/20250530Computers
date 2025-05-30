@@ -32,3 +32,4 @@ tobe/zz*.bib
 dist/
 build/
 *.egg-info/mytoken.txt
+.env
