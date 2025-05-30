@@ -1370,9 +1370,11 @@ class PaperRevisionTool:
         Format the response as a JSON array of objects with "old_text", "new_text", "reason", and "line_number" fields.
         """
         
-        changes_json = self.llm_client.get_completion(
+        # Use optimized completion with appropriate token limits for changes generation
+        changes_json = self._optimized_completion(
             prompt=prompt,
-            system_prompt="You are a scientific paper revision assistant. Generate specific text changes to implement revision solutions."
+            system_prompt="You are a scientific paper revision assistant. Generate specific text changes to implement revision solutions.",
+            max_tokens=3000 if self.optimize_costs else 4000
         )
         
         try:
@@ -1486,9 +1488,11 @@ class PaperRevisionTool:
             Format the response as a JSON array of objects with the fields above.
             """
             
-            new_refs_json = self.llm_client.get_completion(
+            # Use optimized completion for reference suggestions
+            new_refs_json = self._optimized_completion(
                 prompt=prompt,
-                system_prompt="You are a scientific reference assistant. Suggest new references based on reviewer comments."
+                system_prompt="You are a scientific reference assistant. Suggest new references based on reviewer comments.",
+                max_tokens=2000 if self.optimize_costs else 3000
             )
             
             try:
@@ -1661,9 +1665,11 @@ class PaperRevisionTool:
         Format the response as a JSON object with these five sections.
         """
         
-        assessment_json = self.llm_client.get_completion(
+        # Use optimized completion for assessment generation
+        assessment_json = self._optimized_completion(
             prompt=prompt,
-            system_prompt="You are a scientific paper assessment assistant. Evaluate the impact of revisions on paper quality."
+            system_prompt="You are a scientific paper assessment assistant. Evaluate the impact of revisions on paper quality.",
+            max_tokens=2000 if self.optimize_costs else 3000
         )
         
         try:
