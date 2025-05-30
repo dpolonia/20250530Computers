@@ -501,6 +501,7 @@ class PaperRevisionTool:
         self.model_description = self.model_name.replace(' ', '_').replace('-', '_')
         self.model_dir = f"./tobe/{self.model_code}_{self.model_description}"
         self.timestamp_dir = f"{self.model_dir}/{self.timestamp}"
+        self.trash_dir = f"./tobe/_trash/{self.model_code}_{self.model_description}/{self.timestamp}"
         
         # Output paths
         self.revision_summary_path = f"{self.timestamp_dir}/90{self.timestamp}.docx"
@@ -513,8 +514,10 @@ class PaperRevisionTool:
         
         # Ensure directories exist
         os.makedirs("./tobe", exist_ok=True)
+        os.makedirs("./tobe/_trash", exist_ok=True)  # Create trash root directory
         os.makedirs(self.model_dir, exist_ok=True)
         os.makedirs(self.timestamp_dir, exist_ok=True)
+        # Trash directory will be created only when needed
         
         # Set up logger
         self._setup_logger()
@@ -581,10 +584,65 @@ class PaperRevisionTool:
             self._log_error(f"Error initializing LLM client: {e}")
             sys.exit(1)
     
+    def _move_to_trash(self):
+        """Move any created files to the trash directory when a run fails."""
+        self._log_info(f"Moving files to trash directory: {self.trash_dir}")
+        
+        # Ensure trash directory exists
+        os.makedirs(self.trash_dir, exist_ok=True)
+        
+        # Create a failure report
+        failure_report_path = f"{self.trash_dir}/failure_report_{self.timestamp}.txt"
+        try:
+            with open(failure_report_path, 'w') as f:
+                f.write(f"FAILURE REPORT - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write(f"Model: {self.model_name} (Code: {self.model_code})\n")
+                f.write(f"Provider: {self.provider}\n")
+                f.write(f"Operation mode: {self.operation_mode}\n")
+                f.write(f"Original directory: {self.timestamp_dir}\n")
+                f.write(f"Trash directory: {self.trash_dir}\n\n")
+                f.write("Files moved to trash:\n")
+                
+                # List all files in the timestamp directory
+                try:
+                    if os.path.exists(self.timestamp_dir):
+                        files = os.listdir(self.timestamp_dir)
+                        for file in files:
+                            f.write(f"- {file}\n")
+                except Exception as e:
+                    f.write(f"Error listing files: {str(e)}\n")
+        except Exception as e:
+            self._log_error(f"Failed to create failure report: {str(e)}")
+        
+        # Try to move all files from timestamp directory to trash
+        try:
+            import shutil
+            if os.path.exists(self.timestamp_dir):
+                # Copy files instead of moving them
+                for item in os.listdir(self.timestamp_dir):
+                    s = os.path.join(self.timestamp_dir, item)
+                    d = os.path.join(self.trash_dir, item)
+                    if os.path.isdir(s):
+                        shutil.copytree(s, d, dirs_exist_ok=True)
+                    else:
+                        shutil.copy2(s, d)
+                
+                # Don't delete the original directory - some files might still be open
+                # We'll let the user decide when to clean up
+                self._log_success(f"Files copied to trash directory: {self.trash_dir}")
+        except Exception as e:
+            self._log_error(f"Failed to move files to trash: {str(e)}")
+        
+        return self.trash_dir
+    
     def _setup_logger(self):
         """Set up the logger for the paper revision tool."""
         self.logger = logging.getLogger(f"paper_revision_{self.timestamp}")
         self.logger.setLevel(logging.DEBUG if self.debug else logging.INFO)
+        
+        # Ensure directories exist for both normal and trash paths
+        os.makedirs(self.timestamp_dir, exist_ok=True)
+        os.makedirs(self.trash_dir, exist_ok=True)
         
         # Create file handler
         file_handler = logging.FileHandler(self.log_path)
@@ -606,6 +664,7 @@ class PaperRevisionTool:
         self.logger.info(f"Model code: {self.model_code}")
         self.logger.info(f"Operation mode: {self.operation_mode}")
         self.logger.info(f"Output directory: {self.timestamp_dir}")
+        self.logger.info(f"Trash directory (used on failure): {self.trash_dir}")
         
     def _log_info(self, message: str):
         """Log an informational message."""
@@ -1057,8 +1116,33 @@ class PaperRevisionTool:
             # Log completion even in error case
             self.logger.info(f"Paper revision process failed after {time.time() - self.start_time:.2f} seconds")
             
-            # Return only the log file
-            return {"log_file": self.log_path}
+            # Move any created files to the trash directory
+            trash_dir = self._move_to_trash()
+            
+            # Create a special log file in the trash directory
+            trash_log_path = f"{trash_dir}/error_log_{self.timestamp}.txt"
+            try:
+                # Copy current log to trash directory
+                import shutil
+                if os.path.exists(self.log_path):
+                    shutil.copy2(self.log_path, trash_log_path)
+                else:
+                    # Create a new log if the original doesn't exist
+                    with open(trash_log_path, 'w') as f:
+                        f.write(f"ERROR LOG - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                        f.write(f"Error: {str(e)}\n")
+                        if self.debug:
+                            f.write(f"\nTraceback:\n{tb}")
+            except Exception as log_error:
+                self._log_error(f"Failed to create error log in trash directory: {str(log_error)}")
+            
+            # Return the trash directory and error log
+            return {
+                "error": str(e),
+                "trash_dir": trash_dir,
+                "error_log": trash_log_path if os.path.exists(trash_log_path) else None,
+                "log_file": self.log_path if os.path.exists(self.log_path) else None
+            }
     
     def _analyze_original_paper(self) -> Dict[str, Any]:
         """Analyze the original paper.
@@ -2604,10 +2688,25 @@ def main():
         print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} - Log file: {results.get('log_file', 'N/A')}")
     else:
         print(f"\n{Fore.RED}Paper revision failed.{Style.RESET_ALL}")
-        if results and "log_file" in results:
-            print(f"Check the log file for details: {results['log_file']}")
+        
+        # Show error message if available
+        if results and "error" in results:
+            print(f"Error: {results['error']}")
+        
+        # Show trash directory information
+        if results and "trash_dir" in results:
+            print(f"\n{Fore.YELLOW}Files from this failed run have been copied to the trash directory:{Style.RESET_ALL}")
+            print(f"  {results['trash_dir']}")
+        
+        # Show error log location
+        if results and "error_log" in results and results["error_log"]:
+            print(f"\n{Fore.YELLOW}Detailed error log:{Style.RESET_ALL}")
+            print(f"  {results['error_log']}")
+        elif results and "log_file" in results and results["log_file"]:
+            print(f"\n{Fore.YELLOW}Check the log file for details:{Style.RESET_ALL}")
+            print(f"  {results['log_file']}")
         else:
-            print("No log file was generated. Check console output for errors.")
+            print("\nNo log file was generated. Check console output for errors.")
 
 if __name__ == "__main__":
     main()
