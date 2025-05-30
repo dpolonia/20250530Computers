@@ -115,6 +115,8 @@ class AnthropicClient(BaseLLMClient):
         if use_streaming:
             # Streaming approach
             full_response = ""
+            print("Streaming response (this may take a moment)... ", end="", flush=True)
+            
             with self.client.messages.stream(
                 model=self.model,
                 max_tokens=max_tokens,
@@ -122,13 +124,21 @@ class AnthropicClient(BaseLLMClient):
                 system=system,
                 messages=[{"role": "user", "content": prompt}]
             ) as stream:
-                print("Streaming response (this may take a moment)... ", end="", flush=True)
+                # Track progress with dots
+                progress_counter = 0
+                
                 for chunk in stream:
-                    if chunk.delta.text:
+                    if hasattr(chunk, 'delta') and hasattr(chunk.delta, 'text') and chunk.delta.text:
                         full_response += chunk.delta.text
-                        # Print progress indicator
-                        if len(full_response) % 500 == 0:
-                            print(".", end="", flush=True)
+                        progress_counter += len(chunk.delta.text)
+                    elif hasattr(chunk, 'content_block') and hasattr(chunk.content_block, 'text'):
+                        full_response += chunk.content_block.text
+                        progress_counter += len(chunk.content_block.text)
+                    
+                    # Print progress indicator periodically
+                    if progress_counter >= 200:
+                        print(".", end="", flush=True)
+                        progress_counter = 0
                 
                 # Get the final message for token counting
                 response = stream.get_final_message()

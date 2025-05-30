@@ -2012,9 +2012,9 @@ def main():
     parser.add_argument("--cost-budget", type=float,
                         help="Maximum cost budget in dollars (overrides mode setting)")
     cost_opt_group = parser.add_mutually_exclusive_group()
-    cost_opt_group.add_argument("--optimize-costs", action="store_true", dest="optimize_costs_arg",
+    cost_opt_group.add_argument("--optimize-costs", action="store_const", const=True, dest="optimize_costs_arg",
                         help="Enable cost optimization (overrides mode setting)")
-    cost_opt_group.add_argument("--no-optimize-costs", action="store_false", dest="optimize_costs_arg",
+    cost_opt_group.add_argument("--no-optimize-costs", action="store_const", const=False, dest="optimize_costs_arg",
                         help="Disable cost optimization (overrides mode setting)")
     parser.add_argument("--max-papers", type=int,
                         help="Maximum number of papers to process for style analysis (overrides mode setting)")
