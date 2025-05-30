@@ -1,0 +1,170 @@
+I want to generate a python script that will enable the revision of a submitted paper to the journal Computers (ISSN;: 2073-431X) that received a review from three reviewers demanding extensive revision.
+
+The submitted paper can be found in
+./asis/00.pdf
+
+Revisions of the three reviewers can be found in:
+./asis/01.pdf
+./asis/02.pdf
+./asis/03.pdf
+
+Letter from the editor can be found in 
+./asis/04.pdf
+
+With an additional request regarding PRISMA framework in
+./asis/05.pdf
+
+The journal webpage can be found in 
+./asis/06.pdf
+
+The scopus reference information can be found in
+./asis/07.pdf
+./asis/08.pdf
+
+Highly cited papers in the same publication can be found in 
+./asis/11.pdf
+./asis/12.pdf
+./asis/13.pdf
+./asis/14.pdf
+./asis/15.pdf
+./asis/16.pdf
+./asis/17.pdf
+./asis/18.pdf
+
+Similar papers to the submitted paper can be found in:
+./asis/21.pdf
+./asis/22.pdf
+./asis/23.pdf
+./asis/24.pdf
+
+
+The suggested workflow, that will use extensively LLM and AI (namely NLP) capabilities will be as follows:
+1. Read and systematize 00.pdf
+2. Based on the reviews 01.pdf, 02.pdf and 03.pdf, an extensive an systematic change requirements will be issued. Conflicting requirements will be assessed according to seriousness and in the end a document with the changes will be issued including a brief description of the problem, proposed solution and a complexity index assessment.
+
+3. This document will be supplemented with information coming from the letter from the editor (04.pdf) and from the additional PRISMA requirements (05.pdf).
+
+The updated change requirements document will be supplemented with relevant and applicable information from the journal information (06.pdf), the scopus source reference information (07.pdf and 08.pdf).
+
+Concerning style, the files 11.pdf thru 18.pdf contain highly cited papers from the journal where the paper was submitted so that the changes requirements include also a mention on the used style so that the revised paper can exactly match the journal style.
+
+Finally, four similar papers can be found in 21.pdf thru 24.pdf so that style for this type of documents and can also be described in the change requirements document regading style for this kind of pa.
+
+Based on this workflow, the change requirements document will be then finalized as 
+./tobe/90timestamp.docx
+where timestamp is the timestamp of the creation date and time.
+
+Based on the 90timestamp.docx file and the original file in docx 00.docx a changes document will be created
+./tobe/91timestamp.docx
+stating the changes that will take place, including original formulation and changed formulation, containing the motive of the change and the original file (00.docx) line number.
+
+All the references (existing and new) can be found in zz.bib and the referencing must match the bibliographic style of the journal
+
+All the references will be validated through the doi link that exists in the bib file.
+
+New references will be inserted into the paper and into a new zztimestamp.bib file to be created.
+
+
+When all changes are enabled, a new document
+./tobe/92timestamp.docx 
+will be created containing all the changes identified through track chages.
+
+An additional 
+./tobe/93timestamp.docx 
+file will be created assessing the changes made, its impact on the paper and eventually the indication of a few changes that need to be enabled by hand by the authors.
+
+Finally a 
+./tobe/94timespamp.docx 
+file will be created in the form of a letter to the editor containing all the expected information to be passed to the editorial office of the journal in scientif style. The file will also contain specific appedixed addressing each of the three initial comments with detailed explanation of the changes made and, if necessary, an explanation of the decision taken when conficting requirements arise between two of more reviewers.
+
+The program will be terminated indicating all the relevant data concerining time, tokens and expected cost.
+
+
+The program will contain fallback mechanisms and interaction through cli interface will be possible.
+Frequent information on the number of tokens consumed and its cost wil be issued as well as systematic information regarding the consumption of existing files and creation of new files.
+
+Whenever possible batching options will be used in order to rationalize the cost and the consumption of tokens.
+
+They will not be replicated to the github repository.
+
+The github address is https://github.com/dpolonia/20250530Computers and the user is dpoonia, please ask for the password if necessary,
+
+The user will be able to choose in the beginning of the program which LLM model he wants to use from the following list:
+
+# Import model information
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+try:
+    from src.models.openai_models import get_openai_model_choices, get_openai_model_info, get_max_tokens_for_model as get_openai_max_tokens
+except ImportError:
+    # Create dummy functions if import fails
+    def get_openai_model_choices():
+        return [
+            "gpt-4.5-preview (most powerful)",
+            "gpt-4o (powerful)",
+            "gpt-4o-mini (balanced)",
+            "o1 (powerful reasoning)",
+            "o3 (powerful reasoning)",
+            "o4-mini (fast reasoning)"
+        ]
+    
+    def get_openai_model_info(model_name):
+        return None
+    
+    def get_openai_max_tokens(model_name):
+        return 4096
+
+try:
+    from src.models.anthropic_models import get_claude_model_choices, get_claude_model_info, get_max_tokens_for_model as get_claude_max_tokens
+except ImportError:
+    # Create dummy functions if import fails
+    def get_claude_model_choices():
+        return [
+            "claude-opus-4-20250514 (most powerful)",
+            "claude-sonnet-4-20250514 (powerful)",
+            "claude-3-7-sonnet-20250219 (powerful)",
+            "claude-3-5-sonnet-20241022 (balanced)",
+            "claude-3-5-haiku-20241022 (fast)",
+            "claude-3-haiku-20240307 (fastest & cheapest)"
+        ]
+    
+    def get_claude_model_info(model_name):
+        return None
+    
+    def get_claude_max_tokens(model_name):
+        return 4096
+        
+try:
+    from src.models.google_models import get_gemini_model_choices, get_gemini_model_info, get_max_tokens_for_model as get_gemini_max_tokens
+except ImportError:
+    # Create dummy functions if import fails
+    def get_gemini_model_choices():
+        return [
+            "gemini-2.5-pro-preview (most powerful, 8M context)",
+            "gemini-2.5-flash-preview (efficient, 1M context)",
+            "gemini-1.5-pro (powerful, 1M context)",
+            "gemini-1.5-flash (fast, 1M context)",
+            "gemini-2.0-flash (powerful)",
+            "gemini-2.0-flash-lite (faster)"
+        ]
+    
+    def get_gemini_model_info(model_name):
+        return None
+    
+    def get_gemini_max_tokens(model_name):
+        return 8192
+
+# Unified function to get max tokens for any model
+def get_max_tokens_for_model(provider, model_name):
+    """Get maximum output tokens for a model across any provider."""
+    if provider == "openai":
+        return get_openai_max_tokens(model_name)
+    elif provider == "anthropic":
+        return get_claude_max_tokens(model_name)
+    elif provider == "google":
+        return get_gemini_max_tokens(model_name)
+    else:
+        # Default fallback
+        return 4096
+
+
+

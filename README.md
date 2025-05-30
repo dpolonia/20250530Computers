@@ -1,2 +1,3 @@
-# 20250530Computers
-Computers paper revision
+# Paper Revision Tool
+
+This project automates parts of the paper revision workflow for the *Computers* journal.

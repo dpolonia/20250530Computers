@@ -1,0 +1,34 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Output files in tobe directory with timestamps
+tobe/90*.docx
+tobe/91*.docx
+tobe/92*.docx
+tobe/93*.docx
+tobe/94*.docx
+tobe/zz*.bib
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
