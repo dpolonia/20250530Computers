@@ -14,6 +14,7 @@ import datetime
 import json
 import hashlib
 import re  # Used for extracting dates from model names
+import logging
 from typing import Dict, List, Any, Optional, Tuple
 from pathlib import Path
 from dotenv import load_dotenv
@@ -508,11 +509,15 @@ class PaperRevisionTool:
         self.assessment_path = f"{self.timestamp_dir}/93{self.timestamp}.docx"
         self.editor_response_path = f"{self.timestamp_dir}/94{self.timestamp}.docx"
         self.new_bib_path = f"{self.timestamp_dir}/zz{self.timestamp}.bib"
+        self.log_path = f"{self.timestamp_dir}/log{self.timestamp}.txt"
         
         # Ensure directories exist
         os.makedirs("./tobe", exist_ok=True)
         os.makedirs(self.model_dir, exist_ok=True)
         os.makedirs(self.timestamp_dir, exist_ok=True)
+        
+        # Set up logger
+        self._setup_logger()
         
         # Statistics
         self.start_time = time.time()
@@ -576,26 +581,57 @@ class PaperRevisionTool:
             self._log_error(f"Error initializing LLM client: {e}")
             sys.exit(1)
     
+    def _setup_logger(self):
+        """Set up the logger for the paper revision tool."""
+        self.logger = logging.getLogger(f"paper_revision_{self.timestamp}")
+        self.logger.setLevel(logging.DEBUG if self.debug else logging.INFO)
+        
+        # Create file handler
+        file_handler = logging.FileHandler(self.log_path)
+        file_handler.setLevel(logging.DEBUG)  # Log everything to file
+        
+        # Create console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)  # Only info and above to console
+        
+        # Create formatter
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(formatter)
+        
+        # Add handlers to logger
+        self.logger.addHandler(file_handler)
+        
+        # Log initial information
+        self.logger.info(f"Paper revision started with {self.provider} model: {self.model_name}")
+        self.logger.info(f"Model code: {self.model_code}")
+        self.logger.info(f"Operation mode: {self.operation_mode}")
+        self.logger.info(f"Output directory: {self.timestamp_dir}")
+        
     def _log_info(self, message: str):
         """Log an informational message."""
         print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} {message}")
+        self.logger.info(message)
     
     def _log_success(self, message: str):
         """Log a success message."""
         print(f"{Fore.GREEN}[SUCCESS]{Style.RESET_ALL} {message}")
+        self.logger.info(f"SUCCESS: {message}")
     
     def _log_warning(self, message: str):
         """Log a warning message."""
         print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} {message}")
+        self.logger.warning(message)
     
     def _log_error(self, message: str):
         """Log an error message."""
         print(f"{Fore.RED}[ERROR]{Style.RESET_ALL} {message}")
+        self.logger.error(message)
     
     def _log_debug(self, message: str):
         """Log a debug message."""
         if self.debug:
             print(f"{Fore.MAGENTA}[DEBUG]{Style.RESET_ALL} {message}")
+        self.logger.debug(message)
     
     def _create_revision_report(self, issues, solutions, reviewer_comments, new_references):
         """Create a summary report of the revision.
@@ -990,6 +1026,11 @@ class PaperRevisionTool:
             cost_report = self._log_stats(export_to_file=True)
             self._log_success("Paper revision process completed successfully!")
             self._log_success(f"Detailed revision report saved to {report_path}")
+            self._log_success(f"Log file saved to {self.log_path}")
+            
+            # Log final completion
+            self.logger.info("Paper revision process completed successfully")
+            self.logger.info(f"Total time elapsed: {time.time() - self.start_time:.2f} seconds")
             
             return {
                 "revision_summary": self.revision_summary_path,
@@ -999,15 +1040,25 @@ class PaperRevisionTool:
                 "editor_letter": self.editor_response_path,
                 "new_bib": self.new_bib_path,
                 "cost_report": cost_report,
-                "revision_report": report_path
+                "revision_report": report_path,
+                "log_file": self.log_path
             }
             
         except Exception as e:
             self._log_error(f"Error in paper revision process: {e}")
             if self.debug:
                 import traceback
+                tb = traceback.format_exc()
+                self.logger.error(f"Traceback: {tb}")
                 traceback.print_exc()
-            return None
+            else:
+                self.logger.error(f"Exception: {str(e)}")
+                
+            # Log completion even in error case
+            self.logger.info(f"Paper revision process failed after {time.time() - self.start_time:.2f} seconds")
+            
+            # Return only the log file
+            return {"log_file": self.log_path}
     
     def _analyze_original_paper(self) -> Dict[str, Any]:
         """Analyze the original paper.
@@ -2524,13 +2575,15 @@ def main():
         print("Output files:")
         
         # Display special reports first
-        special_reports = ["revision_report", "cost_report"]
+        special_reports = ["revision_report", "cost_report", "log_file"]
         for report_name in special_reports:
             if report_name in results and results[report_name]:
                 if report_name == "revision_report":
                     print(f"{Fore.GREEN}- {report_name}: {results[report_name]}{Style.RESET_ALL} (Detailed revision summary)")
-                else:
+                elif report_name == "cost_report":
                     print(f"{Fore.GREEN}- {report_name}: {results[report_name]}{Style.RESET_ALL} (Cost optimization report)")
+                elif report_name == "log_file":
+                    print(f"{Fore.GREEN}- {report_name}: {results[report_name]}{Style.RESET_ALL} (Process log file)")
             
         # Display other output files
         for name, path in results.items():
@@ -2545,11 +2598,16 @@ def main():
                         pass
                 print(f"- {name}: {path} (Model: {model_code})")
                 
-        print(f"\n{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost optimization report saved to {results.get('cost_report', 'N/A')}")
-        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Detailed revision report saved to {results.get('revision_report', 'N/A')}")
+        print(f"\n{Fore.BLUE}[INFO]{Style.RESET_ALL} Reports and logs saved to:")
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} - Cost report: {results.get('cost_report', 'N/A')}")
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} - Revision report: {results.get('revision_report', 'N/A')}")
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} - Log file: {results.get('log_file', 'N/A')}")
     else:
         print(f"\n{Fore.RED}Paper revision failed.{Style.RESET_ALL}")
-        print("Check the logs for details.")
+        if results and "log_file" in results:
+            print(f"Check the log file for details: {results['log_file']}")
+        else:
+            print("No log file was generated. Check console output for errors.")
 
 if __name__ == "__main__":
     main()
