@@ -34,17 +34,26 @@ Where:
 
 ## Integration with Claude
 
-To capture output and send it directly to Claude Code, use the following command:
+The tool includes intelligent integration with Claude that only activates when errors occur:
 
 ```bash
 ./run_for_claude.sh --mode [training|finetuning|final]
 ```
 
-This will:
-1. Run the paper revision tool with the specified arguments
-2. Capture all output to a file
-3. Format the output for easy sharing with Claude
-4. Provide the file path that can be used with the Claude CLI
+For successful runs:
+1. The script will analyze logs and cost reports
+2. Provide a summary of the run with model information
+3. Extract cost analysis and token usage statistics
+4. Show optimization recommendations
+5. Report any warnings or issues detected in the logs
+
+For error cases only:
+1. The script will automatically capture the error output
+2. Format it for easy sharing with Claude
+3. Save it to a file named `claude_error_TIMESTAMP.txt`
+4. Provide the command to send the file to Claude
+
+This ensures Claude is only used when needed, while still providing useful analytics for successful runs.
 
 ## Error Handling
 
