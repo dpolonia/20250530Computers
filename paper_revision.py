@@ -484,6 +484,112 @@ class PaperRevisionTool:
         if self.debug:
             print(f"{Fore.MAGENTA}[DEBUG]{Style.RESET_ALL} {message}")
     
+    def _create_revision_report(self, issues, solutions, reviewer_comments, new_references):
+        """Create a summary report of the revision.
+        
+        Args:
+            issues: List of identified issues
+            solutions: List of solutions
+            reviewer_comments: List of reviewer comments
+            new_references: List of new references added
+            
+        Returns:
+            Tuple of (report text, report file path)
+        """
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        filename = f"{self.timestamp_dir}/report{timestamp}.txt"
+        
+        # Initialize report sections
+        report_lines = [
+            f"{'=' * 70}",
+            f"PAPER REVISION SUMMARY REPORT",
+            f"Generated: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+            f"Model: {self.model_name} (Code: {self.model_code})",
+            f"Operation mode: {self.operation_mode.upper()}",
+            f"{'=' * 70}\n"
+        ]
+        
+        # Add reviewer comments section
+        report_lines.append("REVIEWER COMMENTS SUMMARY:")
+        for i, reviewer in enumerate(reviewer_comments, 1):
+            report_lines.append(f"\nREVIEWER {i}:")
+            report_lines.append(f"  Overall assessment: {reviewer.get('overall_assessment', 'Not specified')}")
+            
+            # Main concerns
+            report_lines.append("  Main concerns:")
+            concerns = reviewer.get("main_concerns", [])
+            if concerns:
+                for concern in concerns[:3]:  # Show up to 3 concerns
+                    report_lines.append(f"   - {concern}")
+            else:
+                report_lines.append("   - No specific concerns identified")
+            
+            # Required changes
+            report_lines.append("  Required changes:")
+            required = reviewer.get("required_changes", [])
+            if required:
+                for change in required[:3]:  # Show up to 3 required changes
+                    report_lines.append(f"   - {change}")
+            else:
+                report_lines.append("   - No specific changes required")
+        
+        # Add issues section
+        report_lines.append("\nKEY ISSUES IDENTIFIED:")
+        if issues:
+            for i, issue in enumerate(issues[:5], 1):  # Show top 5 issues
+                report_lines.append(f"  {i}. {issue.get('title', 'Unnamed issue')} (Severity: {issue.get('severity', 'unspecified')})")
+                report_lines.append(f"     Source: {issue.get('source', 'unspecified')}")
+                if 'description' in issue:
+                    desc = issue['description']
+                    if len(desc) > 100:
+                        desc = desc[:97] + "..."
+                    report_lines.append(f"     Description: {desc}")
+        else:
+            report_lines.append("  No issues identified")
+        
+        # Add solutions section
+        report_lines.append("\nIMPLEMENTED SOLUTIONS:")
+        if solutions:
+            for i, solution in enumerate(solutions[:5], 1):  # Show top 5 solutions
+                report_lines.append(f"  {i}. {solution.get('title', 'Unnamed solution')} (Complexity: {solution.get('complexity', 'unspecified')})")
+                if 'implementation' in solution:
+                    impl = solution['implementation']
+                    if len(impl) > 100:
+                        impl = impl[:97] + "..."
+                    report_lines.append(f"     Implementation: {impl}")
+        else:
+            report_lines.append("  No solutions implemented")
+        
+        # Add references section
+        report_lines.append("\nNEW REFERENCES ADDED:")
+        if new_references:
+            for i, ref in enumerate(new_references, 1):
+                report_lines.append(f"  {i}. {ref.get('title', 'Unnamed reference')} ({ref.get('authors', 'Unknown authors')}, {ref.get('year', 'Unknown year')})")
+                if 'reason' in ref:
+                    report_lines.append(f"     Reason: {ref.get('reason', 'No reason specified')}")
+        else:
+            report_lines.append("  No new references added")
+        
+        # Add output files section
+        report_lines.append("\nOUTPUT FILES GENERATED:")
+        report_lines.append(f"  Revision summary: {os.path.basename(self.revision_summary_path)}")
+        report_lines.append(f"  Changes document: {os.path.basename(self.changes_document_path)}")
+        report_lines.append(f"  Revised paper: {os.path.basename(self.revised_paper_path)}")
+        report_lines.append(f"  Assessment: {os.path.basename(self.assessment_path)}")
+        report_lines.append(f"  Editor letter: {os.path.basename(self.editor_response_path)}")
+        report_lines.append(f"  Bibliography: {os.path.basename(self.new_bib_path)}")
+        
+        # Add footer
+        report_lines.append(f"\n{'=' * 70}")
+        report_lines.append(f"End of report - {self.model_code}_{self.model_description}")
+        report_lines.append(f"{'=' * 70}")
+        
+        # Write to file
+        with open(filename, 'w') as f:
+            f.write("\n".join(report_lines))
+        
+        return "\n".join(report_lines), filename
+        
     def _log_stats(self, export_to_file=False):
         """Log current statistics.
         
@@ -532,7 +638,7 @@ class PaperRevisionTool:
         # Export to file if requested
         if export_to_file:
             timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-            filename = f"cost{timestamp}.txt"
+            filename = f"{self.timestamp_dir}/cost{timestamp}.txt"
             
             with open(filename, 'w') as f:
                 f.write(f"COST OPTIMIZATION REPORT - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
@@ -729,9 +835,48 @@ class PaperRevisionTool:
             editor_letter_path = self._create_editor_letter(reviewer_comments, changes, self.editor_response_path)
             self._log_success(f"Created letter to editor at {editor_letter_path}")
             
+            # Create summary report with essential information
+            report_text, report_path = self._create_revision_report(
+                issues, solutions, reviewer_comments, new_references
+            )
+            
+            # Print essential information to console
+            print(f"\n{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}ESSENTIAL REVISION INFORMATION:{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}")
+            
+            # Extract and print the most important parts from the report
+            reviewer_concerns = []
+            for i, reviewer in enumerate(reviewer_comments, 1):
+                concerns = reviewer.get("main_concerns", [])
+                required = reviewer.get("required_changes", [])
+                if concerns or required:
+                    reviewer_concerns.append(f"Reviewer {i}:")
+                    if concerns:
+                        reviewer_concerns.append(f"  Main concerns: {concerns[0] if concerns else 'None'}")
+                    if required:
+                        reviewer_concerns.append(f"  Required changes: {required[0] if required else 'None'}")
+            
+            # Print reviewer concerns
+            print(f"\n{Fore.YELLOW}REVIEWER CONCERNS:{Style.RESET_ALL}")
+            for line in reviewer_concerns:
+                print(line)
+            
+            # Print key issues and solutions
+            print(f"\n{Fore.YELLOW}KEY ISSUES ADDRESSED:{Style.RESET_ALL}")
+            for i, issue in enumerate(issues[:3], 1):  # Show top 3 issues
+                print(f"{i}. {issue.get('title', 'Unnamed issue')} (Source: {issue.get('source', 'unspecified')})")
+            
+            # Print references added
+            if new_references:
+                print(f"\n{Fore.YELLOW}NEW REFERENCES ADDED:{Style.RESET_ALL}")
+                for i, ref in enumerate(new_references[:3], 1):  # Show top 3 references
+                    print(f"{i}. {ref.get('title', 'Unnamed reference')} ({ref.get('authors', 'Unknown')})")
+            
             # Final statistics with export to file
             cost_report = self._log_stats(export_to_file=True)
             self._log_success("Paper revision process completed successfully!")
+            self._log_success(f"Detailed revision report saved to {report_path}")
             
             return {
                 "revision_summary": self.revision_summary_path,
@@ -740,7 +885,8 @@ class PaperRevisionTool:
                 "assessment": self.assessment_path,
                 "editor_letter": self.editor_response_path,
                 "new_bib": self.new_bib_path,
-                "cost_report": cost_report
+                "cost_report": cost_report,
+                "revision_report": report_path
             }
             
         except Exception as e:
@@ -2264,13 +2410,18 @@ def main():
         print(f"\n{Fore.GREEN}Paper revision completed successfully!{Style.RESET_ALL}")
         print("Output files:")
         
-        # Display cost report first if it exists
-        if "cost_report" in results and results["cost_report"]:
-            print(f"{Fore.GREEN}- cost_report: {results['cost_report']}{Style.RESET_ALL} (Cost optimization report)")
+        # Display special reports first
+        special_reports = ["revision_report", "cost_report"]
+        for report_name in special_reports:
+            if report_name in results and results[report_name]:
+                if report_name == "revision_report":
+                    print(f"{Fore.GREEN}- {report_name}: {results[report_name]}{Style.RESET_ALL} (Detailed revision summary)")
+                else:
+                    print(f"{Fore.GREEN}- {report_name}: {results[report_name]}{Style.RESET_ALL} (Cost optimization report)")
             
         # Display other output files
         for name, path in results.items():
-            if name != "cost_report" and path:
+            if name not in special_reports and path:
                 # Extract model code from path for clearer display
                 model_code = "Unknown"
                 if "/tobe/" in path:
@@ -2282,6 +2433,7 @@ def main():
                 print(f"- {name}: {path} (Model: {model_code})")
                 
         print(f"\n{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost optimization report saved to {results.get('cost_report', 'N/A')}")
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Detailed revision report saved to {results.get('revision_report', 'N/A')}")
     else:
         print(f"\n{Fore.RED}Paper revision failed.{Style.RESET_ALL}")
         print("Check the logs for details.")
