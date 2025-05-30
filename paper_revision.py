@@ -452,7 +452,8 @@ class PaperRevisionTool:
                  cost_budget: float = DEFAULT_COST_BUDGET,
                  max_papers_to_process: int = 3,
                  optimize_costs: bool = True,
-                 operation_mode: str = "custom"):
+                 operation_mode: str = "custom",
+                 skip_api_validation: bool = False):
         """Initialize the paper revision tool.
         
         Args:
@@ -526,8 +527,12 @@ class PaperRevisionTool:
             "cost_budget_remaining": self.cost_budget
         }
         
-        # Initialize LLM client
-        self._initialize_llm_client()
+        # Skip API validation flag
+        self.skip_api_validation = skip_api_validation
+        
+        # Initialize LLM client (if not skipping validation)
+        if not self.skip_api_validation:
+            self._initialize_llm_client()
         
     def _check_budget(self, estimated_tokens: int, estimated_cost: float) -> bool:
         """Check if the estimated tokens and cost are within budget.
