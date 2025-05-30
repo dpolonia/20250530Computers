@@ -251,6 +251,78 @@ from src.utils.document_processor import DocumentProcessor
 from src.utils.reference_validator import ReferenceValidator
 from src.utils.llm_client import get_llm_client
 
+# Model code generation function
+def get_model_code(provider, model_name):
+    """Generate a standardized model code.
+    
+    Format: [A|B|C][01-99]
+    - A: Anthropic
+    - B: OpenAI
+    - C: Google
+    - Number: 01 (weakest/oldest) to 99 (strongest/newest)
+    
+    Args:
+        provider: Provider name ("anthropic", "openai", or "google")
+        model_name: Name of the model
+        
+    Returns:
+        A standardized model code
+    """
+    # Provider code
+    if provider == "anthropic":
+        provider_code = "A"
+    elif provider == "openai":
+        provider_code = "B" 
+    elif provider == "google":
+        provider_code = "C"
+    else:
+        provider_code = "X"  # Unknown provider
+    
+    # Model strength code
+    if provider == "anthropic":
+        if "opus" in model_name:
+            strength_code = "05"
+        elif "sonnet-4" in model_name:
+            strength_code = "04"
+        elif "3-7-sonnet" in model_name:
+            strength_code = "03"
+        elif "3-5-sonnet" in model_name:
+            strength_code = "02"
+        elif "haiku" in model_name:
+            strength_code = "01"
+        else:
+            strength_code = "00"
+    elif provider == "openai":
+        if "4.5-preview" in model_name:
+            strength_code = "05"
+        elif "o1" in model_name or "o3" in model_name:
+            strength_code = "04"
+        elif "gpt-4o" in model_name and "mini" not in model_name:
+            strength_code = "03"
+        elif "o4-mini" in model_name:
+            strength_code = "02"
+        elif "gpt-4o-mini" in model_name:
+            strength_code = "01"
+        else:
+            strength_code = "00"
+    elif provider == "google":
+        if "2.5-pro" in model_name:
+            strength_code = "05"
+        elif "2.5-flash" in model_name:
+            strength_code = "04"
+        elif "1.5-pro" in model_name:
+            strength_code = "03"
+        elif "2.0-flash" in model_name:
+            strength_code = "02"
+        elif "1.5-flash" in model_name or "2.0-flash-lite" in model_name:
+            strength_code = "01"
+        else:
+            strength_code = "00"
+    else:
+        strength_code = "00"
+    
+    return f"{provider_code}{strength_code}"
+
 # Unified function to get max tokens for any model
 def get_max_tokens_for_model(provider, model_name):
     """Get maximum output tokens for a model across any provider."""
@@ -314,8 +386,10 @@ class PaperRevisionTool:
         self.similar_papers_paths = [f"./asis/{i:02d}.pdf" for i in range(21, 25)]
         self.bib_path = "./asis/zz.bib"
         
-        # Create model directory inside tobe
-        self.model_dir = f"./tobe/{self.model_name.replace(' ', '_').replace('-', '_')}"
+        # Create model directory inside tobe using the standardized model code
+        self.model_code = get_model_code(self.provider, self.model_name)
+        self.model_description = self.model_name.replace(' ', '_').replace('-', '_')
+        self.model_dir = f"./tobe/{self.model_code}_{self.model_description}"
         self.timestamp_dir = f"{self.model_dir}/{self.timestamp}"
         
         # Output paths
@@ -384,7 +458,7 @@ class PaperRevisionTool:
             if not self.llm_client.validate_api_key():
                 self._log_error(f"Invalid API key for {self.provider}. Please check your .env file.")
                 sys.exit(1)
-            self._log_success(f"Successfully initialized {self.provider} client with model {self.model_name}")
+            self._log_success(f"Successfully initialized {self.provider} client with model {self.model_name} (Code: {self.model_code})")
         except Exception as e:
             self._log_error(f"Error initializing LLM client: {e}")
             sys.exit(1)
@@ -441,8 +515,8 @@ class PaperRevisionTool:
             f"Files created: {self.process_statistics['files_created']}",
             f"Token budget remaining: {self.process_statistics['token_budget_remaining']:,}",
             f"Cost budget remaining: ${self.process_statistics['cost_budget_remaining']:.4f}",
-            f"Provider: {self.provider}",
-            f"Model: {self.model_name}",
+            f"Provider: {self.provider} ({self.model_code[0]})",
+            f"Model: {self.model_name} (Code: {self.model_code})",
             f"Cost optimization: {'Enabled' if self.optimize_costs else 'Disabled'}",
             f"Maximum papers analyzed: {self.max_papers_to_process}",
             f"{'=' * 50}"
@@ -2196,8 +2270,16 @@ def main():
             
         # Display other output files
         for name, path in results.items():
-            if name != "cost_report" or not path:
-                print(f"- {name}: {path}")
+            if name != "cost_report" and path:
+                # Extract model code from path for clearer display
+                model_code = "Unknown"
+                if "/tobe/" in path:
+                    try:
+                        model_part = path.split("/tobe/")[1].split("/")[0]
+                        model_code = model_part.split("_")[0]  # Extract just the code portion
+                    except:
+                        pass
+                print(f"- {name}: {path} (Model: {model_code})")
                 
         print(f"\n{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost optimization report saved to {results.get('cost_report', 'N/A')}")
     else:
