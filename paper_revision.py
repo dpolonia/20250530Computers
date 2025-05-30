@@ -367,8 +367,12 @@ class PaperRevisionTool:
         if self.debug:
             print(f"{Fore.MAGENTA}[DEBUG]{Style.RESET_ALL} {message}")
     
-    def _log_stats(self):
-        """Log current statistics."""
+    def _log_stats(self, export_to_file=False):
+        """Log current statistics.
+        
+        Args:
+            export_to_file: Whether to export stats to a text file
+        """
         elapsed = time.time() - self.start_time
         hours, remainder = divmod(elapsed, 3600)
         minutes, seconds = divmod(remainder, 60)
@@ -380,18 +384,90 @@ class PaperRevisionTool:
             self.process_statistics["cost"] = usage_stats["total_cost"]
             self.process_statistics["requests"] = usage_stats["request_count"]
         
-        print(f"\n{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}")
-        print(f"{Fore.CYAN}CURRENT STATISTICS:{Style.RESET_ALL}")
-        print(f"Time elapsed: {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}")
-        print(f"Tokens used: {self.process_statistics['tokens_used']:,}")
-        print(f"Estimated cost: ${self.process_statistics['cost']:.4f}")
-        print(f"API requests: {self.process_statistics['requests']}")
-        print(f"Cached requests: {self.process_statistics['cached_requests']}")
-        print(f"Files processed: {self.process_statistics['files_processed']}")
-        print(f"Files created: {self.process_statistics['files_created']}")
-        print(f"Token budget remaining: {self.process_statistics['token_budget_remaining']:,}")
-        print(f"Cost budget remaining: ${self.process_statistics['cost_budget_remaining']:.4f}")
-        print(f"{Fore.CYAN}{'=' * 50}{Style.RESET_ALL}\n")
+        # Prepare stats as formatted strings
+        stats_lines = [
+            f"{'=' * 50}",
+            f"STATISTICS SUMMARY:",
+            f"Time elapsed: {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}",
+            f"Tokens used: {self.process_statistics['tokens_used']:,}",
+            f"Estimated cost: ${self.process_statistics['cost']:.4f}",
+            f"API requests: {self.process_statistics['requests']}",
+            f"Cached requests: {self.process_statistics['cached_requests']}",
+            f"Files processed: {self.process_statistics['files_processed']}",
+            f"Files created: {self.process_statistics['files_created']}",
+            f"Token budget remaining: {self.process_statistics['token_budget_remaining']:,}",
+            f"Cost budget remaining: ${self.process_statistics['cost_budget_remaining']:.4f}",
+            f"Provider: {self.provider}",
+            f"Model: {self.model_name}",
+            f"Cost optimization: {'Enabled' if self.optimize_costs else 'Disabled'}",
+            f"{'=' * 50}"
+        ]
+        
+        # Print to console with colors
+        print(f"\n{Fore.CYAN}{stats_lines[0]}{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}{stats_lines[1]}{Style.RESET_ALL}")
+        for line in stats_lines[2:-1]:
+            print(line)
+        print(f"{Fore.CYAN}{stats_lines[-1]}{Style.RESET_ALL}\n")
+        
+        # Export to file if requested
+        if export_to_file:
+            timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            filename = f"cost{timestamp}.txt"
+            
+            with open(filename, 'w') as f:
+                f.write(f"COST OPTIMIZATION REPORT - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write("\n".join(stats_lines))
+                
+                # Add detailed cache statistics
+                f.write("\n\nCACHE STATISTICS:\n")
+                f.write(f"Cache directory: {CACHE_DIR}\n")
+                f.write(f"Cache entries: {len(os.listdir(CACHE_DIR))}\n")
+                if os.path.exists(CACHE_DIR) and os.listdir(CACHE_DIR):
+                    f.write("\nMost recent cache entries:\n")
+                    cache_files = sorted([os.path.join(CACHE_DIR, f) for f in os.listdir(CACHE_DIR) if f.endswith('.json')], 
+                                        key=os.path.getmtime, reverse=True)
+                    for i, cache_file in enumerate(cache_files[:5]):  # Show 5 most recent
+                        mtime = datetime.datetime.fromtimestamp(os.path.getmtime(cache_file))
+                        f.write(f"{i+1}. {os.path.basename(cache_file)} - {mtime.strftime('%Y-%m-%d %H:%M:%S')}\n")
+                
+                # Add detailed cost breakdown by operation
+                f.write("\n\nESTIMATED COST BREAKDOWN:\n")
+                token_cost = self.process_statistics['tokens_used'] / 1000
+                if self.provider == "anthropic":
+                    from src.models.anthropic_models import get_claude_model_info
+                    model_info = get_claude_model_info(self.model_name)
+                    if model_info:
+                        input_cost = token_cost * model_info.get("price_per_1k_input", 0.0)
+                        output_cost = token_cost * model_info.get("price_per_1k_output", 0.0)
+                        f.write(f"Input tokens cost (estimated): ${input_cost:.4f}\n")
+                        f.write(f"Output tokens cost (estimated): ${output_cost:.4f}\n")
+                elif self.provider == "openai":
+                    from src.models.openai_models import get_openai_model_info
+                    model_info = get_openai_model_info(self.model_name)
+                    if model_info:
+                        input_cost = token_cost * model_info.get("price_per_1k_input", 0.0)
+                        output_cost = token_cost * model_info.get("price_per_1k_output", 0.0)
+                        f.write(f"Input tokens cost (estimated): ${input_cost:.4f}\n")
+                        f.write(f"Output tokens cost (estimated): ${output_cost:.4f}\n")
+                
+                f.write(f"\nTotal cost: ${self.process_statistics['cost']:.4f}\n")
+                
+                # Add recommendations for further optimization
+                f.write("\n\nOPTIMIZATION RECOMMENDATIONS:\n")
+                if self.provider == "anthropic" and "opus" in self.model_name:
+                    f.write("- Consider using a cheaper model like Claude Sonnet or Haiku for initial drafts\n")
+                if self.provider == "openai" and "gpt-4" in self.model_name:
+                    f.write("- Consider using a cheaper model like GPT-3.5 for initial drafts\n")
+                if self.process_statistics['tokens_used'] > 100000:
+                    f.write("- Reduce token usage by processing fewer papers or shortening text inputs\n")
+                if self.process_statistics['cached_requests'] < self.process_statistics['requests'] * 0.1:
+                    f.write("- Enable caching between runs for similar operations\n")
+                
+            self._log_success(f"Cost report exported to {filename}")
+            return filename
+        
+        return None
         
     def _optimized_completion(self, prompt: str, system_prompt: Optional[str] = None, max_tokens: Optional[int] = None, **kwargs) -> str:
         """Get a completion from the LLM with cost optimization and caching.
@@ -534,8 +610,8 @@ class PaperRevisionTool:
             editor_letter_path = self._create_editor_letter(reviewer_comments, changes, self.editor_response_path)
             self._log_success(f"Created letter to editor at {editor_letter_path}")
             
-            # Final statistics
-            self._log_stats()
+            # Final statistics with export to file
+            cost_report = self._log_stats(export_to_file=True)
             self._log_success("Paper revision process completed successfully!")
             
             return {
@@ -544,7 +620,8 @@ class PaperRevisionTool:
                 "revised_paper": self.revised_paper_path,
                 "assessment": self.assessment_path,
                 "editor_letter": self.editor_response_path,
-                "new_bib": self.new_bib_path
+                "new_bib": self.new_bib_path,
+                "cost_report": cost_report
             }
             
         except Exception as e:
@@ -1899,8 +1976,17 @@ def main():
     if results:
         print(f"\n{Fore.GREEN}Paper revision completed successfully!{Style.RESET_ALL}")
         print("Output files:")
+        
+        # Display cost report first if it exists
+        if "cost_report" in results and results["cost_report"]:
+            print(f"{Fore.GREEN}- cost_report: {results['cost_report']}{Style.RESET_ALL} (Cost optimization report)")
+            
+        # Display other output files
         for name, path in results.items():
-            print(f"- {name}: {path}")
+            if name != "cost_report" or not path:
+                print(f"- {name}: {path}")
+                
+        print(f"\n{Fore.BLUE}[INFO]{Style.RESET_ALL} Cost optimization report saved to {results.get('cost_report', 'N/A')}")
     else:
         print(f"\n{Fore.RED}Paper revision failed.{Style.RESET_ALL}")
         print("Check the logs for details.")
