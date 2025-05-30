@@ -7,37 +7,37 @@ import requests
 OPENAI_MODELS = {
     "gpt-4.5-preview": {
         "description": "most powerful",
-        "max_tokens": 128000,
+        "max_tokens": 16384,
         "price_per_1k_input": 0.01,
         "price_per_1k_output": 0.03
     },
     "gpt-4o": {
         "description": "powerful",
-        "max_tokens": 128000,
+        "max_tokens": 16384,
         "price_per_1k_input": 0.005,
         "price_per_1k_output": 0.015
     },
     "gpt-4o-mini": {
         "description": "balanced",
-        "max_tokens": 128000,
+        "max_tokens": 16384,
         "price_per_1k_input": 0.0015,
         "price_per_1k_output": 0.006
     },
     "o1": {
         "description": "powerful reasoning",
-        "max_tokens": 128000,
+        "max_tokens": 16384,
         "price_per_1k_input": 0.015,
         "price_per_1k_output": 0.075
     },
     "o3": {
         "description": "powerful reasoning",
-        "max_tokens": 128000,
+        "max_tokens": 16384,
         "price_per_1k_input": 0.015,
         "price_per_1k_output": 0.075
     },
     "o4-mini": {
         "description": "fast reasoning",
-        "max_tokens": 128000,
+        "max_tokens": 16384,
         "price_per_1k_input": 0.005,
         "price_per_1k_output": 0.015
     }

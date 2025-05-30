@@ -109,9 +109,9 @@ def calculate_tokens_per_prompt(provider: str, model: str) -> Dict[str, int]:
             return {"max_context": 50000, "max_per_prompt": 15000}
     elif provider == "openai":
         if "4o" in model or "o1" in model or "o3" in model or "o4" in model:
-            return {"max_context": 100000, "max_per_prompt": 30000}
+            return {"max_context": 16000, "max_per_prompt": 8000}
         else:
-            return {"max_context": 16000, "max_per_prompt": 4000}
+            return {"max_context": 8000, "max_per_prompt": 4000}
     elif provider == "google":
         return {"max_context": 32000, "max_per_prompt": 8000}
     
