@@ -3518,6 +3518,87 @@ def choose_operation_mode():
         print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} Invalid choice. Defaulting to finetuning mode.")
         return "finetuning"
 
+def copy_mega_result_to_directory(run_id: str) -> str:
+    """Copy mega-result files to a dedicated directory.
+    
+    Args:
+        run_id: The run ID of the mega-result
+        
+    Returns:
+        Path to the created directory
+    """
+    # Create database connection
+    db = WorkflowDB()
+    
+    # Get mega-result information
+    run_info = db.get_run(run_id)
+    if not run_info:
+        print(f"{Fore.RED}[ERROR]{Style.RESET_ALL} Mega-result with run ID {run_id} not found")
+        db.close()
+        return None
+        
+    # Create mega-result directory
+    mega_dir = f"./tobe/MEGA/{run_id}"
+    os.makedirs(mega_dir, exist_ok=True)
+    
+    # Get output files from database
+    files = db.get_output_files(run_id)
+    
+    # Copy files to mega directory
+    print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Copying mega-result files to {mega_dir}")
+    file_count = 0
+    
+    for file_info in files:
+        file_path = file_info.get("file_path")
+        file_type = file_info.get("file_type")
+        
+        if file_path and os.path.exists(file_path):
+            # Determine target name based on file type
+            if file_type == "revised_paper":
+                target_name = "revised_paper.docx"
+            elif file_type == "revision_summary":
+                target_name = "revision_summary.docx"
+            elif file_type == "changes_document":
+                target_name = "changes_document.docx"
+            elif file_type == "editor_letter":
+                target_name = "editor_letter.docx"
+            elif file_type == "assessment":
+                target_name = "assessment.docx"
+            elif file_type == "bibliography":
+                target_name = "bibliography.bib"
+            elif file_type == "log":
+                target_name = "log.txt"
+            elif file_type == "cost_report":
+                target_name = "cost_report.txt"
+            else:
+                # Use original filename
+                target_name = os.path.basename(file_path)
+                
+            # Copy the file
+            import shutil
+            target_path = os.path.join(mega_dir, target_name)
+            shutil.copy2(file_path, target_path)
+            file_count += 1
+            print(f"  - Copied {file_type} to {target_path}")
+    
+    # Create README file with information about the mega-result
+    with open(os.path.join(mega_dir, "README.txt"), "w") as f:
+        f.write(f"MEGA-RESULT {run_id}\n")
+        f.write("=" * 70 + "\n\n")
+        f.write(f"Provider: {run_info.get('provider', 'Unknown')}\n")
+        f.write(f"Model: {run_info.get('model', 'Unknown')}\n")
+        f.write(f"Operation mode: {run_info.get('operation_mode', 'Unknown')}\n")
+        f.write(f"Created: {run_info.get('timestamp', 'Unknown')}\n")
+        f.write("\n")
+        f.write("This directory contains the merged results from multiple provider runs.\n")
+        f.write("Files include the revised paper, revision summary, and other outputs.\n")
+    
+    # Close database connection
+    db.close()
+    
+    print(f"{Fore.GREEN}[SUCCESS]{Style.RESET_ALL} Copied {file_count} files to {mega_dir}")
+    return mega_dir
+
 def main():
     """Main entry point for the paper revision tool."""
     # Load environment variables
@@ -3597,7 +3678,16 @@ File Preprocessing:
                         help="API integration to use (scopus, wos, both, or none to disable)")
     parser.add_argument("--no-api", action="store_true", help="Disable all API integrations")
     parser.add_argument("--key", help="API key for the specified API (uses value from .env if not provided)")
+    parser.add_argument("--view-mega", metavar="RUN_ID", help="View mega-result with the specified run ID")
     args = parser.parse_args()
+    
+    # Check if we're viewing a mega-result
+    if args.view_mega:
+        mega_dir = copy_mega_result_to_directory(args.view_mega)
+        if mega_dir:
+            print(f"\n{Fore.GREEN}[SUCCESS]{Style.RESET_ALL} Mega-result files available at: {mega_dir}")
+            print(f"You can now open the files in this directory.")
+        return
     
     # Handle preprocessing if requested
     if args.preprocess:
