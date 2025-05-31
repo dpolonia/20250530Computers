@@ -37,6 +37,20 @@ class PDFProcessor:
         for page in self.doc:
             text += page.get_text()
         self.text = text
+        
+    def extract_text(self, output_path: str = None) -> str:
+        """Extract text from the PDF document.
+        
+        Args:
+            output_path: Optional path to save the extracted text to a file
+            
+        Returns:
+            Extracted text as a string
+        """
+        if output_path:
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(self.text)
+        return self.text
     
     def extract_sections(self) -> Dict[str, str]:
         """Extract sections from the PDF document.
@@ -179,6 +193,35 @@ class PDFProcessor:
         
         doc.save(output_path)
         return output_path
+    
+    def get_page_count(self) -> int:
+        """Get the number of pages in the PDF document.
+        
+        Returns:
+            Number of pages in the document
+        """
+        if self.doc:
+            return len(self.doc)
+        return 0
+    
+    def save_first_page_as_image(self, output_path: str, dpi: int = 150):
+        """Save the first page of the PDF as an image.
+        
+        Args:
+            output_path: Path to save the image
+            dpi: Resolution in dots per inch
+        """
+        if not self.doc or len(self.doc) == 0:
+            return
+            
+        # Get the first page
+        page = self.doc[0]
+        
+        # Render the page to a pixmap
+        pixmap = page.get_pixmap(dpi=dpi)
+        
+        # Save the pixmap as a PNG
+        pixmap.save(output_path)
     
     def close(self):
         """Close the PDF document."""

@@ -36,6 +36,21 @@ class DocumentProcessor:
             String containing all text in the document
         """
         return "\n".join([para.text for para in self.doc.paragraphs])
+        
+    def extract_text(self, output_path: str = None) -> str:
+        """Extract text from the document.
+        
+        Args:
+            output_path: Optional path to save the extracted text to a file
+            
+        Returns:
+            Extracted text as a string
+        """
+        text = self.get_full_text()
+        if output_path:
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(text)
+        return text
     
     def extract_sections(self) -> Dict[str, str]:
         """Extract sections from the document based on headings.
@@ -199,12 +214,13 @@ class DocumentProcessor:
         doc.save(output_path)
         return output_path
     
-    def create_editor_letter(self, reviewer_responses: List[Dict], output_path: str) -> str:
+    def create_editor_letter(self, reviewer_responses: List[Dict], output_path: str, process_summary: Dict = None) -> str:
         """Create a letter to the editor with responses to reviewer comments.
         
         Args:
             reviewer_responses: List of dictionaries with response details
             output_path: Path where the document should be saved
+            process_summary: Optional dictionary containing review process summary
             
         Returns:
             Path to the created document
@@ -253,6 +269,39 @@ class DocumentProcessor:
             "We hope that the revised manuscript now meets the standards for publication in Computers. " +
             "We look forward to your feedback and are available to address any additional questions or concerns."
         )
+        
+        # Add revision process disclaimer if provided
+        if process_summary:
+            doc.add_heading('REVISION PROCESS DISCLOSURE', 1)
+            
+            # Add detailed information about the multi-persona revision process
+            doc.add_paragraph(process_summary.get("process_description", ""))
+            
+            # Add statistics
+            stats_paragraph = doc.add_paragraph()
+            stats_paragraph.add_run("REVISION STATISTICS:\n").bold = True
+            stats_paragraph.add_run(f"• Reviewers: {process_summary.get('reviewer_count', 0)}\n")
+            stats_paragraph.add_run(f"• Reviewer personas: {process_summary.get('total_reviewer_personas', 0)}\n")
+            stats_paragraph.add_run(f"• Editors: {process_summary.get('editor_count', 0)}\n")
+            stats_paragraph.add_run(f"• Fine-tuned personas used: {process_summary.get('fine_personas_used', 0)}\n")
+            stats_paragraph.add_run(f"• Total reviews generated: {process_summary.get('review_count', 0)}\n")
+            stats_paragraph.add_run(f"• Final decision: {process_summary.get('decision', 'Not specified')}")
+            
+            # Add acknowledgment
+            doc.add_paragraph(
+                "We acknowledge that this revision process utilized advanced AI-assisted multi-persona review " +
+                "technology to ensure a comprehensive, diverse, and thorough evaluation of our manuscript. " +
+                "The multiple persona approach ensures that our paper was examined from various academic " +
+                "perspectives before making our final revisions."
+            )
+            
+            # Add attribution for FinePersonas if used
+            if process_summary.get('fine_personas_used', 0) > 0:
+                doc.add_paragraph(
+                    "This revision process utilized the FinePersonas dataset " +
+                    "(https://huggingface.co/datasets/argilla/FinePersonas-v0.1) " +
+                    "to enhance the diversity and expertise of the reviewer perspectives."
+                )
         
         doc.add_paragraph("Sincerely,")
         doc.add_paragraph("The Authors")
