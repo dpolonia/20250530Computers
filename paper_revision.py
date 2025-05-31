@@ -519,6 +519,8 @@ class PaperRevisionTool:
         """
         self.provider = provider
         self.model_name = model_name
+        # Add self.model as an alias to model_name for compatibility with LLMClient
+        self.model = self.model_name.split(" (")[0] if " (" in self.model_name else self.model_name
         self.debug = debug
         self.llm_client = None
         self.timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
