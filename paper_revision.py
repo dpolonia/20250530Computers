@@ -562,6 +562,7 @@ class PaperRevisionTool:
         self.workflow_db.create_run(self.run_id, provider, model_name, operation_mode, settings)
         
         # Calculate token limits for prompts
+        high_quality = operation_mode.lower() == "final"  # High quality for final mode
         self.token_limits = calculate_tokens_per_prompt(
             provider, 
             model_name, 
