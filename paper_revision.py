@@ -3509,6 +3509,10 @@ def main():
     # Load environment variables
     load_dotenv()
     
+    # Load API keys from environment if available
+    scopus_api_key_env = os.environ.get("SCOPUS_API_KEY")
+    wos_client_id_env = os.environ.get("WOS_CLIENT_ID")
+    
     # Check if we need to update model information
     db = WorkflowDB()
     update_due = db.is_model_update_due()
@@ -3577,7 +3581,7 @@ File Preprocessing:
                         help="Maximum number of papers to process for style analysis (overrides mode setting)")
     parser.add_argument("--api", choices=["scopus", "wos", "scopus,wos", "wos,scopus"],
                         help="API integration to use (scopus, wos, or both)")
-    parser.add_argument("--key", help="API key for the specified API")
+    parser.add_argument("--key", help="API key for the specified API (uses value from .env if not provided)")
     args = parser.parse_args()
     
     # Handle preprocessing if requested
@@ -3759,6 +3763,13 @@ File Preprocessing:
     
     print(f"{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}\n")
     
+    # Use API key from environment if not provided via command line
+    api_key = args.key
+    if not api_key and args.api:
+        if "scopus" in args.api and scopus_api_key_env:
+            api_key = scopus_api_key_env
+            print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Using Scopus API key from environment")
+    
     # Create and run the paper revision tool with parameters
     revision_tool = PaperRevisionTool(
         provider=provider,
@@ -3773,7 +3784,7 @@ File Preprocessing:
         competitor_evaluation=args.competitor_eval,  # Enable/disable competitor evaluation
         competing_evaluator=args.evaluator,  # Specific competing model to use for evaluation
         api=args.api,  # API integration to use (scopus, wos, or both)
-        api_key=args.key  # API key for the specified API
+        api_key=api_key  # API key for the specified API
     )
     
     # Print starting message
