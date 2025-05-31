@@ -2896,7 +2896,9 @@ class PaperRevisionTool:
         self._log_info("Validating and updating references")
         
         # Load references
-        ref_validator = ReferenceValidator(self.bib_path)
+        # Only use Scopus if API integration is enabled
+        use_scopus = self.api is not None and "scopus" in self.api
+        ref_validator = ReferenceValidator(self.bib_path, use_scopus=use_scopus, scopus_api_key=self.api_key)
         
         # Validate existing references
         valid_refs, invalid_refs = ref_validator.validate_references()
