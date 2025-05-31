@@ -3591,8 +3591,9 @@ File Preprocessing:
                         help="Disable cost optimization (overrides mode setting)")
     parser.add_argument("--max-papers", type=int,
                         help="Maximum number of papers to process for style analysis (overrides mode setting)")
-    parser.add_argument("--api", choices=["scopus", "wos", "scopus,wos", "wos,scopus"],
-                        help="API integration to use (scopus, wos, or both)")
+    parser.add_argument("--api", choices=["scopus", "wos", "scopus,wos", "wos,scopus", "none"],
+                        help="API integration to use (scopus, wos, both, or none to disable)")
+    parser.add_argument("--no-api", action="store_true", help="Disable all API integrations")
     parser.add_argument("--key", help="API key for the specified API (uses value from .env if not provided)")
     args = parser.parse_args()
     
@@ -3775,10 +3776,18 @@ File Preprocessing:
     
     print(f"{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}\n")
     
+    # Handle API configuration
+    api = args.api
+    
+    # Disable API if explicitly requested
+    if args.no_api or api == "none":
+        api = None
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} API integrations disabled")
+    
     # Use API key from environment if not provided via command line
     api_key = args.key
-    if not api_key and args.api:
-        if "scopus" in args.api and scopus_api_key_env:
+    if not api_key and api:
+        if "scopus" in api and scopus_api_key_env:
             api_key = scopus_api_key_env
             print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Using Scopus API key from environment")
     
@@ -3795,7 +3804,7 @@ File Preprocessing:
         verify=args.verify,  # Pass the verify flag from command line arguments
         competitor_evaluation=args.competitor_eval,  # Enable/disable competitor evaluation
         competing_evaluator=args.evaluator,  # Specific competing model to use for evaluation
-        api=args.api,  # API integration to use (scopus, wos, or both)
+        api=api,  # API integration to use (scopus, wos, or both)
         api_key=api_key  # API key for the specified API
     )
     
