@@ -494,7 +494,9 @@ class PaperRevisionTool:
                  competitor_evaluation: bool = True,
                  competing_evaluator: str = None,
                  db_path: str = "./.cache/workflow.db",
-                 output_dir: str = None):
+                 output_dir: str = None,
+                 api: str = None,
+                 api_key: str = None):
         """Initialize the paper revision tool.
         
         Args:
@@ -511,6 +513,9 @@ class PaperRevisionTool:
             competitor_evaluation: Whether to use competing models for evaluation
             competing_evaluator: Specific competitor to use for evaluation (format: "provider/model")
             db_path: Path to the SQLite database file for workflow tracking
+            output_dir: Output directory for generated files
+            api: API integration to use (scopus, wos, or both)
+            api_key: API key for the specified API
         """
         self.provider = provider
         self.model_name = model_name
@@ -525,6 +530,10 @@ class PaperRevisionTool:
         self.verify = verify
         self.competitor_evaluation = competitor_evaluation
         self.competing_evaluator = competing_evaluator
+        
+        # API integration
+        self.api = api
+        self.api_key = api_key
         
         # Initialize database
         self.db_path = db_path
@@ -546,7 +555,9 @@ class PaperRevisionTool:
             "verify": verify,
             "competitor_evaluation": competitor_evaluation,
             "competing_evaluator": competing_evaluator,
-            "output_dir": output_dir
+            "output_dir": output_dir,
+            "api": api,
+            "api_key": "********" if api_key else None  # Don't store actual key in DB
         }
         self.workflow_db.create_run(self.run_id, provider, model_name, operation_mode, settings)
         
