@@ -1,6 +1,6 @@
 # Paper Revision Tool
 
-This project automates parts of the paper revision workflow for the *Computers* journal.
+This project automates parts of the paper revision workflow for the *Computers* journal with academic API integration.
 
 ## Usage
 
@@ -20,6 +20,21 @@ python paper_revision.py --mode [training|finetuning|final]
 
 ```bash
 python paper_revision.py --provider [anthropic|openai|google] --model [model_name]
+```
+
+### API Integration
+
+The tool integrates with academic citation databases:
+
+```bash
+# Use Scopus API integration
+python paper_revision.py --api scopus --key YOUR_API_KEY
+
+# Enable Web of Science integration (will prompt for credentials if not provided)
+python paper_revision.py --api wos 
+
+# Use both APIs together
+python paper_revision.py --api scopus,wos --key YOUR_SCOPUS_KEY
 ```
 
 ### Output Files

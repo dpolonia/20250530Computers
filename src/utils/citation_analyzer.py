@@ -140,7 +140,10 @@ class CitationAnalyzer:
         return results
     
     def _get_scopus_citation_data(self, doi: str) -> Dict[str, Any]:
-        """Get citation data from Scopus.
+        """Get citation data from Scopus using standard API methods.
+        
+        This implementation uses the standard Scopus Search API instead of the
+        Citation Overview API which requires special access permissions.
         
         Args:
             doi: DOI of the paper
@@ -149,14 +152,52 @@ class CitationAnalyzer:
             Dictionary with Scopus citation data
         """
         try:
-            # Get citation overview
-            citation_report = self.scopus_client.generate_citation_report(doi)
-            
-            if citation_report and "citations" in citation_report:
-                return citation_report["citations"]
-            else:
-                logger.warning(f"No Scopus citation data found for DOI: {doi}")
+            # Get basic paper information first
+            paper = self.scopus_client.search_by_doi(doi)
+            if not paper:
+                logger.warning(f"Paper not found in Scopus: {doi}")
                 return {}
+                
+            # Get total citation count from paper metadata
+            total_citations = int(paper.get("citedby-count", 0))
+            
+            # Get papers that cite this DOI to extract more information
+            citing_papers = self.scopus_client.get_citations(doi, count=50)
+            
+            # Analyze citing papers to build citation data
+            journals = {}
+            countries = {}  # Note: We can't reliably get this without Citation Overview API
+            years = {}
+            
+            for cite in citing_papers:
+                # Extract journal
+                journal = cite.get("prism:publicationName", "")
+                if journal:
+                    journals[journal] = journals.get(journal, 0) + 1
+                
+                # Extract year for citation history
+                if "prism:coverDate" in cite:
+                    try:
+                        year = cite["prism:coverDate"].split("-")[0]
+                        years[year] = years.get(year, 0) + 1
+                    except:
+                        pass
+            
+            # Format citation data
+            citation_data = {
+                "total_citations": total_citations,
+                "citation_history": [
+                    {"year": year, "count": count}
+                    for year, count in sorted(years.items())
+                ],
+                "top_citing_journals": [
+                    {"journal": journal, "count": count}
+                    for journal, count in sorted(journals.items(), key=lambda x: x[1], reverse=True)
+                ],
+                "top_citing_countries": []  # Empty as we can't get this data reliably
+            }
+            
+            return citation_data
         except Exception as e:
             logger.error(f"Error getting Scopus citation data: {e}")
             return {}

@@ -849,16 +849,19 @@ class ScopusClient:
     def get_citation_overview(self, doi: str) -> Dict[str, Any]:
         """Get citation overview for a paper by DOI.
         
+        Note: This implementation uses the standard Scopus Search API instead of the 
+        Citation Overview API (which requires special access) to get citation data.
+        
         Args:
             doi: DOI of the paper
             
         Returns:
             Dictionary with citation metrics
         """
-        # First get the paper details to obtain the Scopus ID
+        # Get the paper details first
         paper = self.search_by_doi(doi)
-        if not paper or "dc:identifier" not in paper:
-            logger.warning(f"Could not find Scopus ID for DOI: {doi}")
+        if not paper:
+            logger.warning(f"Could not find paper with DOI: {doi}")
             return {
                 "total_citations": 0,
                 "recent_citations": 0,
@@ -867,57 +870,65 @@ class ScopusClient:
                 "top_citing_journals": []
             }
         
-        # Extract Scopus ID
-        scopus_id = paper.get("dc:identifier", "").replace("SCOPUS_ID:", "")
+        # Get the total citation count from the paper metadata
+        total_citations = int(paper.get("citedby-count", 0))
         
-        # Get citation overview
-        params = {
-            "scopus_id": scopus_id,
-            "date": "2020-2025"  # Last 5 years
-        }
-        
-        response = self._make_request(f"/content/abstract/citations/{scopus_id}", params)
+        # Get papers that cite this DOI
+        citing_papers = self.get_citations(doi, count=100)
         
         # Extract citation information
         citation_info = {
-            "total_citations": int(paper.get("citedby-count", 0)),
+            "total_citations": total_citations,
             "recent_citations": 0,
             "citation_history": [],
             "top_citing_countries": [],
             "top_citing_journals": []
         }
         
-        if "abstract-citations-response" in response:
-            data = response["abstract-citations-response"]
+        # Process citing papers to extract additional information
+        journals = {}
+        countries = {}
+        years = {}
+        
+        for cite in citing_papers:
+            # Extract journal
+            journal = cite.get("prism:publicationName", "")
+            if journal:
+                journals[journal] = journals.get(journal, 0) + 1
             
-            # Extract citation history
-            if "citeColumnTotalXML" in data:
-                citation_info["citation_history"] = [
-                    {"year": item.get("year", ""), "count": int(item.get("columnTotal", 0))}
-                    for item in data["citeColumnTotalXML"]
-                ]
-                
-                # Calculate recent citations (last 2 years)
-                current_year = datetime.datetime.now().year
-                citation_info["recent_citations"] = sum(
-                    int(item.get("columnTotal", 0))
-                    for item in data["citeColumnTotalXML"]
-                    if item.get("year", 0) and int(item.get("year", 0)) >= current_year - 2
-                )
+            # Extract year for citation history
+            year = None
+            if "prism:coverDate" in cite:
+                try:
+                    year = cite["prism:coverDate"].split("-")[0]
+                    years[year] = years.get(year, 0) + 1
+                    
+                    # Check if it's a recent citation (last 2 years)
+                    current_year = datetime.datetime.now().year
+                    if int(year) >= current_year - 2:
+                        citation_info["recent_citations"] += 1
+                except:
+                    pass
             
-            # Extract top citing countries
-            if "citeCountryXML" in data:
-                citation_info["top_citing_countries"] = [
-                    {"country": item.get("name", ""), "count": int(item.get("citationCount", 0))}
-                    for item in data["citeCountryXML"]
-                ]
-            
-            # Extract top citing journals
-            if "citeSourceXML" in data:
-                citation_info["top_citing_journals"] = [
-                    {"journal": item.get("sourcetitle", ""), "count": int(item.get("citationCount", 0))}
-                    for item in data["citeSourceXML"]
-                ]
+            # Note: Countries would normally come from the Citation Overview API
+            # Since we don't have access, we could approximate from author affiliations
+            # But this is simplified here
+        
+        # Format the citation history
+        citation_info["citation_history"] = [
+            {"year": year, "count": count}
+            for year, count in sorted(years.items())
+        ]
+        
+        # Format the top citing journals
+        citation_info["top_citing_journals"] = [
+            {"journal": journal, "count": count}
+            for journal, count in sorted(journals.items(), key=lambda x: x[1], reverse=True)
+        ]
+        
+        # Since we don't have country data without the Citation Overview API,
+        # we'll return an empty list
+        citation_info["top_citing_countries"] = []
         
         return citation_info
 
