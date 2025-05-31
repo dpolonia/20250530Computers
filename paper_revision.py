@@ -1319,7 +1319,7 @@ class PaperRevisionTool:
                 if hasattr(self, 'interactive') and self.interactive:
                     self._interactive_wait(
                         f"About to perform cross-model evaluation using {competing_provider.capitalize()} {competing_model}. " +
-                        f"This will evaluate the quality of outputs from {self.provider.capitalize()} {self.model}.",
+                        f"This will evaluate the quality of outputs from {self.provider.capitalize()} {self.model_name}.",
                         self.log_path
                     )
                 
@@ -1395,7 +1395,7 @@ class PaperRevisionTool:
                             evaluation["evaluation_cost"] = evaluation_cost
                             
                             # Log the cross-model evaluation
-                            self.logger.info(f"Cross-model evaluation: {self.provider}/{self.model} evaluated by {competing_provider}/{competing_model}")
+                            self.logger.info(f"Cross-model evaluation: {self.provider}/{self.model_name} evaluated by {competing_provider}/{competing_model}")
                             self.logger.info(f"Evaluation score: {evaluation.get('quality_score', 'N/A')}/5")
                             
                             # Interactive wait point after cross-model evaluation
