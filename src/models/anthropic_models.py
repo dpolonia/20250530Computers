@@ -71,9 +71,9 @@ CLAUDE_MODELS = {
     },
     "claude-3-sonnet-20240229": {
         "description": "powerful",
-        "max_tokens": 16384,  # Maximum API limit
-        "safe_tokens": 14745,  # 90% of max for safety
-        "max_safe_tokens": 16220,  # 99% of max for when needed
+        "max_tokens": 4096,  # Maximum API limit
+        "safe_tokens": 3686,  # 90% of max for safety
+        "max_safe_tokens": 4055,  # 99% of max for when needed
         "price_per_1k_input": 0.003,
         "price_per_1k_output": 0.015
     },
