@@ -631,6 +631,9 @@ class PaperRevisionTool:
         os.makedirs(self.mode_dir, exist_ok=True)
         os.makedirs(self.model_dir, exist_ok=True)
         
+        # Set up logger first
+        self._setup_logger()
+        
         # Create final directory if in final mode
         if operation_mode.lower() == "final" and self.final_dir:
             os.makedirs(self.final_dir, exist_ok=True)
@@ -640,12 +643,15 @@ class PaperRevisionTool:
             if self.backup_dir:
                 os.makedirs(self.backup_dir, exist_ok=True)
                 self._log_debug(f"Created backup directory: {self.backup_dir}")
+            
+            # Add interactive wait point after creating final directory
+            self._interactive_wait(
+                "Final mode has been initialized. A special directory has been created to store all outputs.",
+                self.final_dir
+            )
         else:
             os.makedirs(self.timestamp_dir, exist_ok=True)
         # Trash directory will be created only when needed
-        
-        # Set up logger
-        self._setup_logger()
         
         # Statistics
         self.start_time = time.time()
@@ -659,6 +665,23 @@ class PaperRevisionTool:
             "token_budget_remaining": self.token_budget,
             "cost_budget_remaining": self.cost_budget
         }
+        
+        # Interactive mode flag - by default enabled for final mode
+        self.interactive = operation_mode.lower() == "final"
+        
+        # If in final mode, ask if the user wants interactive stop points
+        if operation_mode.lower() == "final":
+            try:
+                user_choice = input(f"\n{Fore.CYAN}Would you like to enable interactive stop points? (Y/n): {Style.RESET_ALL}").lower()
+                self.interactive = user_choice != "n"
+                if self.interactive:
+                    self._log_info("Interactive stop points enabled - press Enter to continue at each step")
+                else:
+                    self._log_info("Running in non-interactive mode without stop points")
+            except (EOFError, KeyboardInterrupt):
+                # In case of non-interactive environment
+                self.interactive = False
+                self._log_info("Non-interactive environment detected, disabling stop points")
         
         # Skip API validation flag
         self.skip_api_validation = skip_api_validation
@@ -857,6 +880,30 @@ class PaperRevisionTool:
         if self.debug:
             print(f"{Fore.MAGENTA}[DEBUG]{Style.RESET_ALL} {message}")
         self.logger.debug(message)
+    
+    def _interactive_wait(self, message: str, path: str = None):
+        """Wait for user input in interactive mode.
+        
+        Args:
+            message: Message to display
+            path: Optional path to show to the user
+        """
+        if not hasattr(self, 'interactive') or not self.interactive:
+            return
+            
+        print(f"\n{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}[INTERACTIVE STOP POINT]{Style.RESET_ALL}")
+        print(f"{message}")
+        if path:
+            print(f"\nYou can find the output at: {Fore.YELLOW}{path}{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}{'=' * 70}{Style.RESET_ALL}")
+        
+        try:
+            input(f"{Fore.CYAN}Press Enter to continue...{Style.RESET_ALL}")
+        except (EOFError, KeyboardInterrupt):
+            # In case of non-interactive environment
+            print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} Non-interactive environment detected, continuing automatically")
+            pass
         
     def _track_preprocessed_file(self, original_path: str, processed_path: str, file_type: str, 
                                size: int, token_estimate: int, page_count: int = 0):
@@ -1268,6 +1315,14 @@ class PaperRevisionTool:
             competing_provider, competing_model = self._get_competing_model()
             
             if competing_provider and competing_model:
+                # Interactive wait point before cross-model evaluation
+                if hasattr(self, 'interactive') and self.interactive:
+                    self._interactive_wait(
+                        f"About to perform cross-model evaluation using {competing_provider.capitalize()} {competing_model}. " +
+                        f"This will evaluate the quality of outputs from {self.provider.capitalize()} {self.model}.",
+                        self.log_path
+                    )
+                
                 # Track the cost of this evaluation in the statistics
                 self.process_statistics["evaluation_requests"] = self.process_statistics.get("evaluation_requests", 0) + 1
                 
@@ -1342,6 +1397,15 @@ class PaperRevisionTool:
                             # Log the cross-model evaluation
                             self.logger.info(f"Cross-model evaluation: {self.provider}/{self.model} evaluated by {competing_provider}/{competing_model}")
                             self.logger.info(f"Evaluation score: {evaluation.get('quality_score', 'N/A')}/5")
+                            
+                            # Interactive wait point after cross-model evaluation
+                            if hasattr(self, 'interactive') and self.interactive:
+                                score = evaluation.get('quality_score', 'N/A')
+                                self._interactive_wait(
+                                    f"Cross-model evaluation completed with score: {score}/5. " +
+                                    f"The evaluation was performed by {competing_provider.capitalize()} {competing_model}.",
+                                    self.log_path
+                                )
                             
                             return evaluation
                     except Exception as parse_error:
@@ -1646,6 +1710,13 @@ class PaperRevisionTool:
         try:
             self._log_info("Starting paper revision process")
             
+            # Interactive wait point at the beginning of the process
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Paper revision process is starting. This will analyze the paper and make improvements based on reviewer comments.",
+                    self.log_path
+                )
+            
             # Initialize process monitoring
             self.process_monitoring = {
                 "start_time": time.time(),
@@ -1668,6 +1739,13 @@ class PaperRevisionTool:
             self.process_monitoring["current_step"] = 1
             step_start_time = time.time()
             print(f"\n{Fore.BLUE}[STEP 1/10] Analyzing original paper...{Style.RESET_ALL}")
+            
+            # Interactive wait point before Step 1
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "About to begin Step 1: Analyzing the original paper. This will extract key information about structure, content, and references.",
+                    self.log_path
+                )
             
             # Start step in database
             step_id = self.workflow_db.start_step(self.run_id, 1, "Analyze original paper")
@@ -1703,17 +1781,45 @@ class PaperRevisionTool:
             else:
                 print(f"{Fore.GREEN}✓ Step completed in {step_duration:.1f}s{Style.RESET_ALL}")
             
+            # Interactive wait point after Step 1
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 1 completed: Original paper analysis is complete. The system has extracted key information about structure, content, and references.",
+                    output_file
+                )
+            
             # Step 2: Analyze reviewer comments
             self._log_info("Step 2: Analyzing reviewer comments")
             reviewer_comments = self._analyze_reviewer_comments()
+            
+            # Interactive wait point after Step 2
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 2 completed: Reviewer comments have been analyzed. The system has identified key concerns and requirements from reviewers.",
+                    self.log_path
+                )
             
             # Step 3: Process editor letter and PRISMA requirements
             self._log_info("Step 3: Processing editor letter and PRISMA requirements")
             editor_requirements = self._process_editor_requirements()
             
+            # Interactive wait point after Step 3
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 3 completed: Editor letter and PRISMA requirements have been processed. The system has identified key requirements from the editor.",
+                    self.log_path
+                )
+            
             # Step 4: Analyze journal style and requirements
             self._log_info("Step 4: Analyzing journal style and requirements")
             journal_style = self._analyze_journal_style()
+            
+            # Interactive wait point after Step 4
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 4 completed: Journal style and requirements have been analyzed. The system understands the formatting and style guidelines.",
+                    self.log_path
+                )
             
             # Step 5: Generate revision summary
             self._log_info("Step 5: Generating revision summary")
@@ -1723,25 +1829,60 @@ class PaperRevisionTool:
             revision_summary_path = self._create_revision_summary(issues, solutions, self.revision_summary_path)
             self._log_success(f"Created revision summary at {revision_summary_path}")
             
+            # Interactive wait point after Step 5
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 5 completed: Revision summary has been generated. This document outlines the issues identified and solutions proposed.",
+                    revision_summary_path
+                )
+            
             # Step 6: Generate changes document
             self._log_info("Step 6: Generating changes document")
             changes = self._generate_changes(paper_analysis, issues, solutions)
             changes_document_path = self._create_changes_document(changes, self.changes_document_path)
             self._log_success(f"Created changes document at {changes_document_path}")
             
+            # Interactive wait point after Step 6
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 6 completed: Changes document has been generated. This details all modifications that will be made to the paper.",
+                    changes_document_path
+                )
+            
             # Step 7: Validate and update references
             self._log_info("Step 7: Validating and updating references")
             new_references = self._validate_and_update_references(paper_analysis, reviewer_comments, self.new_bib_path)
+            
+            # Interactive wait point after Step 7
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 7 completed: References have been validated and updated. The bibliography has been improved based on reviewer feedback.",
+                    self.new_bib_path
+                )
             
             # Step 8: Create revised paper with track changes
             self._log_info("Step 8: Creating revised paper with track changes")
             revised_paper_path = self._create_revised_paper(changes, self.revised_paper_path)
             self._log_success(f"Created revised paper at {revised_paper_path}")
             
+            # Interactive wait point after Step 8
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 8 completed: Revised paper with track changes has been created. This is the main output of the revision process.",
+                    revised_paper_path
+                )
+            
             # Step 9: Create assessment document
             self._log_info("Step 9: Creating assessment document")
             assessment_path = self._create_assessment(changes, paper_analysis, self.assessment_path)
             self._log_success(f"Created assessment document at {assessment_path}")
+            
+            # Interactive wait point after Step 9
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 9 completed: Assessment document has been created. This evaluates how well the revisions address the reviewer comments.",
+                    assessment_path
+                )
             
             # Step 10: Create letter to editor with process summary
             self._log_info("Step 10: Creating letter to editor with process disclosure")
@@ -1753,6 +1894,13 @@ class PaperRevisionTool:
             
             editor_letter_path = self._create_editor_letter(reviewer_comments, changes, self.editor_response_path)
             self._log_success(f"Created letter to editor at {editor_letter_path}")
+            
+            # Interactive wait point after Step 10
+            if hasattr(self, 'interactive') and self.interactive:
+                self._interactive_wait(
+                    "Step 10 completed: Letter to editor has been created. This explains the revision process and how reviewer comments were addressed.",
+                    editor_letter_path
+                )
             
             # Create summary report with essential information
             report_text, report_path = self._create_revision_report(
@@ -1912,6 +2060,14 @@ class PaperRevisionTool:
             # Log final completion
             self.logger.info("Paper revision process completed successfully")
             self.logger.info(f"Total time elapsed: {time.time() - self.start_time:.2f} seconds")
+            
+            # Final interactive wait point at the end of the process
+            if hasattr(self, 'interactive') and self.interactive:
+                output_dir = self.final_dir if self.operation_mode.lower() == "final" and self.final_dir else self.timestamp_dir
+                self._interactive_wait(
+                    "Paper revision process completed successfully! All outputs have been generated and are ready for review.",
+                    output_dir
+                )
             
             return {
                 "revision_summary": self.revision_summary_path,
@@ -3537,9 +3693,14 @@ def copy_mega_result_to_directory(run_id: str) -> str:
         db.close()
         return None
         
-    # Create mega-result directory
+    # Create mega-result directory and subdirectories
     mega_dir = f"./tobe/MEGA/{run_id}"
     os.makedirs(mega_dir, exist_ok=True)
+    
+    # Create subdirectories for organization
+    os.makedirs(os.path.join(mega_dir, "papers"), exist_ok=True)
+    os.makedirs(os.path.join(mega_dir, "reports"), exist_ok=True)
+    os.makedirs(os.path.join(mega_dir, "metadata"), exist_ok=True)
     
     # Get output files from database
     files = db.get_output_files(run_id)
@@ -3553,35 +3714,102 @@ def copy_mega_result_to_directory(run_id: str) -> str:
         file_type = file_info.get("file_type")
         
         if file_path and os.path.exists(file_path):
-            # Determine target name based on file type
-            if file_type == "revised_paper":
+            # Extract the filename from the path
+            filename = os.path.basename(file_path)
+            
+            # Determine target name and directory based on file type or filename
+            if file_type == "revised_paper" or "revised_paper" in filename:
                 target_name = "revised_paper.docx"
-            elif file_type == "revision_summary":
+                target_subdir = "papers"
+            elif file_type == "revision_summary" or "revision_summary" in filename:
                 target_name = "revision_summary.docx"
-            elif file_type == "changes_document":
+                target_subdir = "reports"
+            elif file_type == "changes_document" or "changes_document" in filename:
                 target_name = "changes_document.docx"
-            elif file_type == "editor_letter":
+                target_subdir = "reports"
+            elif file_type == "editor_letter" or "editor_letter" in filename:
                 target_name = "editor_letter.docx"
-            elif file_type == "assessment":
+                target_subdir = "papers"
+            elif file_type == "assessment" or "assessment" in filename:
                 target_name = "assessment.docx"
-            elif file_type == "bibliography":
+                target_subdir = "reports"
+            elif file_type == "bibliography" or filename.endswith(".bib"):
                 target_name = "bibliography.bib"
-            elif file_type == "log":
+                target_subdir = "papers"
+            elif file_type == "log" or "log" in filename:
                 target_name = "log.txt"
-            elif file_type == "cost_report":
+                target_subdir = "metadata"
+            elif file_type == "cost_report" or "cost" in filename:
                 target_name = "cost_report.txt"
+                target_subdir = "metadata"
+            # Handle additional file types based on extension
+            elif filename.endswith(".docx"):
+                if "revised" in filename.lower() or "final" in filename.lower():
+                    target_name = "revised_paper.docx"
+                    target_subdir = "papers"
+                elif "summary" in filename.lower():
+                    target_name = "revision_summary.docx"
+                    target_subdir = "reports"
+                elif "change" in filename.lower():
+                    target_name = "changes_document.docx"
+                    target_subdir = "reports"
+                elif "editor" in filename.lower() or "letter" in filename.lower():
+                    target_name = "editor_letter.docx"
+                    target_subdir = "papers"
+                elif "assess" in filename.lower():
+                    target_name = "assessment.docx"
+                    target_subdir = "reports"
+                else:
+                    target_name = filename
+                    target_subdir = "reports"
             else:
                 # Use original filename
-                target_name = os.path.basename(file_path)
+                target_name = filename
+                if filename.endswith(".pdf") and (
+                    "paper" in filename.lower() or 
+                    "revised" in filename.lower() or 
+                    "manuscript" in filename.lower()
+                ):
+                    target_subdir = "papers"
+                elif filename.endswith(".txt") and "report" in filename.lower():
+                    target_subdir = "reports"
+                else:
+                    target_subdir = "metadata"
                 
             # Copy the file
             import shutil
-            target_path = os.path.join(mega_dir, target_name)
-            shutil.copy2(file_path, target_path)
-            file_count += 1
-            print(f"  - Copied {file_type} to {target_path}")
+            target_path = os.path.join(mega_dir, target_subdir, target_name)
+            
+            # Also copy to the root directory for convenience
+            root_path = os.path.join(mega_dir, target_name)
+            
+            # Skip if we've already copied this file (avoid duplicates)
+            if not os.path.exists(target_path) or not os.path.exists(root_path):
+                try:
+                    # Ensure subdirectory exists
+                    os.makedirs(os.path.dirname(target_path), exist_ok=True)
+                    
+                    # Copy to subdirectory
+                    shutil.copy2(file_path, target_path)
+                    
+                    # Copy to root
+                    shutil.copy2(file_path, root_path)
+                    
+                    file_count += 1
+                    print(f"  - Copied {file_type} to {target_path} and {root_path}")
+                except Exception as e:
+                    print(f"  - Error copying {file_type}: {str(e)}")
     
-    # Create README file with information about the mega-result
+    # Get run statistics
+    run_stats = db.get_stats(run_id)
+    
+    # Get additional information from the workflow database
+    file_types = set()
+    for file_info in files:
+        if file_info.get("file_type"):
+            file_types.add(file_info.get("file_type"))
+    
+    # Create README file with detailed information about the mega-result
     with open(os.path.join(mega_dir, "README.txt"), "w") as f:
         f.write(f"MEGA-RESULT {run_id}\n")
         f.write("=" * 70 + "\n\n")
@@ -3589,14 +3817,126 @@ def copy_mega_result_to_directory(run_id: str) -> str:
         f.write(f"Model: {run_info.get('model', 'Unknown')}\n")
         f.write(f"Operation mode: {run_info.get('operation_mode', 'Unknown')}\n")
         f.write(f"Created: {run_info.get('timestamp', 'Unknown')}\n")
-        f.write("\n")
+        
+        # Add statistics if available
+        if run_stats:
+            f.write("\nSTATISTICS:\n")
+            f.write("-" * 30 + "\n")
+            
+            # Safely get statistics with defensive checks
+            try:
+                if "total_tokens" in run_stats and run_stats["total_tokens"] is not None:
+                    f.write(f"Total tokens: {run_stats.get('total_tokens', 0):,}\n")
+            except Exception:
+                pass
+                
+            try:
+                if "total_cost" in run_stats and run_stats["total_cost"] is not None:
+                    f.write(f"Total cost: ${run_stats.get('total_cost', 0.0):.4f}\n")
+            except Exception:
+                pass
+                
+            try:
+                if "evaluation_tokens" in run_stats and run_stats["evaluation_tokens"] is not None:
+                    f.write(f"Evaluation tokens: {run_stats.get('evaluation_tokens', 0):,}\n")
+            except Exception:
+                pass
+                
+            try:
+                if "evaluation_cost" in run_stats and run_stats["evaluation_cost"] is not None:
+                    f.write(f"Evaluation cost: ${run_stats.get('evaluation_cost', 0.0):.4f}\n")
+            except Exception:
+                pass
+                
+            try:
+                if "step_count" in run_stats and run_stats["step_count"] is not None:
+                    f.write(f"Number of steps: {run_stats.get('step_count', 0)}\n")
+            except Exception:
+                pass
+                
+            try:
+                if "completed_steps" in run_stats and run_stats["completed_steps"] is not None:
+                    f.write(f"Completed steps: {run_stats.get('completed_steps', 0)}\n")
+            except Exception:
+                pass
+                
+            try:
+                if "total_duration" in run_stats and run_stats["total_duration"] is not None:
+                    total_duration = float(run_stats.get('total_duration', 0))
+                    hours, remainder = divmod(total_duration, 3600)
+                    minutes, seconds = divmod(remainder, 60)
+                    f.write(f"Total duration: {int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}\n")
+            except (TypeError, ValueError):
+                pass
+        
+        # Add file information
+        f.write("\nFILES INCLUDED:\n")
+        f.write("-" * 30 + "\n")
+        if "revised_paper" in file_types:
+            f.write("revised_paper.docx - The final revised version of the paper\n")
+        if "revision_summary" in file_types:
+            f.write("revision_summary.docx - A summary of all revisions made to the paper\n")
+        if "changes_document" in file_types:
+            f.write("changes_document.docx - Detailed list of changes made to the paper\n")
+        if "editor_letter" in file_types:
+            f.write("editor_letter.docx - Response letter to the editor\n")
+        if "assessment" in file_types:
+            f.write("assessment.docx - Assessment of the paper's quality\n")
+        if "bibliography" in file_types:
+            f.write("bibliography.bib - Updated bibliography file\n")
+        if "log" in file_types:
+            f.write("log.txt - Log of the revision process\n")
+        if "cost_report" in file_types:
+            f.write("cost_report.txt - Detailed cost report of the revision\n")
+        
+        f.write("\nDESCRIPTION:\n")
+        f.write("-" * 30 + "\n")
         f.write("This directory contains the merged results from multiple provider runs.\n")
-        f.write("Files include the revised paper, revision summary, and other outputs.\n")
+        f.write("The mega-result combines the outputs from different AI models to provide\n")
+        f.write("a comprehensive revision of your academic paper.\n\n")
+        f.write("HOW TO USE THESE FILES:\n")
+        f.write("1. Start with the revised_paper.docx to see the final output\n")
+        f.write("2. Review the revision_summary.docx to understand the changes made\n")
+        f.write("3. Check the editor_letter.docx for the response to reviewers\n")
+        f.write("4. Refer to changes_document.docx for a detailed breakdown of edits\n\n")
+        
+        f.write("DIRECTORY STRUCTURE:\n")
+        f.write("-" * 30 + "\n")
+        f.write("Root Directory: All key files are available here for convenience\n")
+        f.write("papers/: Contains the revised paper, editor letter, and bibliography\n")
+        f.write("reports/: Contains revision summaries, change documents, and assessments\n")
+        f.write("metadata/: Contains logs, cost reports, and other auxiliary files\n")
     
     # Close database connection
     db.close()
     
     print(f"{Fore.GREEN}[SUCCESS]{Style.RESET_ALL} Copied {file_count} files to {mega_dir}")
+    
+    # Display summary information about the mega-result
+    print(f"\n{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}MEGA-RESULT SUMMARY{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
+    print(f"Run ID: {run_id}")
+    print(f"Provider: {run_info.get('provider', 'Unknown')}")
+    print(f"Model: {run_info.get('model', 'Unknown')}")
+    print(f"Operation mode: {run_info.get('operation_mode', 'Unknown')}")
+    
+    # Show statistics if available
+    try:
+        if run_stats and "total_tokens" in run_stats and run_stats["total_tokens"] is not None:
+            print(f"Total tokens: {run_stats.get('total_tokens', 0):,}")
+    except Exception:
+        pass
+        
+    try:
+        if run_stats and "total_cost" in run_stats and run_stats["total_cost"] is not None:
+            print(f"Total cost: ${run_stats.get('total_cost', 0.0):.4f}")
+    except Exception:
+        pass
+        
+    if file_count > 0:
+        print(f"Files copied: {file_count}")
+    print(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
     return mega_dir
 
 def main():
@@ -3604,6 +3944,7 @@ def main():
     # Load environment variables
     load_dotenv()
     
+    import os
     # Load API keys from environment if available
     scopus_api_key_env = os.environ.get("SCOPUS_API_KEY")
     wos_client_id_env = os.environ.get("WOS_CLIENT_ID")
@@ -3683,10 +4024,99 @@ File Preprocessing:
     
     # Check if we're viewing a mega-result
     if args.view_mega:
+        print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Retrieving mega-result files for run ID: {args.view_mega}")
         mega_dir = copy_mega_result_to_directory(args.view_mega)
         if mega_dir:
             print(f"\n{Fore.GREEN}[SUCCESS]{Style.RESET_ALL} Mega-result files available at: {mega_dir}")
-            print(f"You can now open the files in this directory.")
+            print(f"\nKey files available:")
+            print(f"  - {mega_dir}/revised_paper.docx (Final revised version)")
+            print(f"  - {mega_dir}/revision_summary.docx (Summary of changes)")
+            print(f"  - {mega_dir}/editor_letter.docx (Response to editor)")
+            print(f"  - {mega_dir}/README.txt (Details about this mega-result)")
+            
+            # Create a temporary tool instance to use the interactive wait method
+            # This is only used for its interactive_wait method
+            temp_tool = PaperRevisionTool(provider="anthropic", model_name="claude-3")
+            
+            # Interactive wait point after viewing mega-result
+            if hasattr(temp_tool, 'interactive') and temp_tool.interactive:
+                temp_tool._interactive_wait(
+                    "Mega-result files have been copied to a directory for your review. You can find all the combined outputs in this directory.",
+                    mega_dir
+                )
+            
+            print(f"\nOrganized directory structure:")
+            print(f"  - {mega_dir}/papers/ (Final papers and bibliography)")
+            print(f"  - {mega_dir}/reports/ (Analysis and revision reports)")
+            print(f"  - {mega_dir}/metadata/ (Logs and process data)")
+            
+            # Check if we're in an interactive terminal
+            import sys
+            is_interactive = sys.stdin.isatty()
+            
+            if is_interactive:
+                # Offer to list files in directory only if we're in an interactive terminal
+                try:
+                    try_list = input("\nWould you like to see a list of files in this directory? (y/N): ").lower()
+                    should_list = try_list == 'y'
+                except (EOFError, KeyboardInterrupt):
+                    # Handle non-interactive environments gracefully
+                    should_list = False
+                    print("\nNon-interactive environment detected, skipping file listing prompt.")
+            else:
+                # Always show file list in non-interactive mode
+                should_list = True
+                print("\nListing files in non-interactive mode:")
+                
+            if should_list:
+                try:
+                    print(f"\n{Fore.BLUE}[INFO]{Style.RESET_ALL} Files in {mega_dir}:")
+                    
+                    # First list files in root directory
+                    import os
+                    root_files = [f for f in os.listdir(mega_dir) if os.path.isfile(os.path.join(mega_dir, f))]
+                    
+                    if root_files:
+                        print(f"\n{Fore.CYAN}Root Directory Files:{Style.RESET_ALL}")
+                        for file in sorted(root_files):
+                            if file.endswith(".txt"):
+                                print(f"  📄 {file} - Text file")
+                            elif file.endswith(".docx"):
+                                print(f"  📝 {file} - Word document")
+                            elif file.endswith(".pdf"):
+                                print(f"  📕 {file} - PDF document")
+                            elif file.endswith(".bib"):
+                                print(f"  📚 {file} - Bibliography file")
+                            else:
+                                print(f"  📁 {file}")
+                    
+                    # List files in papers directory
+                    papers_dir = os.path.join(mega_dir, "papers")
+                    if os.path.exists(papers_dir):
+                        papers_files = [f for f in os.listdir(papers_dir) if os.path.isfile(os.path.join(papers_dir, f))]
+                        if papers_files:
+                            print(f"\n{Fore.CYAN}Papers Directory Files:{Style.RESET_ALL}")
+                            for file in sorted(papers_files):
+                                print(f"  📝 {file}")
+                    
+                    # List files in reports directory
+                    reports_dir = os.path.join(mega_dir, "reports")
+                    if os.path.exists(reports_dir):
+                        reports_files = [f for f in os.listdir(reports_dir) if os.path.isfile(os.path.join(reports_dir, f))]
+                        if reports_files:
+                            print(f"\n{Fore.CYAN}Reports Directory Files:{Style.RESET_ALL}")
+                            for file in sorted(reports_files):
+                                print(f"  📊 {file}")
+                    
+                    # Print instructions for accessing files
+                    print(f"\n{Fore.YELLOW}To access these files:{Style.RESET_ALL}")
+                    print(f"cd {mega_dir}")
+                    print(f"less README.txt  # View the README file")
+                    print(f"# Use your preferred application to open the DOCX/PDF files")
+                    
+                except Exception as e:
+                    print(f"{Fore.YELLOW}[WARNING]{Style.RESET_ALL} Could not list files: {str(e)}")
+                    print(f"Please navigate to {mega_dir} manually.")
         return
     
     # Handle preprocessing if requested
@@ -3903,6 +4333,14 @@ File Preprocessing:
     # Print starting message
     print(f"{Fore.BLUE}[INFO]{Style.RESET_ALL} Starting paper revision process...")
     
+    # Interactive wait point before starting the revision process
+    if hasattr(revision_tool, 'interactive') and revision_tool.interactive:
+        revision_tool._interactive_wait(
+            "All settings have been configured and the paper revision process is ready to begin. The tool will use " + 
+            f"{provider.capitalize()} {model} to analyze and revise your paper.",
+            revision_tool.log_path
+        )
+    
     # Run the tool
     results = revision_tool.run()
     
@@ -4080,6 +4518,13 @@ File Preprocessing:
                 if create_mega == 'y':
                     print(f"\n{Fore.GREEN}Creating mega-result...{Style.RESET_ALL}")
                     
+                    # Interactive wait point before mega-result generation
+                    if hasattr(tool, 'interactive') and tool.interactive:
+                        tool._interactive_wait(
+                            "About to create a mega-result combining outputs from multiple AI models. This will merge the best results from each model.",
+                            tool.timestamp_dir
+                        )
+                    
                     # Create a new timestamp for the mega run
                     mega_timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
                     
@@ -4115,6 +4560,16 @@ File Preprocessing:
                         color = Fore.GREEN if idx == 0 else (Fore.YELLOW if idx == 1 else Fore.BLUE)
                         print(f"  {idx+1}. {color}{model_info['provider'].capitalize()} {model_info['model']}{Style.RESET_ALL} (Run ID: {model_info['run_id']})")
                     
+                    # Copy the mega-result to a directory for viewing
+                    mega_dir = copy_mega_result_to_directory(mega_timestamp)
+                    
+                    # Interactive wait point after mega-result generation
+                    if hasattr(tool, 'interactive') and tool.interactive and mega_dir:
+                        tool._interactive_wait(
+                            "Mega-result has been created successfully! The combined outputs from multiple AI models are now available for review.",
+                            mega_dir
+                        )
+                    
                     print(f"\nYou can find the merged results in the database using run ID: {Fore.CYAN}{mega_timestamp}{Style.RESET_ALL}")
                     
                     # For final mode, offer the option to simulate reviewer feedback
@@ -4136,6 +4591,13 @@ File Preprocessing:
                             else:
                                 try:
                                     print(f"\n{Fore.BLUE}Generating reviewer personas and feedback...{Style.RESET_ALL}")
+                                    
+                                    # Interactive wait point before generating reviewer feedback
+                                    if hasattr(tool, 'interactive') and tool.interactive:
+                                        tool._interactive_wait(
+                                            "About to generate simulated reviewer feedback on the revised paper. This will create reviewer personas based on the original reviewers.",
+                                            revised_paper_path
+                                        )
                                     
                                     # Extract journal guidelines from analysis
                                     journal_guidelines = "Follow standard academic publishing guidelines. Focus on originality, methodology, clarity, and significance of contribution."
@@ -4165,6 +4627,13 @@ File Preprocessing:
                                     print(f"\n{Fore.GREEN}Reviewer feedback generated successfully!{Style.RESET_ALL}")
                                     print(f"Report saved to: {Fore.CYAN}{report_path}{Style.RESET_ALL}")
                                     
+                                    # Interactive wait point after generating reviewer feedback
+                                    if hasattr(tool, 'interactive') and tool.interactive:
+                                        tool._interactive_wait(
+                                            "Reviewer feedback has been generated successfully! The report contains simulated reviews from multiple reviewers and an editor's summary.",
+                                            report_path
+                                        )
+                                    
                                     # Display key decision
                                     decision = review_report['editor_summary']['decision']
                                     decision_color = Fore.GREEN if decision == "Accept" else (
@@ -4185,6 +4654,13 @@ File Preprocessing:
                                         if new_cycle == 'y':
                                             print(f"\n{Fore.BLUE}To start a new revision cycle, please run the tool again and use the revised paper as input.{Style.RESET_ALL}")
                                             print(f"Remember to consider the reviewer feedback from: {report_path}")
+                                            
+                                            # Interactive wait point for starting new revision cycle
+                                            if hasattr(tool, 'interactive') and tool.interactive:
+                                                tool._interactive_wait(
+                                                    "You've chosen to start a new revision cycle. The feedback from this round will be valuable for your next revision.",
+                                                    report_path
+                                                )
                                         else:
                                             # User chose not to continue - revise the editor letter to acknowledge unaddressed concerns
                                             print(f"\n{Fore.YELLOW}Revising letter to editor to acknowledge unaddressed concerns...{Style.RESET_ALL}")
@@ -4265,6 +4741,13 @@ File Preprocessing:
                                                     
                                                     print(f"{Fore.GREEN}Letter to editor updated successfully with explanations for unaddressed concerns.{Style.RESET_ALL}")
                                                     print(f"Updated letter saved to: {Fore.CYAN}{editor_letter_path}{Style.RESET_ALL}")
+                                                    
+                                                    # Interactive wait point after updating the editor letter
+                                                    if hasattr(tool, 'interactive') and tool.interactive:
+                                                        tool._interactive_wait(
+                                                            "Letter to editor has been updated with explanations for unaddressed concerns. This provides transparency about your revision decisions.",
+                                                            editor_letter_path
+                                                        )
                                                     
                                                 except Exception as e:
                                                     print(f"{Fore.RED}[ERROR]{Style.RESET_ALL} Failed to update editor letter: {e}")
