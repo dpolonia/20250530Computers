@@ -19,8 +19,13 @@ tobe/93*.docx
 tobe/94*.docx
 tobe/zz*.bib
 
-# Logs
+# Logs and error files
 *.log
+logs/
+error_logs/
+*.json.log
+errors.json
+claude_error_*.txt
 
 # IDE files
 .vscode/

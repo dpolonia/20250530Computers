@@ -1,0 +1,17 @@
+FAILURE REPORT - 2025-05-31 03:47:08
+Model: gemini-1.5-flash (fast, 1M context) (Code: C01)
+Provider: google
+Operation mode: training
+Original directory: ./tobe/TRAINING/C01_gemini_1.5_flash_(fast,_1M_context)/20250531034304
+Trash directory: ./tobe/_trash/TRAINING/C01_gemini_1.5_flash_(fast,_1M_context)/20250531034304
+
+Files moved to trash:
+- report20250531034708.txt
+- 9020250531034304.docx
+- 9220250531034304.docx
+- 9420250531034304.docx
+- zz20250531034304.bib
+- log20250531034304.txt
+- 9320250531034304.docx
+- 9120250531034304.docx
+- cost20250531034708.txt

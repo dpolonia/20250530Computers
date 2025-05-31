@@ -1,0 +1,17 @@
+FAILURE REPORT - 2025-05-31 03:41:53
+Model: gpt-4o-mini (balanced) (Code: B01)
+Provider: openai
+Operation mode: training
+Original directory: ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748
+Trash directory: ./tobe/_trash/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748
+
+Files moved to trash:
+- zz20250531033748.bib
+- 9220250531033748.docx
+- 9420250531033748.docx
+- 9320250531033748.docx
+- 9020250531033748.docx
+- log20250531033748.txt
+- report20250531034153.txt
+- cost20250531034153.txt
+- 9120250531033748.docx

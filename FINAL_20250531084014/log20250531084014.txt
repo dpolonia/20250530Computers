@@ -1,0 +1,18 @@
+2025-05-31 08:40:14,455 - INFO - Paper revision started with anthropic model: claude-3-sonnet-20240229
+2025-05-31 08:40:14,455 - INFO - Model code: A29
+2025-05-31 08:40:14,455 - INFO - Operation mode: final
+2025-05-31 08:40:14,455 - INFO - Output directory: /home/dpolonia/20250530Computers/FINAL_20250531084014
+2025-05-31 08:40:14,455 - INFO - Trash directory (used on failure): ./tobe/_trash/FINAL/A29_claude_3_sonnet_20240229/20250531084014
+2025-05-31 08:40:14,455 - INFO - Creating special FINAL directory in root: /home/dpolonia/20250530Computers/FINAL_20250531084014
+2025-05-31 08:40:14,455 - INFO - Interactive stop points enabled - press Enter to continue at each step
+2025-05-31 08:40:14,991 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 08:40:14,991 - INFO - SUCCESS: Successfully initialized ANTHROPIC client with model claude-3-sonnet-20240229 (Code: A29)
+2025-05-31 08:40:14,992 - INFO - Starting paper revision process
+2025-05-31 08:40:15,003 - INFO - Step 1: Analyzing original paper
+2025-05-31 08:40:15,004 - INFO - Loading original paper
+2025-05-31 08:40:15,115 - INFO - Analyzing paper structure and content
+2025-05-31 08:40:16,021 - ERROR - Error in paper revision process: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'max_tokens: 16220 > 4096, which is the maximum allowed number of output tokens for claude-3-sonnet-20240229'}}
+2025-05-31 08:40:16,021 - ERROR - Exception: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'max_tokens: 16220 > 4096, which is the maximum allowed number of output tokens for claude-3-sonnet-20240229'}}
+2025-05-31 08:40:16,021 - INFO - Paper revision process failed after 1.57 seconds
+2025-05-31 08:40:16,029 - INFO - Moving files to trash directory: ./tobe/_trash/FINAL/A29_claude_3_sonnet_20240229/20250531084014
+2025-05-31 08:40:16,029 - INFO - SUCCESS: Files copied to trash directory: ./tobe/_trash/FINAL/A29_claude_3_sonnet_20240229/20250531084014

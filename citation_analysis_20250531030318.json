@@ -1,0 +1,49 @@
+{
+  "citation_analysis": {
+    "doi": "10.1016/j.cose.2022.102644",
+    "analysis_date": "2025-05-31T03:03:12.789166",
+    "sources": [
+      "scopus"
+    ],
+    "citation_counts": {},
+    "citation_history": [],
+    "top_citing_journals": [],
+    "top_citing_countries": [],
+    "citation_network": {},
+    "total_citations": 0,
+    "citation_velocity": 0
+  },
+  "similar_papers": [],
+  "citation_overlap": {
+    "papers": [],
+    "overlap_matrix": {
+      "10.1016/j.cose.2022.102644": {
+        "10.1016/j.cose.2022.102644": 1.0,
+        "10.1016/j.diin.2022.301504": 0.0
+      },
+      "10.1016/j.diin.2022.301504": {
+        "10.1016/j.cose.2022.102644": 0.0,
+        "10.1016/j.diin.2022.301504": 1.0
+      }
+    },
+    "total_unique_citations": 0,
+    "common_citations": {
+      "common_to_all": 0,
+      "common_to_some": 0
+    }
+  },
+  "timestamp": "2025-05-31T03:03:18.810245",
+  "api_stats": {
+    "scopus_stats": {
+      "api_key": "217fcb50",
+      "cache_enabled": true,
+      "cache_ttl_days": 7.0,
+      "cache_entries": 0,
+      "cache_size_mb": 0.0,
+      "api_requests": 0,
+      "cache_hits": 0,
+      "cache_hit_rate": 0.0,
+      "rate_limit_spacing": 0.5
+    }
+  }
+}

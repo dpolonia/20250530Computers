@@ -1,0 +1,18 @@
+2025-05-31 08:27:33,308 - INFO - Paper revision started with anthropic model: claude-opus-4-20250514
+2025-05-31 08:27:33,308 - INFO - Model code: A06
+2025-05-31 08:27:33,308 - INFO - Operation mode: final
+2025-05-31 08:27:33,308 - INFO - Output directory: /home/dpolonia/20250530Computers/FINAL_20250531082733
+2025-05-31 08:27:33,308 - INFO - Trash directory (used on failure): ./tobe/_trash/FINAL/A06_claude_opus_4_20250514/20250531082733
+2025-05-31 08:27:33,308 - INFO - Creating special FINAL directory in root: /home/dpolonia/20250530Computers/FINAL_20250531082733
+2025-05-31 08:27:33,309 - INFO - Interactive stop points enabled - press Enter to continue at each step
+2025-05-31 08:27:40,849 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 08:27:40,849 - INFO - SUCCESS: Successfully initialized ANTHROPIC client with model claude-opus-4-20250514 (Code: A06)
+2025-05-31 08:27:40,849 - INFO - Starting paper revision process
+2025-05-31 08:27:40,854 - INFO - Step 1: Analyzing original paper
+2025-05-31 08:27:40,854 - INFO - Loading original paper
+2025-05-31 08:27:40,956 - INFO - Analyzing paper structure and content
+2025-05-31 08:27:45,586 - ERROR - Error in paper revision process: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'max_tokens: 32440 > 32000, which is the maximum allowed number of output tokens for claude-opus-4-20250514'}}
+2025-05-31 08:27:45,586 - ERROR - Exception: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'max_tokens: 32440 > 32000, which is the maximum allowed number of output tokens for claude-opus-4-20250514'}}
+2025-05-31 08:27:45,586 - INFO - Paper revision process failed after 12.28 seconds
+2025-05-31 08:27:45,593 - INFO - Moving files to trash directory: ./tobe/_trash/FINAL/A06_claude_opus_4_20250514/20250531082733
+2025-05-31 08:27:45,593 - INFO - SUCCESS: Files copied to trash directory: ./tobe/_trash/FINAL/A06_claude_opus_4_20250514/20250531082733

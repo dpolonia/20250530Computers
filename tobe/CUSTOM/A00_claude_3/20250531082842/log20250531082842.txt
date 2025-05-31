@@ -1,0 +1,7 @@
+2025-05-31 08:28:42,024 - INFO - Paper revision started with anthropic model: claude-3
+2025-05-31 08:28:42,024 - INFO - Model code: A00
+2025-05-31 08:28:42,024 - INFO - Operation mode: custom
+2025-05-31 08:28:42,024 - INFO - Output directory: ./tobe/CUSTOM/A00_claude_3/20250531082842
+2025-05-31 08:28:42,024 - INFO - Trash directory (used on failure): ./tobe/_trash/CUSTOM/A00_claude_3/20250531082842
+2025-05-31 08:28:42,049 - ERROR - Error initializing LLM client: 'NoneType' object has no attribute 'get'
+2025-05-31 08:28:42,049 - WARNING - Make sure you have the required API keys in your .env file and all dependencies installed.

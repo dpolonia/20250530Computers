@@ -1,0 +1,35 @@
+REVIEWER #1
+
+OVERALL ASSESSMENT: MINOR REVISION
+
+The paper presents an interesting approach to academic paper revision using NLP techniques. The research is novel and has potential impact in the field. However, there are several issues that need to be addressed before publication.
+
+MAIN CONCERNS:
+1. The methodology section lacks sufficient detail about the implementation.
+2. Some recent relevant works are missing from the literature review.
+3. The evaluation metrics are not fully justified.
+4. The writing could be improved in some sections for clarity.
+
+METHODOLOGY COMMENTS:
+- The paper does not clearly explain how the NLP models were fine-tuned.
+- More details are needed about the data preprocessing steps.
+- The hyperparameter selection process should be described.
+- Please provide more information about the computational resources used.
+
+RESULTS COMMENTS:
+- The results are presented clearly in Table 1.
+- The comparison with baseline methods is appropriate.
+- It would be beneficial to include confidence intervals for the reported metrics.
+- Consider including a qualitative analysis of some example outputs.
+
+WRITING COMMENTS:
+- The introduction is well-written and motivates the work effectively.
+- The paper has a few grammatical errors that should be corrected.
+- Some paragraphs in the discussion section are too long and should be split.
+- Technical terminology is used consistently throughout the paper.
+
+REFERENCES COMMENTS:
+- The bibliography is generally comprehensive.
+- Some recent papers (2023-2024) on LLM-based document processing are missing.
+- Reference [12] is incomplete - missing page numbers.
+- Consider including more papers from the last two years on academic writing assistance.

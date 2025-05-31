@@ -1,0 +1,9 @@
+FAILURE REPORT - 2025-05-31 03:49:05
+Model: claude-3-5-sonnet-20241022 (balanced) (Code: A03)
+Provider: anthropic
+Operation mode: finetuning
+Original directory: ./tobe/FINETUNING/A03_claude_3_5_sonnet_20241022_(balanced)/20250531034902
+Trash directory: ./tobe/_trash/FINETUNING/A03_claude_3_5_sonnet_20241022_(balanced)/20250531034902
+
+Files moved to trash:
+- log20250531034902.txt

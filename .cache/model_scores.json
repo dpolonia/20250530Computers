@@ -1,0 +1,602 @@
+{
+  "anthropic": {
+    "claude-2.0": {
+      "capability": 50,
+      "cost_efficiency": 50,
+      "input_cost": 0.003,
+      "output_cost": 0.015,
+      "max_tokens": 4096,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.904433"
+    },
+    "claude-2.1": {
+      "capability": 50,
+      "cost_efficiency": 50,
+      "input_cost": 0.003,
+      "output_cost": 0.015,
+      "max_tokens": 4096,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.909402"
+    },
+    "claude-3-5-haiku-20241022": {
+      "capability": 60,
+      "cost_efficiency": 80,
+      "input_cost": 0.00025,
+      "output_cost": 0.00125,
+      "max_tokens": 4096,
+      "description": "fast",
+      "last_updated": "2025-05-31T03:21:28.914295"
+    },
+    "claude-3-5-sonnet-20240620": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.0025,
+      "output_cost": 0.0125,
+      "max_tokens": 8192,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:28.919544"
+    },
+    "claude-3-5-sonnet-20241022": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.0025,
+      "output_cost": 0.0125,
+      "max_tokens": 8192,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:28.925025"
+    },
+    "claude-3-7-sonnet-20250219": {
+      "capability": 85,
+      "cost_efficiency": 50,
+      "input_cost": 0.003,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:28.931307"
+    },
+    "claude-3-haiku-20240307": {
+      "capability": 60,
+      "cost_efficiency": 80,
+      "input_cost": 0.00025,
+      "output_cost": 0.00125,
+      "max_tokens": 4096,
+      "description": "fastest & cheapest",
+      "last_updated": "2025-05-31T03:21:28.936711"
+    },
+    "claude-3-opus-20240229": {
+      "capability": 100,
+      "cost_efficiency": 20,
+      "input_cost": 0.015,
+      "output_cost": 0.075,
+      "max_tokens": 32768,
+      "description": "most powerful",
+      "last_updated": "2025-05-31T03:21:28.942427"
+    },
+    "claude-3-sonnet-20240229": {
+      "capability": 85,
+      "cost_efficiency": 50,
+      "input_cost": 0.003,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:28.947594"
+    },
+    "claude-opus-4-20250514": {
+      "capability": 100,
+      "cost_efficiency": 20,
+      "input_cost": 0.015,
+      "output_cost": 0.075,
+      "max_tokens": 32768,
+      "description": "most powerful",
+      "last_updated": "2025-05-31T03:21:28.951912"
+    },
+    "claude-sonnet-4-20250514": {
+      "capability": 85,
+      "cost_efficiency": 50,
+      "input_cost": 0.003,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:28.955242"
+    }
+  },
+  "openai": {
+    "gpt-4": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.960244"
+    },
+    "gpt-4-0125-preview": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.965037"
+    },
+    "gpt-4-0613": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.969813"
+    },
+    "gpt-4-1106-preview": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.974550"
+    },
+    "gpt-4-turbo": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.978719"
+    },
+    "gpt-4-turbo-2024-04-09": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.983454"
+    },
+    "gpt-4-turbo-preview": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.988101"
+    },
+    "gpt-4.1": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:28.993801"
+    },
+    "gpt-4.1-2025-04-14": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.000312"
+    },
+    "gpt-4.1-mini": {
+      "capability": 65,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.007240"
+    },
+    "gpt-4.1-mini-2025-04-14": {
+      "capability": 65,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.013976"
+    },
+    "gpt-4.1-nano": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.021063"
+    },
+    "gpt-4.1-nano-2025-04-14": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.028225"
+    },
+    "gpt-4.5-preview": {
+      "capability": 100,
+      "cost_efficiency": 40,
+      "input_cost": 0.01,
+      "output_cost": 0.03,
+      "max_tokens": 16384,
+      "description": "most powerful",
+      "last_updated": "2025-05-31T03:21:29.036147"
+    },
+    "gpt-4.5-preview-2025-02-27": {
+      "capability": 100,
+      "cost_efficiency": 40,
+      "input_cost": 0.01,
+      "output_cost": 0.03,
+      "max_tokens": 16384,
+      "description": "most powerful",
+      "last_updated": "2025-05-31T03:21:29.043398"
+    },
+    "gpt-4o": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.050549"
+    },
+    "gpt-4o-2024-05-13": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.055785"
+    },
+    "gpt-4o-2024-08-06": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.063051"
+    },
+    "gpt-4o-2024-11-20": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.070515"
+    },
+    "gpt-4o-audio-preview": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.078298"
+    },
+    "gpt-4o-audio-preview-2024-10-01": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.085746"
+    },
+    "gpt-4o-audio-preview-2024-12-17": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.093194"
+    },
+    "gpt-4o-mini": {
+      "capability": 75,
+      "cost_efficiency": 60,
+      "input_cost": 0.0015,
+      "output_cost": 0.006,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.100134"
+    },
+    "gpt-4o-mini-2024-07-18": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.107890"
+    },
+    "gpt-4o-mini-audio-preview": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.115053"
+    },
+    "gpt-4o-mini-audio-preview-2024-12-17": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.121948"
+    },
+    "gpt-4o-mini-realtime-preview": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.129348"
+    },
+    "gpt-4o-mini-realtime-preview-2024-12-17": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.136655"
+    },
+    "gpt-4o-mini-search-preview": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.143968"
+    },
+    "gpt-4o-mini-search-preview-2025-03-11": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.152481"
+    },
+    "gpt-4o-mini-transcribe": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.160097"
+    },
+    "gpt-4o-mini-tts": {
+      "capability": 75,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "balanced",
+      "last_updated": "2025-05-31T03:21:29.166754"
+    },
+    "gpt-4o-realtime-preview": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.175933"
+    },
+    "gpt-4o-realtime-preview-2024-10-01": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.181900"
+    },
+    "gpt-4o-realtime-preview-2024-12-17": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.188241"
+    },
+    "gpt-4o-search-preview": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.194884"
+    },
+    "gpt-4o-search-preview-2025-03-11": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.201385"
+    },
+    "gpt-4o-transcribe": {
+      "capability": 90,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.207190"
+    },
+    "o1": {
+      "capability": 95,
+      "cost_efficiency": 20,
+      "input_cost": 0.015,
+      "output_cost": 0.075,
+      "max_tokens": 16384,
+      "description": "powerful reasoning",
+      "last_updated": "2025-05-31T03:21:29.212996"
+    },
+    "o1-mini": {
+      "capability": 80,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.218218"
+    },
+    "o1-pro": {
+      "capability": 80,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.222690"
+    },
+    "o3": {
+      "capability": 75,
+      "cost_efficiency": 20,
+      "input_cost": 0.015,
+      "output_cost": 0.075,
+      "max_tokens": 16384,
+      "description": "powerful reasoning",
+      "last_updated": "2025-05-31T03:21:29.227742"
+    },
+    "o3-mini": {
+      "capability": 65,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.232974"
+    },
+    "o4-mini": {
+      "capability": 70,
+      "cost_efficiency": 50,
+      "input_cost": 0.005,
+      "output_cost": 0.015,
+      "max_tokens": 16384,
+      "description": "fast reasoning",
+      "last_updated": "2025-05-31T03:21:29.238521"
+    }
+  },
+  "google": {
+    "gemini-1.0-pro-vision": {
+      "capability": 65,
+      "cost_efficiency": 60,
+      "input_cost": 0.0035,
+      "output_cost": 0.0035,
+      "max_tokens": 32768,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.245470"
+    },
+    "gemini-1.5-flash": {
+      "capability": 85,
+      "cost_efficiency": 90,
+      "input_cost": 0.00035,
+      "output_cost": 0.00035,
+      "max_tokens": 131072,
+      "description": "fast, 1M context",
+      "last_updated": "2025-05-31T03:21:29.251652"
+    },
+    "gemini-1.5-flash-8b": {
+      "capability": 85,
+      "cost_efficiency": 90,
+      "input_cost": 0.00035,
+      "output_cost": 0.00035,
+      "max_tokens": 131072,
+      "description": "fast, 1M context",
+      "last_updated": "2025-05-31T03:21:29.258297"
+    },
+    "gemini-1.5-pro": {
+      "capability": 100,
+      "cost_efficiency": 60,
+      "input_cost": 0.0035,
+      "output_cost": 0.0035,
+      "max_tokens": 131072,
+      "description": "powerful, 1M context",
+      "last_updated": "2025-05-31T03:21:29.264314"
+    },
+    "gemini-2.0-flash": {
+      "capability": 95,
+      "cost_efficiency": 90,
+      "input_cost": 0.00035,
+      "output_cost": 0.00035,
+      "max_tokens": 131072,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.270509"
+    },
+    "gemini-2.0-flash-lite": {
+      "capability": 80,
+      "cost_efficiency": 90,
+      "input_cost": 0.00025,
+      "output_cost": 0.00025,
+      "max_tokens": 32768,
+      "description": "faster",
+      "last_updated": "2025-05-31T03:21:29.276155"
+    },
+    "gemini-2.0-flash-live": {
+      "capability": 95,
+      "cost_efficiency": 90,
+      "input_cost": 0.00035,
+      "output_cost": 0.00035,
+      "max_tokens": 131072,
+      "description": "powerful",
+      "last_updated": "2025-05-31T03:21:29.282279"
+    },
+    "gemini-2.0-pro-exp": {
+      "capability": 100,
+      "cost_efficiency": 90,
+      "input_cost": 0.00035,
+      "output_cost": 0.00035,
+      "max_tokens": 131072,
+      "description": "experimental, powerful",
+      "last_updated": "2025-05-31T03:21:29.288372"
+    },
+    "gemini-2.5-flash": {
+      "capability": 80,
+      "cost_efficiency": 90,
+      "input_cost": 0.00035,
+      "output_cost": 0.00035,
+      "max_tokens": 131072,
+      "description": "efficient, 1M context",
+      "last_updated": "2025-05-31T03:21:29.294809"
+    },
+    "gemini-2.5-pro": {
+      "capability": 100,
+      "cost_efficiency": 60,
+      "input_cost": 0.0035,
+      "output_cost": 0.0035,
+      "max_tokens": 1048576,
+      "description": "most powerful, 8M context",
+      "last_updated": "2025-05-31T03:21:29.301284"
+    },
+    "gemini-pro-vision": {
+      "capability": 65,
+      "cost_efficiency": 60,
+      "input_cost": 0.0035,
+      "output_cost": 0.0035,
+      "max_tokens": 32768,
+      "description": "standard",
+      "last_updated": "2025-05-31T03:21:29.306364"
+    }
+  }
+}

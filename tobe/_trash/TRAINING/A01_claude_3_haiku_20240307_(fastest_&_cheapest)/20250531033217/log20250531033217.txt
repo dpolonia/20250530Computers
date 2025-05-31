@@ -1,0 +1,66 @@
+2025-05-31 03:32:17,050 - INFO - Paper revision started with anthropic model: claude-3-haiku-20240307 (fastest & cheapest)
+2025-05-31 03:32:17,051 - INFO - Model code: A01
+2025-05-31 03:32:17,051 - INFO - Operation mode: training
+2025-05-31 03:32:17,051 - INFO - Output directory: ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217
+2025-05-31 03:32:17,051 - INFO - Trash directory (used on failure): ./tobe/_trash/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217
+2025-05-31 03:32:19,128 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 03:32:19,129 - INFO - SUCCESS: Successfully initialized ANTHROPIC client with model claude-3-haiku-20240307 (fastest & cheapest) (Code: A01)
+2025-05-31 03:32:19,129 - INFO - Starting paper revision process
+2025-05-31 03:32:19,145 - INFO - Step 1: Analyzing original paper
+2025-05-31 03:32:19,145 - INFO - Loading original paper
+2025-05-31 03:32:19,271 - INFO - Analyzing paper structure and content
+2025-05-31 03:32:19,271 - WARNING - LLM didn't return valid JSON. Using basic analysis.
+2025-05-31 03:32:19,271 - INFO - SUCCESS: Paper analysis completed
+2025-05-31 03:32:19,278 - INFO - Step 2: Analyzing reviewer comments
+2025-05-31 03:32:19,278 - INFO - Analyzing reviewer 1 comments
+2025-05-31 03:32:19,383 - INFO - Analyzing reviewer 2 comments
+2025-05-31 03:32:19,419 - INFO - Analyzing reviewer 3 comments
+2025-05-31 03:32:19,455 - INFO - SUCCESS: Reviewer comment analysis completed
+2025-05-31 03:32:19,455 - INFO - Step 3: Processing editor letter and PRISMA requirements
+2025-05-31 03:32:19,455 - INFO - Processing editor letter
+2025-05-31 03:32:19,479 - INFO - Processing PRISMA requirements
+2025-05-31 03:32:19,495 - INFO - SUCCESS: Editor requirements analysis completed
+2025-05-31 03:32:19,495 - INFO - Step 4: Analyzing journal style and requirements
+2025-05-31 03:32:19,495 - INFO - Processing journal information
+2025-05-31 03:32:19,738 - INFO - Processing Scopus information from ./asis/07.pdf
+2025-05-31 03:32:19,918 - INFO - Processing highly cited papers for style analysis
+2025-05-31 03:32:20,030 - INFO - Analyzing reference style
+2025-05-31 03:32:21,726 - WARNING - LLM didn't return valid JSON for journal style. Using basic analysis.
+2025-05-31 03:32:21,726 - INFO - SUCCESS: Journal style analysis completed
+2025-05-31 03:32:21,726 - INFO - Step 5: Generating revision summary
+2025-05-31 03:32:21,726 - INFO - Generating revision plan
+2025-05-31 03:32:21,726 - WARNING - LLM didn't return valid JSON for revision plan. Using basic plan.
+2025-05-31 03:32:21,726 - INFO - SUCCESS: Generated revision plan with 3 issues and 3 solutions
+2025-05-31 03:32:21,726 - INFO - Creating revision summary document
+2025-05-31 03:32:21,773 - INFO - SUCCESS: Created revision summary at ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/9020250531033217.docx
+2025-05-31 03:32:21,773 - INFO - Step 6: Generating changes document
+2025-05-31 03:32:21,773 - INFO - Generating specific text changes
+2025-05-31 03:32:21,774 - WARNING - LLM didn't return valid JSON for changes. Using basic changes.
+2025-05-31 03:32:21,774 - INFO - SUCCESS: Generated 3 specific text changes
+2025-05-31 03:32:21,774 - INFO - Creating changes document
+2025-05-31 03:32:21,823 - INFO - SUCCESS: Created changes document at ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/9120250531033217.docx
+2025-05-31 03:32:21,823 - INFO - Step 7: Validating and updating references
+2025-05-31 03:32:21,823 - INFO - Validating and updating references
+2025-05-31 03:36:15,885 - INFO - Found 41 valid and 17 invalid references
+2025-05-31 03:36:15,894 - INFO - Step 8: Creating revised paper with track changes
+2025-05-31 03:36:15,894 - INFO - Creating revised paper with track changes
+2025-05-31 03:36:16,036 - INFO - SUCCESS: Applied 0 changes to the paper
+2025-05-31 03:36:16,036 - INFO - SUCCESS: Created revised paper at ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/9220250531033217.docx
+2025-05-31 03:36:16,037 - INFO - Step 9: Creating assessment document
+2025-05-31 03:36:16,037 - INFO - Creating assessment document
+2025-05-31 03:36:16,056 - WARNING - LLM didn't return valid JSON for assessment. Using basic assessment.
+2025-05-31 03:36:16,080 - INFO - SUCCESS: Created assessment document
+2025-05-31 03:36:16,080 - INFO - SUCCESS: Created assessment document at ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/9320250531033217.docx
+2025-05-31 03:36:16,080 - INFO - Step 10: Creating letter to editor with process disclosure
+2025-05-31 03:36:16,080 - INFO - Creating letter to editor
+2025-05-31 03:36:16,101 - WARNING - Error getting review process summary: 'NoneType' object is not subscriptable
+2025-05-31 03:36:16,128 - INFO - SUCCESS: Created letter to editor
+2025-05-31 03:36:16,128 - INFO - SUCCESS: Created letter to editor at ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/9420250531033217.docx
+2025-05-31 03:36:16,130 - INFO - SUCCESS: Cost report exported to ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/cost20250531033616.txt
+2025-05-31 03:36:16,131 - INFO - SUCCESS: Paper revision process completed successfully!
+2025-05-31 03:36:16,131 - INFO - SUCCESS: Detailed revision report saved to ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/report20250531033616.txt
+2025-05-31 03:36:16,131 - INFO - SUCCESS: Log file saved to ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217/log20250531033217.txt
+2025-05-31 03:36:16,137 - ERROR - Error in paper revision process: unsupported format string passed to NoneType.__format__
+2025-05-31 03:36:16,137 - ERROR - Exception: unsupported format string passed to NoneType.__format__
+2025-05-31 03:36:16,137 - INFO - Paper revision process failed after 239.09 seconds
+2025-05-31 03:36:16,142 - INFO - Moving files to trash directory: ./tobe/_trash/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217

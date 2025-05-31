@@ -1,0 +1,15 @@
+2025-05-31 03:49:02,867 - INFO - Paper revision started with anthropic model: claude-3-5-sonnet-20241022 (balanced)
+2025-05-31 03:49:02,867 - INFO - Model code: A03
+2025-05-31 03:49:02,867 - INFO - Operation mode: finetuning
+2025-05-31 03:49:02,867 - INFO - Output directory: ./tobe/FINETUNING/A03_claude_3_5_sonnet_20241022_(balanced)/20250531034902
+2025-05-31 03:49:02,867 - INFO - Trash directory (used on failure): ./tobe/_trash/FINETUNING/A03_claude_3_5_sonnet_20241022_(balanced)/20250531034902
+2025-05-31 03:49:05,012 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 03:49:05,012 - INFO - SUCCESS: Successfully initialized ANTHROPIC client with model claude-3-5-sonnet-20241022 (balanced) (Code: A03)
+2025-05-31 03:49:05,012 - INFO - Starting paper revision process
+2025-05-31 03:49:05,024 - INFO - Step 1: Analyzing original paper
+2025-05-31 03:49:05,024 - INFO - Loading original paper
+2025-05-31 03:49:05,153 - INFO - Analyzing paper structure and content
+2025-05-31 03:49:05,153 - ERROR - Error in paper revision process: 'PaperRevisionTool' object has no attribute 'high_quality'
+2025-05-31 03:49:05,153 - ERROR - Exception: 'PaperRevisionTool' object has no attribute 'high_quality'
+2025-05-31 03:49:05,153 - INFO - Paper revision process failed after 2.29 seconds
+2025-05-31 03:49:05,157 - INFO - Moving files to trash directory: ./tobe/_trash/FINETUNING/A03_claude_3_5_sonnet_20241022_(balanced)/20250531034902

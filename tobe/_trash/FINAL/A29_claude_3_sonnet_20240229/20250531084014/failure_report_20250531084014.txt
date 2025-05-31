@@ -1,0 +1,9 @@
+FAILURE REPORT - 2025-05-31 08:40:16
+Model: claude-3-sonnet-20240229 (Code: A29)
+Provider: anthropic
+Operation mode: final
+Original directory: /home/dpolonia/20250530Computers/FINAL_20250531084014
+Trash directory: ./tobe/_trash/FINAL/A29_claude_3_sonnet_20240229/20250531084014
+
+Files moved to trash:
+- log20250531084014.txt

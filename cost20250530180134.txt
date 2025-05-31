@@ -1,0 +1,41 @@
+COST OPTIMIZATION REPORT - 2025-05-30 18:01:34
+==================================================
+STATISTICS SUMMARY:
+Operation mode: TRAINING
+Time elapsed: 00:01:33
+Tokens used: 6,176
+Estimated cost: $0.0193
+API requests: 9
+Cached requests: 0
+Files processed: 10
+Files created: 6
+Token budget remaining: 8,729
+Cost budget remaining: $0.9310
+Provider: openai
+Model: gpt-4o-mini (balanced)
+Cost optimization: Enabled
+Maximum papers analyzed: 1
+==================================================
+
+CACHE STATISTICS:
+Cache directory: /home/dpolonia/20250530Computers/.cache
+Cache entries: 18
+
+Most recent cache entries:
+1. 25163ac5a9325b834eb5ee66934cd46a.json - 2025-05-30 18:01:34
+2. 1d9d566b44186802c722bcebf53171d7.json - 2025-05-30 18:00:53
+3. 155f0874b9459d81a812487cdb55b8f2.json - 2025-05-30 18:00:26
+4. 5efbf9ae01258aaa4604714e336df249.json - 2025-05-30 18:00:22
+5. a5a15ca5663aafccdb8208c48df6cd0a.json - 2025-05-30 18:00:17
+
+
+ESTIMATED COST BREAKDOWN:
+Input tokens cost (estimated): $0.0093
+Output tokens cost (estimated): $0.0371
+
+Total cost: $0.0193
+
+
+OPTIMIZATION RECOMMENDATIONS:
+- Consider using a cheaper model like GPT-3.5 for initial drafts
+- Enable caching between runs for similar operations

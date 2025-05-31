@@ -1,0 +1,71 @@
+2025-05-31 03:37:48,096 - INFO - Paper revision started with openai model: gpt-4o-mini (balanced)
+2025-05-31 03:37:48,096 - INFO - Model code: B01
+2025-05-31 03:37:48,096 - INFO - Operation mode: training
+2025-05-31 03:37:48,096 - INFO - Output directory: ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748
+2025-05-31 03:37:48,096 - INFO - Trash directory (used on failure): ./tobe/_trash/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748
+2025-05-31 03:37:50,555 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 03:37:50,555 - INFO - SUCCESS: Successfully initialized OPENAI client with model gpt-4o-mini (balanced) (Code: B01)
+2025-05-31 03:37:50,555 - INFO - Starting paper revision process
+2025-05-31 03:37:50,566 - INFO - Step 1: Analyzing original paper
+2025-05-31 03:37:50,566 - INFO - Loading original paper
+2025-05-31 03:37:50,766 - INFO - Analyzing paper structure and content
+2025-05-31 03:37:50,768 - WARNING - LLM didn't return valid JSON. Using basic analysis.
+2025-05-31 03:37:50,769 - INFO - SUCCESS: Paper analysis completed
+2025-05-31 03:37:50,775 - INFO - Step 2: Analyzing reviewer comments
+2025-05-31 03:37:50,776 - INFO - Analyzing reviewer 1 comments
+2025-05-31 03:37:50,900 - WARNING - LLM didn't return valid JSON for reviewer 1. Using basic analysis.
+2025-05-31 03:37:50,900 - INFO - Analyzing reviewer 2 comments
+2025-05-31 03:37:50,961 - WARNING - LLM didn't return valid JSON for reviewer 2. Using basic analysis.
+2025-05-31 03:37:50,961 - INFO - Analyzing reviewer 3 comments
+2025-05-31 03:37:51,000 - WARNING - LLM didn't return valid JSON for reviewer 3. Using basic analysis.
+2025-05-31 03:37:51,001 - INFO - SUCCESS: Reviewer comment analysis completed
+2025-05-31 03:37:51,001 - INFO - Step 3: Processing editor letter and PRISMA requirements
+2025-05-31 03:37:51,001 - INFO - Processing editor letter
+2025-05-31 03:37:51,027 - INFO - Processing PRISMA requirements
+2025-05-31 03:37:51,046 - WARNING - LLM didn't return valid JSON for editor requirements. Using basic analysis.
+2025-05-31 03:37:51,047 - INFO - SUCCESS: Editor requirements analysis completed
+2025-05-31 03:37:51,047 - INFO - Step 4: Analyzing journal style and requirements
+2025-05-31 03:37:51,047 - INFO - Processing journal information
+2025-05-31 03:37:51,430 - INFO - Processing Scopus information from ./asis/07.pdf
+2025-05-31 03:37:51,718 - INFO - Processing highly cited papers for style analysis
+2025-05-31 03:37:51,843 - INFO - Analyzing reference style
+2025-05-31 03:37:53,537 - WARNING - LLM didn't return valid JSON for journal style. Using basic analysis.
+2025-05-31 03:37:53,537 - INFO - SUCCESS: Journal style analysis completed
+2025-05-31 03:37:53,537 - INFO - Step 5: Generating revision summary
+2025-05-31 03:37:53,537 - INFO - Generating revision plan
+2025-05-31 03:37:53,538 - WARNING - LLM didn't return valid JSON for revision plan. Using basic plan.
+2025-05-31 03:37:53,538 - INFO - SUCCESS: Generated revision plan with 3 issues and 3 solutions
+2025-05-31 03:37:53,538 - INFO - Creating revision summary document
+2025-05-31 03:37:53,586 - INFO - SUCCESS: Created revision summary at ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/9020250531033748.docx
+2025-05-31 03:37:53,586 - INFO - Step 6: Generating changes document
+2025-05-31 03:37:53,586 - INFO - Generating specific text changes
+2025-05-31 03:37:53,588 - WARNING - LLM didn't return valid JSON for changes. Using basic changes.
+2025-05-31 03:37:53,588 - INFO - SUCCESS: Generated 3 specific text changes
+2025-05-31 03:37:53,588 - INFO - Creating changes document
+2025-05-31 03:37:53,626 - INFO - SUCCESS: Created changes document at ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/9120250531033748.docx
+2025-05-31 03:37:53,626 - INFO - Step 7: Validating and updating references
+2025-05-31 03:37:53,626 - INFO - Validating and updating references
+2025-05-31 03:41:52,988 - INFO - Found 41 valid and 17 invalid references
+2025-05-31 03:41:52,991 - INFO - Step 8: Creating revised paper with track changes
+2025-05-31 03:41:52,992 - INFO - Creating revised paper with track changes
+2025-05-31 03:41:53,120 - INFO - SUCCESS: Applied 0 changes to the paper
+2025-05-31 03:41:53,120 - INFO - SUCCESS: Created revised paper at ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/9220250531033748.docx
+2025-05-31 03:41:53,120 - INFO - Step 9: Creating assessment document
+2025-05-31 03:41:53,120 - INFO - Creating assessment document
+2025-05-31 03:41:53,130 - WARNING - LLM didn't return valid JSON for assessment. Using basic assessment.
+2025-05-31 03:41:53,148 - INFO - SUCCESS: Created assessment document
+2025-05-31 03:41:53,148 - INFO - SUCCESS: Created assessment document at ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/9320250531033748.docx
+2025-05-31 03:41:53,148 - INFO - Step 10: Creating letter to editor with process disclosure
+2025-05-31 03:41:53,148 - INFO - Creating letter to editor
+2025-05-31 03:41:53,169 - WARNING - Error getting review process summary: 'NoneType' object is not subscriptable
+2025-05-31 03:41:53,224 - INFO - SUCCESS: Created letter to editor
+2025-05-31 03:41:53,224 - INFO - SUCCESS: Created letter to editor at ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/9420250531033748.docx
+2025-05-31 03:41:53,225 - INFO - SUCCESS: Cost report exported to ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/cost20250531034153.txt
+2025-05-31 03:41:53,226 - INFO - SUCCESS: Paper revision process completed successfully!
+2025-05-31 03:41:53,226 - INFO - SUCCESS: Detailed revision report saved to ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/report20250531034153.txt
+2025-05-31 03:41:53,226 - INFO - SUCCESS: Log file saved to ./tobe/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748/log20250531033748.txt
+2025-05-31 03:41:53,235 - ERROR - Error in paper revision process: unsupported format string passed to NoneType.__format__
+2025-05-31 03:41:53,235 - ERROR - Exception: unsupported format string passed to NoneType.__format__
+2025-05-31 03:41:53,236 - INFO - Paper revision process failed after 245.14 seconds
+2025-05-31 03:41:53,242 - INFO - Moving files to trash directory: ./tobe/_trash/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748
+2025-05-31 03:41:53,245 - INFO - SUCCESS: Files copied to trash directory: ./tobe/_trash/TRAINING/B01_gpt_4o_mini_(balanced)/20250531033748

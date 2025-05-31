@@ -1,0 +1,17 @@
+FAILURE REPORT - 2025-05-31 08:40:00
+Model: gpt-4o (Code: B03)
+Provider: openai
+Operation mode: final
+Original directory: /home/dpolonia/20250530Computers/FINAL_20250531083852
+Trash directory: ./tobe/_trash/FINAL/B03_gpt_4o/20250531083852
+
+Files moved to trash:
+- 9120250531083852.docx
+- cost20250531084000.txt
+- log20250531083852.txt
+- zz20250531083852.bib
+- 9420250531083852.docx
+- 9320250531083852.docx
+- 9020250531083852.docx
+- report20250531084000.txt
+- 9220250531083852.docx

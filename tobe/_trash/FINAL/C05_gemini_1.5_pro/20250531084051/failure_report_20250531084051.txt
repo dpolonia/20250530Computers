@@ -1,0 +1,17 @@
+FAILURE REPORT - 2025-05-31 08:42:04
+Model: gemini-1.5-pro (Code: C05)
+Provider: google
+Operation mode: final
+Original directory: /home/dpolonia/20250530Computers/FINAL_20250531084051
+Trash directory: ./tobe/_trash/FINAL/C05_gemini_1.5_pro/20250531084051
+
+Files moved to trash:
+- report20250531084204.txt
+- 9320250531084051.docx
+- cost20250531084204.txt
+- 9020250531084051.docx
+- 9120250531084051.docx
+- 9420250531084051.docx
+- 9220250531084051.docx
+- zz20250531084051.bib
+- log20250531084051.txt

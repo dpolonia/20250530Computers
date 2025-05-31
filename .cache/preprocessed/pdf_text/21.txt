@@ -1,0 +1,977 @@
+Citation: Haase, J.; Walker, P.B.;
+Berardi, O.; Karwowski, W. Get Real
+Get Better: A Framework for
+Developing Agile Program
+Management in the U.S. Navy
+Supported by the Application of
+Advanced Data Analytics and AI.
+Technologies 2023, 11, 165.
+https://doi.org/10.3390/
+technologies11060165
+Academic Editors: Mohammed
+Mahmoud and Pedro Antonio
+Gutiérrez
+Received: 26 August 2023
+Revised: 12 November 2023
+Accepted: 13 November 2023
+Published: 20 November 2023
+Copyright:
+© 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed
+under
+the
+terms
+and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+technologies
+Article
+Get Real Get Better: A Framework for Developing Agile
+Program Management in the U.S. Navy Supported by the
+Application of Advanced Data Analytics and AI
+Jonathan Haase 1, Peter B. Walker 2,*, Olivia Berardi 3 and Waldemar Karwowski 4,*
+1
+NAVSEA PEO USC, PMS 408, Expeditionary Warfare Ofﬁce, Washington, DC 20376, USA;
+jonjhaase@gmail.com
+2
+PEO USC, PMS 408–Expeditionary Medicine, 1333 Isaac Hull Ave., Washington Navy Yard, DC 20376, USA
+3
+Cydecor, Inc., 251 18th St. S Ste 550, Arlington, VI 22202, USA; olivia.l.berardi.ctr@us.navy.mil
+4
+Department of Industrial Engineering and Management Systems, University of Central Florida,
+Orlando, FL 32816, USA
+*
+Correspondence: peter.b.walker.mil@health.mil (P.B.W.); wkar@ucf.edu (W.K.)
+Abstract: This paper discusses the “Get Real Get Better” (GRGB) approach to implementing agile
+program management in the U.S. Navy, supported by advanced data analytics and artiﬁcial intel-
+ligence (AI). GRGB was designed as a set of foundational principles to advance Navy culture and
+support its core values. This article identiﬁes a need for a more informed and efﬁcient approach to
+program management by highlighting the beneﬁts of implementing comprehensive data analytics
+that leverage recent advances in cloud computing and machine learning. The Jupiter enclave within
+Advana implemented by the U.S. Navy, is also discussed. The presented approach represents a
+practical framework that cultivates a “Get Real Get Better” mindset for implementing agile program
+management in the U.S. Navy.
+Keywords: program management; data analytics; machine learning; artiﬁcial intelligence; agile
+development
+1. Introduction
+Rapid advances in business applications of data analytics (DA) and artiﬁcial intelli-
+gence (AI) have great potential to transform and disrupt the current program-management
+capabilities and practices [1–3]. Many recently published studies have demonstrated the
+beneﬁts of the effective implementation and integration of data analytics and AI in project
+management (see, for example, [4,5]). While most of these studies focused primarily on
+project management, Santos and de Carvalho [6] discussed the beneﬁts of scaling agile
+project management to large projects. This paper introduces the requirements for leveraging
+data analytics and AI to enhance program management in the U.S. Navy environment.
+In a fast-evolving world, the United States Navy military consistently strives to stay
+ahead by ensuring the efﬁcient execution of complex programs while continuing to meet
+mission-critical objectives. To meet these continuing and changing demands, the Navy’s
+Chief of Naval Operations established the foundations for a program known as Get Real Get
+Better (GRGB) in 2021. GRGB was designed as a set of foundational principles to advance
+Navy culture and support its core values. “Get Real” focuses on self-assessment and
+transparency. To stay ahead of its near-peer competition, the Navy needs to be continually
+self-aware and provide continued assessment regarding its performance. Similarly, “Get
+Better” attempts to utilize this self-assessment and commit to improvement. Here, the focus
+is on achieving the highest standards of performance.
+This paper discusses the Get Real Get Better (GRGB) approach for developing agile
+program management in the U.S. Navy. Currently, the Navy seeks to apply advanced data
+Technologies 2023, 11, 165. https://doi.org/10.3390/technologies11060165
+https://www.mdpi.com/journal/technologies
+Technologies 2023, 11, 165
+2 of 16
+analytics and artiﬁcial intelligence (AI) to transform program management by identify-
+ing and ﬁxing the root causes of its current challenges. At its core, the proposed GRGB
+framework leverages data-driven decision making (Get Real) to build program manage-
+ment performance (PMP) and evaluation criteria to cultivate an environment of program
+management performance improvement (Get Better).
+2. Background: Project and Program Management
+2.1. Agile Project Management
+The agile approach to project management has been extensively used within the
+software development sector and manufacturing settings due to the industry’s dynamics
+and the need for rapid adaptation to unforeseen changes in business environments [7,8].
+However, current agile project management is still limited by the absence of advanced
+analytical methods allowing for automated prediction, estimation, planning, resource and
+risk management, and decision-making in general [5]. For example, Cabrero-Daniel [9]
+conducted an extensive literature review and longitudinal meta-analysis of the retrieved
+studies, focusing on integrating artiﬁcial intelligence with agile software development
+methodologies and the role of artiﬁcial intelligence and its future applications within agile
+software development with a focus on continuous integration and delivery. Furthermore,
+Auth et al. [10] proposed a conceptual framework to speed up the potential applications of
+artiﬁcial intelligence in the project management area.
+2.2. AI-Supported Agile Project Management
+Many recent studies have pointed out that modern management faces the challenge
+created by potentially disruptive AI applications across entire organizations and their
+business processes [1,5], including, among others, organization-speciﬁc AI use cases [11],
+software engineering [12], healthcare [13], and medicine [14]. Most recently, Odeh [15]
+argued that project managers should take full advantage of AI to transform traditional
+project management processes to meet stakeholders’ needs and deliver the desired project
+outcome. Furthermore, Bento et al. [16], based on a systematic literature review, pointed
+out that the ﬁeld of project management still needs to fully embrace the beneﬁts of AI
+technology, and more research and development is required in this direction.
+As discussed by Dam et al. [17], the rapid developments in the ﬁeld of artiﬁcial
+intelligence (AI) can transform the current practices in agile project management (APM) by
+accelerating productivity and increasing project success rates. Such a transformation can be
+achieved by assisting project managers through AI-based automation of repetitive and high-
+volume tasks, improving project analytics for estimation and risk prediction, and enabling
+AI-supported actionable decision-making. The most recent systematic literature review by
+Taboada et al. [18] concluded that AI and machine learning (ML) could be very useful in the
+management of IT and construction projects by enabling signiﬁcant improvements in project
+planning [19], scheduling [20], cost and quality [21], forecasting [22], risk management [23],
+and decision-making competences [24–26].
+2.3. Human–AI Collaboration in Project Management
+According to Abedin et al. [27], AI systems are currently being implanted into var-
+ious information systems, including medical diagnostics, health, layout design, human
+resources, arts, entertainment, ﬁnancial/credit scoring, and autonomous vehicles. Shang
+et al. [28] suggested that AI technologies are underutilized in project management due
+to limited support from top management, the absence of organizational readiness, the
+high cost of AI implementation and maintenance, and the shortage of personnel trained
+in AI. Furthermore, a questionnaire study by Fridgeirsson et al. [29] suggested that the
+respondents did not consider artiﬁcial intelligence as a technology that could support
+the required human cognitive skills and leadership abilities. However, as pointed out by
+Puranam [30], effective human–AI collaborative decision making should be considered
+as a problem in organization design based on two different criteria, i.e., (1) specialization,
+Technologies 2023, 11, 165
+3 of 16
+where humans and AI systems perform tasks that they are best at, and (2) multiple learning
+conﬁgurations, which consider the ways that humans and AI systems may “learn together”
+and use the most relevant knowledge for collaboration.
+Some recent studies have shown the success of human–AI teamwork [31] with hybrid
+decision making, where the individual strengths of the humans and the AI systems allow
+the optimization of the joint decision outcomes. Such collaborative efforts, where the
+human–AI team outperforms the individual agents acting separately, are also called hybrid
+intelligence [32,33]. Examples of such effective human–AI collaboration include knowledge
+work [34], data annotation [35], medical diagnosis [36], mental health [37], and computa-
+tionally informed mission planning [38]. Furthermore, the new developments in the theory
+of organizational decision-making [39] also suggest effective ways in which the decisions of
+organizational members can be combined with AI-based decisions for successful human-AI
+teaming and collaboration in the project management area. Finally, it should be noted
+that, according to Smolensky et al. [40], the recent developments in neurocompositional
+computing [41] will allow us to overcome the limitations of current computing paradigms
+and enable building AI systems that exhibit a high level of cognitive abilities, which are
+required for the realization of AI-powered project management applications.
+2.4. Program Management in the U.S. Navy
+This paper describes a practical framework for developing agile program management
+in the U.S. Navy. It should be noted that most of the published literature on the applications
+of advanced data analytics and AI focuses on project management rather than program
+management. However, as pointed out by many studies [42–46], there are signiﬁcant
+differences between project and program management. Notably, Lycett et al. [42] noted
+that program management is not just a scaled-up version of project management and that
+the ”one size ﬁts all” approach to program management is inappropriate in the dynamic
+business environment. They also pointed out that while project management is inward-
+focused and task-oriented, program management is strategy-focused and represents a
+wider organizational view. In that context, program management links the gap between
+project delivery and the organization’s strategic planning [43]. For example, program
+management in the information technology sector should continually change to uphold
+effective alignment with organizational strategies and react to the external environment as
+needed to preserve its relevance [44]. On the other hand, managing speciﬁc projects in a
+given program requires making decisions to align them with the program goals.
+Pellegrinelli [45] also contended that it is important to distinguish project management
+from program management, including the related concepts, approaches, and techniques
+relevant to each discipline. Concerning the role of managers, Walenta [46] outlined some
+key differences between project managers and program managers by noting that (1) project
+managers are inward-oriented, while program managers are focused on the outside envi-
+ronment; (2) the competencies of successful project managers signiﬁcantly differ from the
+competencies of successful program managers; and (3) project managers do not possess
+the required knowledge and skills for program management. Furthermore, de Groth [47]
+noted that project-oriented organizations use program management to cope with learning
+challenges across teams at different organizational levels. To integrate the above concepts,
+Thiry [48] proposed a uniﬁed model for learning performance program management that
+combines value management with project management.
+3. Data-Driven Organizations
+3.1. The Power of Data-Driven Decision-Making
+There are several recent studies on the benefits of data-driven decision-making, defined
+as the process of using data to inform decision-making and validate courses of action [7–9].
+Stobierski [10] outlined the advantages of data-driven decision-making, arguing that data
+analytics can improve project management outcomes. From a program management
+perspective, data-driven decision-making could take many forms. For example, a program
+Technologies 2023, 11, 165
+4 of 16
+ofﬁce might use spending plans to estimate obligations and expenditure rates. These
+estimates might then be used to make ﬁscal decisions regarding where to spend money in
+future years and how to break down procurement versus research expenditures or develop
+new contracts for execution. The important notion is that the data can drive the decision-
+making process and positively impact organizational performance. Indeed, as access to
+data and the ability to process these data in a more parallel manner become more accessible,
+it will become even easier for organizations to adopt a data-driven decision framework.
+Data collection and analysis are key to the US Navy’s “Get Better, Get Real” strategy.
+Speciﬁcally, the collection of authoritative data drives conﬁdence in the decisions that
+are being made to drive programmatic change. Not only do the data help to baseline
+where certain program constraints exist, but they also provide traceability with respect
+to how changes may impact the organization. Data also reduces the need for intuitive
+decision-making, eliminating the inﬂuence of personal bias. By leveraging authoritative
+data, a program ofﬁce can fully commit to a particular strategy by having conﬁdence that
+this approach will have speciﬁc impacts in a particular area.
+3.2. Becoming a Data-Driven Organization
+Organizations seeking to become more data-driven need to foster a data-driven cul-
+ture [7–10]. This requires the adoption of a mindset that values the insights and use of
+authoritative data. Program managers at the Navy can curate this by developing a culture of
+“data awareness” by encouraging behaviors that seek to leverage data to drive performance
+change. Program managers should also seek to eliminate barriers to accessing authoritative
+data as much as possible. As program ofﬁces seek to make this transition from an intuitive
+to a data-driven culture, there are several steps that can be taken to ensure this happens in
+a manner that facilitates programmatic success. These steps include the following:
+Establish an Authoritative Data Lake: Create a centralized database to store and manage
+all project-related data, ensuring easy access for program managers (PMs) and other stake-
+holders. While there is a need to identify authoritative data sources, the data oftentimes
+may not exist or do not exist in the form that is needed for appropriate analyses. In this
+case, program managers should seek ways to develop new data pipelines that would allow
+for the collection of new and meaningful data;
+Develop Data Collection Standards: One potential pitfall for organizations hoping to adopt
+a data-driven mindset is the inconsistency in which data are collected and reported. To
+avoid this, program managers should seek to implement uniform data collection standards
+across different departments, programs, and projects, making it easier to compare and
+analyze data. Developing data dictionaries or metadata repositories is critical here. A
+data dictionary is deﬁned as a centralized repository of information about data, such as its
+meaning, relationships to other data, origin, usage, and format. By posting this information
+in an easily accessible location and ensuring the dictionary is available to users across
+all levels of the organization, the program ofﬁce can ensure that data are being used in a
+reliable and consistent fashion. This also ensures that conclusions drawn from the use of
+those data are consistent and explainable to users;
+Invest in Data Management Tools: The adoption of a data-driven culture begins with the
+consistent use of data management tools. Program managers should equip themselves and
+their professionals with data management tools, including machine learning and statistical
+modeling techniques, to enable them to derive valuable insights from the collected data. In
+addition, organizations should seek out new and meaningful ways to visualize their data.
+Data visualization is as critical a part of the data analytic process as any other. End users
+simply cannot derive any meaningful interpretation or action from raw data. Visual aids
+that emphasize the power of the data, the inﬂuence and impact of the raw data in drawing
+speciﬁc conclusions, and that demonstrate trends and patterns in the data are all critical
+pieces for data adoption. Visualization tools such as Qlik, Tableau, and even Excel allow
+users to convert raw data of any kind and make them more interpretable for stakeholders
+at all levels;
+Technologies 2023, 11, 165
+5 of 16
+Encourage a Data-Driven Culture: Finally, organizations should seek to promote a culture
+that emphasizes the importance of data-driven decision-making at all levels of the orga-
+nization. Organizational leaders should try to avoid situations that encourage intuitive
+decision-making and rely more on decision-making processes that allow them to trace
+those decisions back to authoritative data. In this case, leading by example will also create
+an environment within a program ofﬁce that encourages analytical thinking. The incul-
+cation of this framework begins by encouraging those behaviors that are consistent with
+data-driven values. This includes providing ongoing training, creating incentives, and
+recognizing achievements in data-driven program management.
+4. Methodology
+The adoption of a data-driven culture can be a key enabler for program managers
+willing to transform their organizations. By gathering and properly labeling data for future
+programs, the U.S. Navy can experience numerous beneﬁts, including the following:
+1.
+Enhanced Decision Making: access to well-structured data will allow PMs to gain a
+deeper understanding of their programs, helping them to identify potential risks and
+opportunities for improvement;
+2.
+Optimized Resource Allocation: data-driven insights can guide PMs in making more
+informed decisions about resource allocation, ensuring that scarce resources are
+deployed effectively;
+3.
+Fostered Collaboration: the availability of relevant data can promote information
+sharing and collaboration between different departments and stakeholders, resulting
+in more efﬁcient project management and better outcomes;
+4.
+Improved Accountability: data transparency will improve accountability by enabling
+PMs to track progress more accurately, making it easier to identify and address
+inefﬁciencies.
+4.1. Business Analytics Use Case
+In March 2023, the Expeditionary Missions Program Ofﬁce (PMS 408) and Naval Sea
+Systems Command (NAVSEA) initiated a use case through Advana Jupiter of the Depart-
+ment of the Navy’s (DoN) enterprise data environment [49,50]. Through a partnership
+with Advana that includes access to data mining and machine learning engineers, product
+managers, full-stack developers, and data visualization experts, PMS 408 sought to create a
+shared understanding of organizational metrics through historical, current, and forward-
+looking algorithms. The goal of this effort was two-fold: (1) to foster a data-driven decision
+culture that allows program managers and analysts at all levels to inform decisions through
+authoritative data, and (2) to simplify and automate existing reporting metrics.
+To accomplish these goals, a need for reducing qualitative or intuitive decision-making
+processes was recognized. This was carried out to increase conﬁdence in programmatic
+planning by developing a data-driven framework for planning and execution. This begins
+ﬁrst by identifying authoritative data sources that drive programmatic execution. Once
+identiﬁed, it was important to understand how these data facilitate or inhibit organizational
+performance. At this stage, it was critical to engage with organizational leadership to
+understand their goals and how these authoritative data can serve as a proxy for assessment
+toward those goals. As with any data-driven environment, it was also important to focus
+on those features that aligned most with the strategic vision of organizational leadership.
+This should be carried out a priori rather than using a data exploration approach. Such an
+approach was encouraged to prevent the Navy from responding to artifacts that might exist
+within the data. Consequently, those features that were the true drivers of organizational
+performance were identiﬁed. It should be noted, however, that given the breadth and scope
+of data pipelines, this could potentially lead to “false positives” and other data artifacts.
+Technologies 2023, 11, 165
+6 of 16
+4.2. Advana Jupiter
+With the above-discussed goals in mind, the Navy initiated the creation of a data
+analytic dashboard sitting on top of the Advana Jupiter infrastructure [49,50]. Advana
+Jupiter serves as the DoN enterprise data hub. Through a tiered “Wisdom of Crowds”
+approach, DON Information Data Stewards create disparate data hubs across a variety of
+data domains. The integration of these data hubs allows for the aggregation of the most
+authoritative and comprehensive view of enterprise data.
+It should be noted that the Advana Jupiter provides several inherent advantages over
+local or distributed cloud architectures. For example, Jupiter allows for more ﬂexible cloud
+computing. Speciﬁcally, Jupiter provides both dedicated and “on-demand” computing
+and storage capacity. In addition, Jupiter and its licensed applications allow for a more
+robust data pipeline for more efﬁcient data ingestion, processing, and visualization. A
+more attractive feature of Advana is the ability to develop speciﬁc queries on new or
+existing data. Metadata are stored on Advana and can be accessed via data discovery tools,
+technical documentation, and a data catalog. Lastly, Jupiter provides perhaps the most
+modern toolset for data analytics in the acquisition enterprise. Tools such as Apache Spark
+allow for large-scale data processing that is agnostic to programming languages. For data
+analytics, developers have access to tools such as PyTorch and TensorFlow, which allow for
+the development and deployment of machine learning algorithms such as deep learning.
+PMS 408 has initiated several efforts that leverage the tools within Advana Jupiter to
+assist in programmatic development. These efforts are designed to leverage the tools and
+algorithms within this environment to provide more quantitative metrics to describe overall
+programmatic health in areas including contract performance, requirement traceability, and
+portfolio visualizations. For example, the PMS 408 team and its developers have developed
+visualizations surrounding portfolio investments using the Qlik business intelligence (BI)
+and visualization platform. This tool can be used in areas such as data integration to assist
+in importing and integrating portfolio investment data from data sources such as Navy
+Enterprise Resource Planning (ERP) data. Navy ERP captures and manages ﬁnancial data
+related to the Navy’s budgeting, accounting, and ﬁnancial transactions. This includes data
+related to budget allocation, expenditure tracking, payroll, and ﬁnancial reporting.
+Some of the key data sources being integrated into this speciﬁc use case include
+procurement data. Here, the system maintains data related to the procurement of goods and
+services, including purchase orders, vendor information, contract details, and procurement
+history. In addition, models based on asset management data were developed. In this case,
+Navy ERP can track and manage assets such as equipment, vehicles, and facilities. This
+includes data on asset maintenance, depreciation, and utilization.
+Similarly, a focused approach to analyzing data surrounding reporting and analytics
+has been adopted. The ERP generates various reports and analytics based on the data
+it collects. These reports help Navy leadership make informed decisions about resource
+allocation, budget planning, and operational efﬁciency. Taken together, the historical
+data were used to build predictive models of future performance. For example, Navy
+ERP accumulates historical data that can be used for trend analysis, forecasting, and
+performance evaluation. Finally, historical data can provide valuable insights into the
+Navy’s ﬁnancial and operational performance.
+4.3. The Qlik Platform
+For this business use case, data from ERP and other government data on the Qlik
+platform were used. This integration allowed the development of data models within
+Qlik to organize our portfolio data. These models help to deﬁne relationships between
+different data tables, such as investments, asset classes, and performance metrics. This
+step is crucial for building meaningful visualizations. A second advantage of the Qlik tool
+is that it allows for ease-of-dashboard creation and visualization. Qlik’s drag-and-drop
+interface created interactive dashboards that can be updated in near real time. In addition,
+users could customize these dashboards to ﬁlter and drill down into the data. Analysts and
+Technologies 2023, 11, 165
+7 of 16
+programmatic leadership can select speciﬁc investments, time frames, or asset classes to
+focus on speciﬁc aspects of the portfolio.
+Visualizations only represent a small fraction of the capability developed through the
+Advana Jupiter business use case. Using additional tools allowed through their secure
+government cloud brokerage enabled the Navy to build models that track key performance
+indicators (KPIs) to provide additional insights into portfolio performance. Examples
+include calculating contract performance deviations, long product delivery delays, and
+other hindrances to programmatic performance. Making further use of the Advana pipeline
+allowed implementing alerts and notiﬁcations within Advana to automatically alert users
+when investments failed to meet predeﬁned criteria or required attention.
+Overall, the tools within the Advana pipeline are a catalyst for developing quantiﬁable
+models to better understand portfolio performance. This study discussed how it was possi-
+ble to use these tools and the Advana platform in the Navy for analysis and visualization
+purposes. Such tools provide ﬂexibility and interactivity, making them well-suited for
+portfolio managers, ﬁnancial analysts, and resource sponsors who want to gain deeper
+insights into their investment portfolios and make informed decisions.
+5. Agile Program Development in the U.S. Navy
+Several studies examined various aspects of agile project management [51–54]. For
+example, Koch and Schermuly [53] suggest that agile project management practices can sig-
+niﬁcantly impact organizational culture. Coram and Bohner [55,56] discussed the impact of
+agile methods on software project management, arguing that agile methodologies improve
+project delivery and faster adaptation to changing market requirements. Conforto et al. [57]
+explored the feasibility of adopting agile project management methodologies outside the
+software industry.
+To ensure the development of the present framework is both impactful and delivered at
+a pace that is consistent with the demands of the Navy’s GRGB program, this project focused
+on developing an agile approach to project management [57]. Historically, much of the
+program and project management efforts have been focused on iterative and/or incremental
+approaches toward delivery. More recently, an emerging debate has arisen comparing more
+traditional “heavyweight” methods with more agile and ﬂuid “lightweight” methods [58].
+Heavyweight methods for project management are those that view the development process
+as more linear, leading to over-reliance on processes and milestones.
+Beck et al. [59] proposed the Manifesto for Agile Software Development, which empha-
+sizes the ability to respond to changing market conditions, customer collaboration, and
+meeting functional software requirements. The document addressed 12 universal principles
+designed to deliver products to customers much more efﬁciently and to directly address
+the needs and wants of the customer. The above principles are illustrated below in the
+context of program management responsibilities and their use by the Navy to drive the
+business analytics use case within the framework of Advana (see Table 1).
+Table 1. Principles of agile software (v. 2001) development (modiﬁed after Beck et al., 2001).
+Software delivery
+Deliver working software frequently, from a couple of weeks to a couple of
+months, with a preference for a shorter timescale. Too often, projects are
+conducted in a manner where there may be an initial envisioning session.
+Beyond that, developers may fail to interact with either thought leaders or
+end users. This was carried out to avoid this through continuous and
+transparent communication with all stakeholders.
+Collaboration
+Businesspeople and developers must work together daily throughout the
+project. The development team must work directly with end users to better
+understand their problems and how algorithms should be designed to
+address those root problems.
+Technologies 2023, 11, 165
+8 of 16
+Table 1. Cont.
+Motivation
+Build projects around motivated individuals. Give them the environment
+and support they need, and trust them to complete the job. This is carried
+out to empower the development teams by giving them the opportunity to
+build innovation. The teams’ creativity was perceived as a key ingredient
+to ultimate success.
+Communication
+Face-to-face conversation continues to be the most efﬁcient and effective
+method of conveying information to and within a development team.
+While the demands of a distributed world were recognized, as much
+face-to-face collaboration as possible was encouraged to facilitate the
+sharing of ideas and more open innovation.
+Demonstrations
+Working software is the primary measure of progress. The goal is to share
+the success via live demonstrations with the stakeholders.
+Development
+Agile processes promote sustainable development. The sponsors,
+developers, and users should be able to maintain a constant pace
+indeﬁnitely. An emboldened collaborator will continue to seek ways to
+improve processes.
+Promotion
+Continuous attention to technical excellence and good design enhances
+agility. Strong technical achievements, as often as possible, are promoted.
+Simpliﬁcation
+Simplicity, the art of maximizing the amount of work not completed, is
+essential to the developed development approach. The teams should not
+be burdened with administrative work that inhibits their ability to deliver
+new and innovative product lines.
+Teams
+The best architectures, requirements, and designs emerge from
+self-organizing teams. However, while collaboration across the effort is
+optional, it occurs organically.
+Adaptation
+The team regularly reﬂects on how to become more effective, then tunes
+and adjusts its behavior accordingly. In-progress reviews, ad hoc scrum
+teams, and other means for self-reﬂection have been used as the key
+facilitators.
+5.1. Applications of Data Analytics and Machine Learning
+The previous section described how the Advana Jupiter platform was harnessed
+to develop a pipeline that ingests, processes, and applies quantiﬁable models to inform
+analysts and program managers. This was carried out using the adoption of data mining
+and machine learning approaches. More explicitly and in the context of the presented BI
+use case, it was postulated that data mining and machine learning could address speciﬁc
+challenges in program management within the context of the U.S. Navy by leveraging
+data-driven insights to improve decision-making, optimize resource allocation, enhance
+operational efﬁciency, and reduce risks.
+For example, machine learning models can analyze historical program data to improve
+the accuracy of cost estimates for new projects. They can help with budget planning and
+allocation. Similarly, these models can conduct real-time data analysis to identify cost
+overruns or anomalies, allowing program managers to promptly take corrective action.
+Similarly, data mining and machine learning can assist in resource allocation decision-
+making. Machine learning algorithms can allocate resources more efﬁciently by considering
+project complexity, resource availability, and historical performance data. In addition, data
+mining can identify potential bottlenecks or resource constraints that may impact program
+timelines. Furthermore, machine learning can be used to analyze historical scheduling
+data to optimize project timelines and reduce delays. These tools can also be applied to
+help predict maintenance needs for Navy equipment, reducing downtime and ensuring
+operational readiness.
+Finally, the above tools have been utilized to assist in decision support. Speciﬁcally,
+the applied data mining and machine learning models have helped support predictive
+Technologies 2023, 11, 165
+9 of 16
+insights and allow program managers to make informed decisions about resource allocation
+and risk mitigation. Similarly, data mining can be applied to simulate different program
+scenarios to evaluate their potential impacts on outcomes. By leveraging data mining
+and machine learning in program management, the U.S. Navy can enhance its ability to
+plan, execute, and monitor programs effectively, improving mission success, cost control,
+and overall operational efﬁciency. However, the extent to which these tools can inﬂuence
+the discussed aspects of planning and execution depends on the quality of the iterative
+feedback on model development and deployment provided by the users. Therefore, it is
+critical in instances such as the use case presented here and others like it that program
+managers are motivated and able to adopt a more ﬂexible framework for model acceptance
+and deployment.
+5.2. How the Agile Approach Impacts Program Management in the U.S. Navy
+In this paper, it has been postulated that a comprehensive data pipeline inspired by
+agile software development principles represents a realization of the “Get Real Get Better”
+initiative. The speciﬁc instances of how agile principles can be used to emphasize iterative
+development, collaboration, adaptability, and customer centricity, which can be highly
+beneﬁcial in the context of Navy program management, are discussed below.
+It is all too common for Navy programs to face issues such as changing requirements
+and operational environments. An agile-inspired data pipeline can be designed to accom-
+modate changes gracefully. They allow for quick adjustments and additions to data sources,
+transformations, and analytics as program requirements evolve. Similarly, Navy program
+managers are consistently challenged with high-risk decisions without the time necessary
+to comprehensively weigh all options. Agile practices enable the rapid development of
+data analytics and visualizations. Program managers can access up-to-date information
+and quickly make informed decisions.
+Program ofﬁces are also required to have continuous stakeholder collaboration. Simply
+put, without effective collaboration, programs are not able to deliver on their promised
+capabilities. However, agile frameworks emphasize continuous collaboration between
+data teams and program managers. Frequent check-ins and feedback loops ensure that
+data solutions align with program objectives. Identifying and mitigating risks is a key
+program management aspect. Agile’s iterative approach allows for the continuous mon-
+itoring of program data. This helps in the early detection of risk factors and adapting
+strategies accordingly.
+By embracing agile-inspired principles in the development and management of data
+pipelines for program management, the U.S. Navy has enhanced its ability to address
+dynamic challenges, make data-driven decisions, and achieve successful outcomes in a
+rapidly evolving operational environment. This framework promotes a culture of adapt-
+ability and continuous improvement that is well suited to the Navy’s mission requirements
+and consistent with the vision that has been outlined by the “Get Better Get Real Framework”.
+6. AI and Data Science in Agile Project Management
+Many recently published studies have demonstrated the effective implementation of
+data analytics and AI in project management [4,5]. Other studies [18,19] have discussed
+the challenges of incorporating AI and data analytics into agile project management to
+improve software development outcomes. Gil et al. [2] reviewed the recent approaches to
+incorporating AI in project management to optimize project processes. Crawford et al. [20]
+present a survey of AI applications in software engineering, speciﬁcally focusing on project
+management. Most recently, Hoda et al. [60–62] introduced the concept of human-centered
+AI-assisted agile project management that augments software management processes
+and human decision-making. The above studies presented the beneﬁts of integrating
+the principles of agile project management, AI, and data science into various project
+management applications. The current paper introduces the requirements for leveraging
+data analytics and AI to enhance program management in the U.S. Navy environment.
+Technologies 2023, 11, 165
+10 of 16
+6.1. Artiﬁcial Intelligence and Machine Learning Applications
+Over the past 10 years, there has been exponential growth in the use and adoption of
+artiﬁcial intelligence tools, including machine learning [63]. Generally speaking, machine
+learning is typically categorized into one of three different categories: supervised, unsu-
+pervised, or reinforcement. Each of these approaches varies in the way it is trained, the
+outputs it provides, and the application of its algorithms to various data types. In a very
+general sense, artiﬁcial intelligence and machine learning represent sophisticated forms of
+data analysis. Using algorithms that continuously learn from data, these approaches allow
+machines to recognize hidden patterns in data sets that are often too subtle for humans
+to identify and/or explain. In addition, through repeated exposure to disparate data sets
+(training), machines can then extrapolate those patterns to new data to predict future states.
+6.2. A Case for Deep Learning
+Recent advances in computing power and architecture have allowed deep learning
+algorithms to reach performance levels unmatched by other machine learning approaches.
+Deep learning has been a key enabler in several key technology areas, including driverless
+cars, image recognition, and human–machine interaction [12,64]. In its most basic form,
+deep learning allows a computer model to perform classiﬁcation tasks directly from images,
+text, or sound. Deep learning models can achieve state-of-the-art accuracy, sometimes
+exceeding human-level performance [65].
+6.3. Generative AI
+Within the past ﬁve years, there has been a resurgence of interest in the area of
+generative artiﬁcial intelligence. Generative AI describes algorithms (such as ChatGPT) [66]
+that can be used to create new content. In this case, content describes new material created
+by the algorithm. This might include content such as audio ﬁles, programming code,
+images, contract language, or videos. Recent advances in the ﬁeld of large language models
+(LLMs) have dynamically changed the way artiﬁcial intelligence and its applications are
+being viewed today. Generative AI opens a plethora of potential use cases within the
+program management space. The primary reasoning for this is that users need not be
+experts in AI and machine learning (ML) to apply these machine learning approaches.
+Rather, they need to be experts in their respective domains. Indeed, a new and growing
+ﬁeld in machine learning is known as “prompt engineering” [67]. Prompt engineering
+is a new concept within AI and machine learning where the description of the task that
+should be accomplished by the AI is embedded within the input. Rather than the algorithm
+attempting to extract those features based on the training data, prompt engineering allows
+the user to embed features based on the questions asked of the algorithm.
+6.4. ChatGPT: Example
+To demonstrate the power and ease of generative AI, a simple query using ChatGPT
+has been implemented. ChatGPT is an AI chatbot developed by OpenAI. ChatGPT is built
+on top of large language models (LLMs) and has been optimized using both supervised
+and reinforcement learning techniques. The primary use of traditional chatbots is to model
+human behavior. However, ChatGPT and this newer generation of generative AI are much
+more versatile. These models have been applied in various use cases, including reading
+and writing code, generating art, and other complex tasks (see Table 2).
+While generative AI appears to be the most promising application of AI for program
+management, caution must be exercised as well. On the one hand, using and applying LLMs
+has seen exponential growth in the past half decade [68,69]. However, surrounding their
+use, there has been extensive hype, misunderstanding, and misrepresentation regarding
+their capabilities. For example, Bender et al. [4] pointed out that LLMs have been built on
+foundational work from Natural Language Processing (NLP) [70]. However, these models
+do not code for Natural Language Understanding (NLU).
+Technologies 2023, 11, 165
+11 of 16
+Another issue with generative AI revolves around the poorly understood problem
+of latent concept learning. Speciﬁcally, these models are learning relationships within the
+training data that are so abstract that they are unlikely to be perceived by a human audience.
+It is believed that the issues revolving around concepts such as trust and fairness [71] will
+become more pronounced as these models are deployed more frequently going forward.
+Table 2. Example of a ChatGPT query.
+>>Provide Some Examples in Which Generative AI Can Be Used to Assist Program
+Managers.<<
+ChatGPT Reply:
+Generative AI, such as GPT-3, can be used to assist in program management in a variety of ways.
+Here are some examples:
+1. Requirement Gathering:
+Program managers can use generative AI to help with requirement gathering. They can provide
+the AI with the project’s scope and goals, and the AI can generate a list of requirements that need
+to be fulﬁlled to achieve those goals;
+2. Risk Management:
+AI can help in identifying potential risks in the program by analyzing data from past projects and
+identifying patterns that indicate potential problems. This can help the program manager take
+proactive measures to mitigate those risks;
+3. Resource Allocation:
+Program managers can use AI to assist in the allocation of resources such as personnel,
+equipment, and funding. AI can help in predicting future resource needs based on past
+performance data and other relevant information;
+4. Schedule Optimization:
+Generative AI can assist program managers in optimizing schedules by analyzing historical data
+to identify the best way to sequence tasks and allocate resources;
+5. Decision-Making:
+AI can assist program managers in making better decisions by providing them with data-driven
+insights and recommendations. This can help the program manager make informed decisions that
+are more likely to lead to successful outcomes;
+Overall, generative AI can help program managers streamline their processes, improve
+decision-making, and increase the chances of program success. However, it is important to note
+that AI should be used as a tool to assist program managers rather than a replacement for human
+decision-making.
+Department of Defense (DoD) program management involves complex and high-stakes projects,
+and machine learning can be used to support decision-making, risk management, resource
+allocation, and other aspects of program management. Here are some examples of machine
+learning techniques that can be used in DoD program management:
+1. Predictive analytics:
+Predictive analytics can be used to forecast future outcomes and identify trends based on
+historical data. This can be useful for predicting project completion dates, identifying potential
+cost overruns, and estimating resource needs;
+2. Natural language processing (NLP):
+NLP can be used to analyze unstructured data, such as emails, chat messages, and reports. This
+can help program managers identify potential risks and issues that may not be captured in
+structured data;
+Technologies 2023, 11, 165
+12 of 16
+Table 2. Cont.
+3. Computer vision:
+Computer vision can be used for surveillance, image analysis, and other tasks that require
+processing large amounts of visual data. This can be particularly useful in the defense industry,
+where there is a need for situational awareness and real-time decision-making;
+4. Reinforcement learning:
+Reinforcement learning can be used to optimize resource allocation and scheduling. This
+approach involves using algorithms to learn from experience and improve over time based on
+feedback;
+5. Deep learning:
+Deep learning can be used for a variety of tasks, including image and speech recognition, natural
+language processing, and predictive analytics. This approach involves using neural networks to
+learn from data and make predictions or decisions based on that learning.
+In addition to these techniques, there are also specialized machine learning algorithms and
+frameworks that have been developed speciﬁcally for defense applications, such as the Defense
+Advanced Research Projects Agency’s (DARPA) Explainable Artiﬁcial Intelligence (XAI) program.
+Ultimately, the choice of machine learning techniques will depend on the speciﬁc needs of the
+DoD program and the available data.
+6.5. Implications of Generative AIs for Agile Program Management Development
+Generative AI holds considerable promise for agile program management by poten-
+tially enhancing creativity, automating certain tasks, and introducing rapid prototyping
+capabilities. However, it also brings challenges related to quality assurance, complexity,
+the need for developing new skills among program managers, and many ethical considera-
+tions. As with any disruptive technology, the successful integration of generative AI into
+agile program management practices in the U.S. Navy will require thoughtful planning,
+continuous learning, and adaptability.
+Generally, generative AI systems can create new content such as text, design concepts,
+and software code [70,71]. The applications of generative AI for developing agile pro-
+gram management have many theoretical and practical implications. The key theoretical
+considerations include complexity and uncertainty, continuous learning and adaptation,
+and redeﬁning value. Generative AI can also introduce a new level of complexity to agile
+management programs due to the unpredictable and innovative nature of the generated
+content. This could affect program risk assessment and the required approaches when
+applying agile methodologies.
+Furthermore, generative AI can constantly change its outputs based on knowledge
+feedback loops when applying the agile principle of iterative development. However,
+this also raises questions about achieving the successful completion of speciﬁc program
+objectives and related tasks. Finally, as agile management’s traditional notion of “value”
+evolves, determining the desired value of AI-generated versus human-designed system
+solutions or components becomes critical to fulﬁlling the program management objectives.
+The practical implications of agile program management in the U.S. Navy are sig-
+niﬁcant and include (1) enhanced creativity, (2) automated task completion, (3) feedback
+integration, (4) rapid prototyping, (5) skill requirements, (6) resource allocation, (7) quality
+assurance and testing, and (8) ethical and governance concerns. These implications are
+described in Table 3 below.
+Technologies 2023, 11, 165
+13 of 16
+Table 3. Practical implications of generative AI for agile program management.
+Enhanced creativity
+Program managers can leverage generative models to
+brainstorm and visualize multiple scenarios, designs, or
+solutions, which can then be reﬁned based on speciﬁc
+stakeholder feedback.
+Automated task completion
+Generative AI can automate the generation of code, reports, or
+other outputs for speciﬁc repetitive or well-deﬁned tasks,
+freeing program managers to focus on more complex or
+creative aspects.
+Feedback integration
+Generative models can be retrained or ﬁne-tuned for program
+management purposes based on feedback, aligning with the
+agile practice of regular reﬂection and adaptation.
+Rapid prototyping
+The use of generative AI can quickly produce multiple
+prototypes or solutions to a variety of program management
+tasks, adhering to the agile principle of early and continuous
+delivery.
+Skill requirements
+The introduction of generative AI in agile program
+management will require new skill sets for program
+managers, including data analytics and AI training, which
+should be considered during the planning and execution
+phases of the program.
+Resource allocation
+The use of generative AI will require additional resources,
+such as high-performance computing and specialized
+AI-powered software tools, which should be accounted for
+during program development, planning, and execution.
+Quality assurance and testing
+The use of generative AI will require new testing and quality
+assurance procedures to ensure the accuracy and reliability of
+program management outputs.
+Ethical and governance
+concerns
+The use of generative AI in agile program management
+should be guided by ethical and governance considerations to
+ensure the responsible and ethical use of these technologies.
+7. Conclusions
+Focusing on the tenets within the “Get Real Get Better” framework, this paper has
+postulated that program managers at the U.S. Navy should leverage data-driven decision-
+making to build quantitative program assessment criteria [72,73]. An approach to achieving
+this has been demonstrated using a use case study implemented through the partnership
+with Advana to create a machine learning pipeline for data analytics that program of-
+ﬁces can harness. Addressing advanced and intelligent data analytics capabilities in the
+U.S. Navy’s program management is crucial to ensuring the sustained success of national
+security safeguarding [74,75]. By prioritizing data collection, labeling, and analysis, un-
+locking advanced data analytics and artiﬁcial intelligence’s full potential becomes feasible,
+leading to better decision-making and improved program outcomes. The time has come
+for all stakeholders, ranging from program managers to top leadership, to collaborate in
+cultivating a culture of organizational excellence that is data-driven and empowered by
+artiﬁcial intelligence, thus fueling innovation, efﬁciency, and collaboration as the U.S. Navy
+progresses toward being a more adaptable and resilient organization.
+Author Contributions: Conceptualization, J.H., P.B.W. and O.B.; validation, J.H., P.B.W., O.B. and
+W.K.; writing—original draft preparation, J.H., P.B.W., O.B. and W.K.; writing—review and editing,
+W.K. and P.B.W.; supervision, P.B.W.; project administration, J.H. All authors have read and agreed to
+the published version of the manuscript.
+Funding: This research received no external funding.
+Technologies 2023, 11, 165
+14 of 16
+Data Availability Statement: No new data were created or analyzed in this study. Data sharing is
+not applicable to this article.
+Conﬂicts of Interest: Author Olivia Berardi is employed by the company Cydecor, Inc. The remaining
+authors declare that the research was conducted in the absence of any commercial or ﬁnancial
+relationships that could be construed as a potential conﬂict of interest.
+References
+1.
+Niederman, F. Project management: Openings for disruption from AI and advanced analytics. Inf. Technol. People 2021, 34,
+1570–1599. [CrossRef]
+2.
+Gil, J.; Martinez Torres, J.; González-Crespo, R. The Application of Artiﬁcial Intelligence in Project Management Research: A
+review. Int. J. Interact. Multimed. Artif. Intell. 2021, 6, 54–66. [CrossRef]
+3.
+Song, L.; Minku, L.L. Artiﬁcial Intelligence in Software Project Management. In Optimising the Software Development Process with
+Artiﬁcial Intelligence; Springer Nature: Singapore, 2023; pp. 19–65.
+4.
+Bender, E.M.; Gebru, T.; McMillan-Major, A.; Shmitchell, S. On the Dangers of Stochastic Parrots: Can Language Models Be
+Too Big? In Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency, Virtual, 3–10 March 2021;
+pp. 610–623.
+5.
+Ong, S.; Uddin, S. Data Science and Artiﬁcial Intelligence in Project Management: The Past, Present and Future. J. Mod. Proj.
+Manag. 2020, 7, 26–33.
+6.
+Santos, P.D.O.; de Carvalho, M.M. Exploring the challenges and beneﬁts for scaling agile project management to large projects: A
+review. Requir. Eng. 2022, 27, 117–134. [CrossRef]
+7.
+Schrettenbrunnner, M.B. Artiﬁcial-intelligence-driven management. IEEE Eng. Manag. Rev. 2020, 48, 15–19. [CrossRef]
+8.
+Canals, J.; Heukamp, F. The Future of Management in an AI World; Palgrave Macmillan: London, UK, 2020.
+9.
+Cabrero-Daniel, B. AI for Agile development: A Meta-Analysis. arXiv 2023, arXiv:2305.08093.
+10.
+Auth, G.; Jöhnk, J.; Wiecha, D.A. A Conceptual Framework for Applying Artiﬁcial Intelligence in Project Management. In
+Proceedings of the 2021 IEEE 23rd Conference on Business Informatics (CBI), Bolzano, Italy, 1–3 September 2021; Volume 1,
+pp. 161–170.
+11.
+Hofmann, P.; Jöhnk, J.; Protschky, D.; Urbach, N. Developing Purposeful AI Use Cases-A Structured Method and Its Application
+in Project Management. In Wirtschaftsinformatik (Zentrale Tracks); FIM Research Center: Fraunhofer, Stuttgart, 2020; pp. 33–49.
+Available online: https://www.ﬁm-rc.de/Paperbibliothek/Veroeffentlicht/1025/wi-1025.pdf (accessed on 17 July 2023).
+12.
+Crawford, T.; Duong, S.; Fueston, R.; Lawani, A.; Owoade, S.; Uzoka, A.; Parizi, R.M.; Yazdinejad, A. AI in Software Engineering:
+A Survey on Project Management Applications. arXiv 2023, arXiv:2307.15224. Available online: https://arxiv.org/pdf/2307.152
+24.pdf (accessed on 17 July 2023).
+13.
+Wahl, B.; Cossy-Gantner, A.; Germann, S.; Schwalbe, N.R. Artiﬁcial intelligence (AI) and global health: How can AI contribute to
+health in resource-poor settings? BMJ Glob. Health 2018, 3, e00798. [CrossRef]
+14.
+Lei, H.; Lai, W.; Feaster, W.; Chang, A.C. Artiﬁcial gence and agile project management. In Intelligence-Based Cardiology and Cardiac
+Surgery; Academic Press: Cambridge, MA, USA, 2024; pp. 401–405.
+15.
+Odeh, M. The Role of Artiﬁcial Intelligence in Project Management. IEEE Eng. Manag. Rev. 2023. [CrossRef]
+16.
+Bento, S.; Pereira, L.; Gonçalves, R.; Dias, Á.; Costa, R.L.D. Artiﬁcial intelligence in project management: Systematic literature
+review. Int. J. Technol. Intell. Plan. 2022, 13, 143–163. [CrossRef]
+17.
+Dam, H.K.; Tran, T.; Grundy, J.; Ghose, A.; Kamei, Y. Towards effective AI-powered agile project management. In Proceedings of
+the 2019 IEEE/ACM 41st International Conference On Software Engineering: New Ideas And Emerging Results (ICSE-NIER),
+Montreal, QC, Canada, 25–31 May 2019; pp. 41–44.
+18.
+Taboada, I.; Daneshpajouh, A.; Toledo, N.; de Vass, T. Artiﬁcial Intelligence Enabled Project Management: A Systematic Literature
+Review. Appl. Sci. 2023, 13, 5014. [CrossRef]
+19.
+Teslia, I.; Yehorchenkova, N.; Khlevna, I.; Yehorchenkov, O.; Kataieva, Y.; Klevanna, G. Development of reﬂex technology of
+action identiﬁcation in project planning systems. In Proceedings of the 2022 International Conference on Smart Information
+Systems and Technologies (SIST), Nur-Sultan, Kazakhstan, 28–30 April 2022; pp. 1–6.
+20.
+Bahroun, Z.; Tanash, M.; As’ad, R.; Alnajar, M. Artiﬁcial Intelligence Applications in Project Scheduling: A Systematic Review,
+Bibliometric Analysis, and Prospects for Future Research. Manag. Syst. Prod. Eng. 2023, 31, 144–161. [CrossRef]
+21.
+Son, P.V.H.; Khoi, L.N.Q. Utilizing Artiﬁcial Intelligence to Solving Time–Cost–Quality Trade-Off Problem. Sci. Rep. 2022, 12,
+20112. [CrossRef] [PubMed]
+22.
+Morozov, V.; Kalnichenko, O.; Proskurin, M.; Mezentseva, O. Investigation of Forecasting Methods of the State of Complex
+IT-Projects with the Use of Deep Learning Neural Networks. Adv. Intell. Syst. Comput. 2020, 1020, 261–280.
+23.
+Choetkiertikul, M.; Dam, H.K.; Tran, T.; Ghose, A. Predicting Delays in Software Projects Using Networked Classiﬁcation. In
+Proceedings of the 2015 30th IEEE/ACM International Conference on Automated Software Engineering, Lincoln, NE, USA, 9–13
+November 2015; pp. 353–364.
+24.
+El Khatib, M.; Al Falasi, A. Effects of Artiﬁcial Intelligence on Decision Making in Project Management. Am. J. Ind. Bus. Manag.
+2021, 11, 251–260. [CrossRef]
+Technologies 2023, 11, 165
+15 of 16
+25.
+Münch, T. AI, Agile, and Organizations. In System Architecture Design and Platform Development Strategies; Springer: Cham,
+Switzerland, 2022; pp. 155–183.
+26.
+Hassani, R.; El Bouzekri El Idriss, Y. Proposal of a Framework and Integration of Artiﬁcial Intelligence to Succeed IT Project
+Planning. Int. J. Adv. Trends Comput. Sci. Eng. 2019, 8, 3396–3404. [CrossRef]
+27.
+Abedin, B.; Meske, C.; Junglas, I.; Rabhi, F.; Motahari-Nezhad, H.R. Designing and managing human-AI interactions. Inf. Syst.
+Front. 2022, 24, 691–697. [CrossRef]
+28.
+Shang, G.; Low, S.P.; Lim, X.Y.V. Prospects, drivers of and barriers to artiﬁcial intelligence adoption in project management. Built
+Environ. Proj. Asset Manag. 2023, 13, 629–645. [CrossRef]
+29.
+Fridgeirsson, T.V.; Ingason, H.T.; Jonasson, H.I.; Jonsdottir, H. An authoritative study on the near future effect of artiﬁcial
+intelligence on project management knowledge areas. Sustainability 2021, 13, 2345. [CrossRef]
+30.
+Puranam, P. Human–AI collaborative decision-making as an organization design problem. J. Organ. Des. 2021, 10, 75–80.
+31.
+National Academies of Sciences, Engineering, and Medicine. Human-AI Teaming: State-of-the-Art and Research Needs; The National
+Academies Press: Washington, DC, USA, 2022. [CrossRef]
+32.
+Dellermann, D.; Ebel, P.; Söllner, M.; Leimeister, J.M. Hybrid intelligence. Bus. Inf. Syst. Eng. 2019, 61, 637–643. [CrossRef]
+33.
+Akata, Z.; Balliet, D.; De Rijke, M.; Dignum, F.; Dignum, V.; Eiben, G.; Fokkens, A.; Grossi, D.; Hindriks, K.; Hoos, H.; et al. A
+research agenda for hybrid intelligence: Augmenting human intellect with collaborative, adaptive, responsible, and explainable
+artiﬁcial intelligence. Computer 2020, 53, 18–28. [CrossRef]
+34.
+Sowa, K.; Przegalinska, A.; Ciechanowski, L. Cobots in knowledge work: Human–AI collaboration in managerial professions. J.
+Bus. Res. 2021, 125, 135–142. [CrossRef]
+35.
+Zhang, H.; He, Y.; Wu, X.; Huang, P.; Qin, W.; Wang, F.; Ye, J.; Huang, X.; Luo, Y.; Chan, H.; et al. PathNarratives: Data annotation
+for pathological human-AI collaborative diagnosis. Front. Med. 2023, 9, 1070072. [CrossRef]
+36.
+Reverberi, C.; Rigon, T.; Solari, A.; Hassan, C.; Cherubini, P.; Cherubini, A. Experimental evidence of effective human–AI
+collaboration in medical decision-making. Sci. Rep. 2022, 12, 14952. [CrossRef] [PubMed]
+37.
+Creed, T.A.; Salama, L.; Slevin, R.; Tanana, M.; Imel, Z.; Narayanan, S.; Atkins, D.C. Enhancing the quality of cognitive behavioral
+therapy in community mental health through artiﬁcial intelligence generated ﬁdelity feedback (Project AFFECT): A study protocol.
+BMC Health Serv. Res. 2022, 22, 1177. [CrossRef]
+38.
+Kase, S.E.; Hung, C.P.; Krayzman, T.; Hare, J.Z.; Rinderspacher, B.C.; Su, S.M. The future of collaborative human-artiﬁcial
+intelligence decision-making for mission planning. Front. Psychol. 2022, 13, 850628. [CrossRef]
+39.
+Shrestha, Y.R.; Ben-Menahem, S.M.; Von Krogh, G. Organizational decision-making structures in the age of artiﬁcial intelligence.
+Calif. Manag. Rev. 2019, 61, 66–83. [CrossRef]
+40.
+Smolensky, P.; McCoy, R.; Fernandez, R.; Goldrick, M.; Gao, J. Neurocompositional computing: From the Central Paradox of
+Cognition to a new generation of AI systems. AI Mag. 2022, 43, 308–322. [CrossRef]
+41.
+Zentner, M.; Stirm, C.; Gesing, S.; Quick, R.; Stubbs, J. The Impact of AI Computing Paradigms on Science Gateways and National
+Compute Resources. PEARC23 2023. Available online: https://par.nsf.gov/biblio/10450536 (accessed on 21 August 2023).
+42.
+Lycett, M.; Rassau, A.; Danson, J. Programme management: A critical review. Int. J. Proj. Manag. 2004, 22, 289–299. [CrossRef]
+43.
+Gaddie, S. Enterprise programme management: Connecting strategic planning to project delivery. J. Facil. Manag. 2003, 2, 177–191.
+[CrossRef]
+44.
+Jiang, J.J.; Klein, G.; Fernandez, W.D. From project management to program management: An invitation to investigate programs
+where IT plays a signiﬁcant role. J. Assoc. Inf. Syst. 2018, 19, 1. [CrossRef]
+45.
+Pellegrinelli, S. What’s in a name: Project or programme? Int. J. Proj. Manag. 2011, 29, 232–240. [CrossRef]
+46.
+Walenta, T. Projects & programs are two different animals, don’t underestimate the gap. Procedia Soc. Behav. Sci. 2016, 226,
+365–371.
+47.
+de Groot, B.; Leendertse, W.; Arts, J. Learning across teams in project-oriented organisations: The role of programme management.
+Learn. Organ. 2022, 29, 6–20. [CrossRef]
+48.
+Thiry, M. Combining value and project management into an effective programme management model. Int. J. Proj. Manag. 2002,
+20, 221–227. [CrossRef]
+49.
+Rorie, J.; Duclos, J.; Lee, D.; Michlin, B.; Sabater, A.; Williams, G.R. The DARTEBoard: Visualization of an Improved and Expanded
+DARTE. 2023. Available online: https://apps.dtic.mil/sti/trecms/pdf/AD1202414.pdf (accessed on 3 August 2023).
+50.
+Whitlock, C.; Strickland, F. Leading the Technology. In Winning the National Security AI Competition: A Practical Guide for
+Government and Industry Leaders; Apress: Berkeley, CA, USA, 2022; pp. 195–225.
+51.
+Pellegrinelli, S.; Murray-Webster, R.; Turner, N. Facilitating organizational ambidexterity through the complementary use of
+projects and programs. Int. J. Proj. Manag. 2015, 33, 153–164. [CrossRef]
+52.
+Singh, H. Project Management Analytics: A Data-Driven Approach to Making Rational and Effective Project Decisions; FT Press: Upper
+Saddle River, NJ, USA, 2015.
+53.
+Vanhoucke, M. The Data-Driven Project Manager. In The Illusion of Control: Project Data, Computer Algorithms and Human Intuition
+for Project Management and Control; Springer Nature: Berlin/Heidelberg, Germany, 2023; pp. 29–48.
+54.
+Mahmood, A.; Al Marzooqi, A.; El Khatib, M.; AlAmeemi, H. How Artiﬁcial Intelligence can Leverage Project Management
+Information System (PMIS) and Data Driven Decision Making in Project Management. Int. J. Bus. Anal. Secur. (IJBAS) 2023, 3,
+184–195. [CrossRef]
+Technologies 2023, 11, 165
+16 of 16
+55.
+Koch, J.; Schermuly, C.C. Who is attracted and why? How agile project management inﬂuences employee’s attraction and
+commitment. Int. J. Manag. Proj. Bus. 2020, 14, 699–720. [CrossRef]
+56.
+Aponte, M. Modernization of Acquisition Planning and Communication. Doctoral Dissertation, Naval Postgraduate School,
+Monterey, CA, USA, 2021.
+57.
+Joseph, B.B.; Pham, T.; Hastings, C. Topological Data Analysis in Conjunction with Traditional Machine Learning Techniques to
+Predict Future MDAP PM Ratings. Acquisition Research Program. 2021. Available online: https://dair.nps.edu/bitstream/1234
+56789/4367/1/SYM-AM-21-060.pdf (accessed on 27 July 2023).
+58.
+Coram, M.; Bohner, S. The impact of agile methods on software project management. In Proceedings of the 12th IEEE International
+Conference and Workshops on the Engineering of Computer-Based Systems (ECBS’05), Greenbelt, MD, USA, 4–7 April 2005;
+pp. 363–370.
+59.
+Conforto, E.C.; Salum, F.; Amaral, D.C.; Da Silva, S.L.; De Almeida, L.F.M. Can agile project management be adopted by industries
+other than software development? Proj. Manag. J. 2014, 45, 21–34. [CrossRef]
+60.
+Khan, A.I.; Qureshi, M.; Khan, U.A. A Comprehensive Study of Commonly Practiced Heavy & Light Weight Software Method-
+ologies. arXiv 2012, arXiv:1202.2514.
+61.
+Beck, K.; Beedle, M.; Van Bennekum, A.; Cockburn, A.; Cunningham, W.; Fowler, M.; Grenning, J.; Highsmith, J.; Hunt, A.; Jeffries,
+R.; et al. Manifesto for agile software development. 2001. Available online: https://ai-learn.it/wp-content/uploads/2019/03/03
+_ManifestoofAgileSoftwareDevelopment-1.pdf (accessed on 30 July 2023).
+62.
+Uysal, M.P. Machine learning and data science project management from an agile perspective: Methods and challenges. In
+Contemporary Challenges for Agile Project Management; IGI Global: Hershey, PA, USA, 2022; pp. 73–88.
+63.
+Hoda, R.; Dam, H.; Tantithamthavorn, C.; Thongtanunam, P.; Storey, M.A. Augmented Agile: Human-Centered AI-Assisted
+Software Management. IEEE Softw. 2023, 40, 106–109. [CrossRef]
+64.
+Jordan, M.I.; Mitchell, T.M. Machine learning: Trends, perspectives, and prospects. Science 2015, 349, 255–260. [CrossRef]
+[PubMed]
+65.
+Xu, M.; Yoon, S.; Fuentes, A.; Park, D.S. A comprehensive survey of image augmentation techniques for deep learning. Pattern
+Recognit. 2023, 137, 109347. [CrossRef]
+66.
+LeCun, Y.; Bengio, Y.; Hinton, G. Deep learning. Nature 2015, 521, 436–444. [CrossRef]
+67.
+Deng, L.; Yu, D. Deep learning: Methods and applications. Found. Trends®Signal Process. 2014, 7, 197–387. [CrossRef]
+68.
+George, A.S.; George, A.H. A review of ChatGPT AI’s impact on several business sectors. Partn. Univers. Int. Innov. J. 2023, 1,
+9–23.
+69.
+Liu, V.; Chilton, L.B. Design guidelines for prompt engineering text-to-image generative models. In Proceedings of the 2022 CHI
+Conference on Human Factors in Computing Systems, New Orleans, LA, USA, 29 April–5 May 2022; pp. 1–23.
+70.
+Bianchi, F.; Hovy, D. On the gap between adoption and understanding in NLP. In Proceedings of the Findings of the Association
+for Computational Linguistics: ACL-IJCNLP 2021, Online, 1–6 August 2021; pp. 3895–3901.
+71.
+Glikson, E.; Woolley, A.W. Human trust in artiﬁcial intelligence: Review of empirical research. Acad. Manag. Ann. 2020, 14,
+627–660. [CrossRef]
+72.
+Lewis, L.; Vavrichek, D. Center for Naval Analyses. In An AI Framework for the Department of the Navy; Center for Naval Analysis:
+Arlington, VA, USA, 2019; p. 29.
+73.
+Chief of Naval Operations, A Design for Maintaining Maritime Superiority—Version 2.0, December 2018. Available online:
+https://www.navy.mil/navydata/people/cno/Richardson/Resource/Design_2.0.pdf (accessed on 29 July 2023).
+74.
+Department of Defense. Summary of the Department of Defense Artiﬁcial Intelligence Strategy; Department of Defense: Arlington, VA,
+USA, 2019.
+75.
+Hull, A.D.; Liew, J.K.S.; Palaoro, K.T.; Grzegorzewski, M.; Klipstein, M.; Breuer, P.; Spencer, M. Why the United States Must Win
+the Artiﬁcial Intelligence (AI) Race. Cyber Def. Rev. 2022, 7, 143–158.
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

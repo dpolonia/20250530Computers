@@ -1,0 +1,34 @@
+Subject: Request for Access to Scopus Citation Overview API
+
+To: Elsevier API Support Team
+
+Dear Elsevier API Support Team,
+
+I am writing to request access to the Scopus Citation Overview API for my research project. Below are the details of my request:
+
+API Key: 794f87fe4933b144dd95702b217fcb50
+Institution: University Research Laboratory for Academic Computing
+API Name: Scopus Citation Overview
+
+Project Description:
+I am developing an academic paper revision tool that analyzes citations and references across multiple databases to help researchers improve their manuscripts. The tool assists in identifying relevant literature, validating references, and analyzing citation patterns to strengthen academic papers.
+
+The Scopus Citation Overview API is essential to my project as it will allow me to:
+1. Generate comprehensive citation reports for academic papers
+2. Analyze citation patterns and trends over time
+3. Identify the most influential citing journals and institutions
+4. Compare citation metrics across different publications
+
+I have implemented a robust caching system with TTL (Time-To-Live) to minimize unnecessary API calls, and the system includes exponential backoff retry logic to handle rate limiting appropriately.
+
+Requested Quota:
+I would like to request the standard weekly quota of 20,000 requests for the Scopus Citation Overview API.
+
+Thank you for considering my request. I look forward to your response.
+
+Sincerely,
+
+[Your Name]
+[Your Position/Department]
+[Your Email]
+[Your Phone Number]

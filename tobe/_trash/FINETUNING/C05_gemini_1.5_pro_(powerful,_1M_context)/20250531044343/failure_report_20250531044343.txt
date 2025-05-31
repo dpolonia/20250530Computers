@@ -1,0 +1,17 @@
+FAILURE REPORT - 2025-05-31 04:45:26
+Model: gemini-1.5-pro (powerful, 1M context) (Code: C05)
+Provider: google
+Operation mode: finetuning
+Original directory: ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343
+Trash directory: ./tobe/_trash/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343
+
+Files moved to trash:
+- 9320250531044343.docx
+- cost20250531044526.txt
+- log20250531044343.txt
+- zz20250531044343.bib
+- 9420250531044343.docx
+- 9120250531044343.docx
+- report20250531044526.txt
+- 9220250531044343.docx
+- 9020250531044343.docx

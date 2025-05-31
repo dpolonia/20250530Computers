@@ -1,0 +1,63 @@
+======================================================================
+PAPER REVISION SUMMARY REPORT
+Generated: 2025-05-31 03:41:53
+Model: gpt-4o-mini (balanced) (Code: B01)
+Operation mode: TRAINING
+======================================================================
+
+REVIEWER COMMENTS SUMMARY:
+
+REVIEWER 1:
+  Overall assessment: Unknown
+  Main concerns:
+   - Unknown concerns
+  Required changes:
+   - Unknown required changes
+
+REVIEWER 2:
+  Overall assessment: Unknown
+  Main concerns:
+   - Unknown concerns
+  Required changes:
+   - Unknown required changes
+
+REVIEWER 3:
+  Overall assessment: Unknown
+  Main concerns:
+   - Unknown concerns
+  Required changes:
+   - Unknown required changes
+
+KEY ISSUES IDENTIFIED:
+  1. Reviewer 1 concern (Severity: major)
+     Source: Reviewer 1
+     Description: Unknown concerns
+  2. Reviewer 2 concern (Severity: major)
+     Source: Reviewer 2
+     Description: Unknown concerns
+  3. Reviewer 3 concern (Severity: major)
+     Source: Reviewer 3
+     Description: Unknown concerns
+
+IMPLEMENTED SOLUTIONS:
+  1. Address reviewer 1 concerns (Complexity: medium)
+     Implementation: Review and implement the changes requested by the reviewer.
+  2. Address reviewer 2 concerns (Complexity: medium)
+     Implementation: Review and implement the changes requested by the reviewer.
+  3. Address reviewer 3 concerns (Complexity: medium)
+     Implementation: Review and implement the changes requested by the reviewer.
+
+NEW REFERENCES ADDED:
+  No new references added
+
+OUTPUT FILES GENERATED:
+  Revision summary: 9020250531033748.docx
+  Changes document: 9120250531033748.docx
+  Revised paper: 9220250531033748.docx
+  Assessment: 9320250531033748.docx
+  Editor letter: 9420250531033748.docx
+  Bibliography: zz20250531033748.bib
+
+======================================================================
+End of report - B01_gpt_4o_mini_(balanced)
+======================================================================

@@ -1,0 +1,17 @@
+FAILURE REPORT - 2025-05-31 03:57:47
+Model: claude-3-haiku-20240307 (Code: A01)
+Provider: anthropic
+Operation mode: training
+Original directory: ./tobe/TRAINING/A01_claude_3_haiku_20240307/20250531035607
+Trash directory: ./tobe/_trash/TRAINING/A01_claude_3_haiku_20240307/20250531035607
+
+Files moved to trash:
+- report20250531035747.txt
+- log20250531035607.txt
+- zz20250531035607.bib
+- 9420250531035607.docx
+- 9020250531035607.docx
+- cost20250531035747.txt
+- 9120250531035607.docx
+- 9320250531035607.docx
+- 9220250531035607.docx

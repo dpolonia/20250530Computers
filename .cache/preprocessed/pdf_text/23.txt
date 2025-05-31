@@ -1,0 +1,3146 @@
+Citation: Kumar, Y.; Lin, M.; Paredes,
+C.; Li, D.; Yang, G.; Kruger, D.; Li, J.J.;
+Morreale, P. A Comprehensive
+Review of AI Advancement Using
+testFAILS and testFAILS‑2 for the
+Pursuit of AGI. Electronics 2024, 13,
+4991. https://doi.org/10.3390/
+electronics13244991
+Received: 9 September 2024
+Revised: 1 December 2024
+Accepted: 4 December 2024
+Published: 18 December 2024
+Copyright:
+© 2024 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://
+creativecommons.org/licenses/by/
+4.0/).
+Article
+A Comprehensive Review of AI Advancement Using testFAILS
+and testFAILS‑2 for the Pursuit of AGI
+Yulia Kumar 1,2,*
+, Mengtian Lin 1, Christopher Paredes 1, Dan Li 1
+, Guohao Yang 1, Dov Kruger 2,*, J. Jenny Li 1
+and Patricia Morreale 1
+1
+Department of Computer Science and Technology, Kean University, Union, NJ 07083, USA
+2
+Department of Electrical and Computer Engineering, Rutgers University, Piscataway, NJ 08854, USA
+*
+Correspondence: ykumar@kean.edu (Y.K.); dov.kruger@rutgers.edu (D.K.)
+Abstract: In a previous paper we defined testFAILS, a set of benchmarks for measuring the efficacy
+of Large Language Models in various domains. This paper defines a second‑generation framework,
+testFAILS‑2 to measure how current AI engines are progressing towards Artificial General Intelli‑
+gence (AGI). The testFAILS‑2 framework offers enhanced evaluation metrics that address the latest
+developments in Artificial Intelligence Linguistic Systems (AILS). A key feature of this re‑view is the
+“Chat with Alan” project, a Retrieval‑Augmented Generation (RAG)‑based AI bot inspired by Alan
+Turing, designed to distinguish between human and AI generated interactions, thereby emulating
+Turing’s original vision. We assess a variety of models, including ChatGPT‑4o‑mini and other Small
+Language Models (SLMs), as well as prominent Large Language Models (LLMs), utilizing expanded
+criteria that encompass result relevance, accessibility, cost, multimodality, agent creation capabilities,
+emotional AI attributes, AI search capacity, and LLM‑robot integration. The analysis reveals that
+testFAILS‑2 significantly enhances the evaluation of model robustness and user productivity, while
+also identifying critical areas for improvement in multimodal processing and emotional reasoning.
+By integrating rigorous evaluation standards and novel testing methodologies, testFAILS‑2 advances
+the assessment of AILS, providing essential insights that contribute to the ongoing development of
+more effective and resilient AI systems towards achieving AGI.
+Keywords: AI evaluation; testFAILS‑2; artificial general intelligence; multimodal AI; AI linguistic systems
+1. Introduction
+The rapid pace of advancements in Artificial Intelligence (AI), particularly in the de‑
+velopment and deployment of Large Language Models (LLMs) and emerging Small Lan‑
+guage Models (SLMs)—collectively referred to in this study as Artificial Intelligence Linguis‑
+tic Systems (AILS)—has unlocked unprecedented opportunities and technological capabili‑
+ties. These models, trained on vast and diverse datasets across multiple modalities—including
+text, images, video, music, and programming code—have demonstrated remarkable profi‑
+ciency in natural language processing, generation, speech understanding, and broader com‑
+prehension of complex world phenomena. As these systems become increasingly embedded
+into the fabric of modern society—serving businesses, governments, and citizens alike—the
+need to rigorously evaluate and track their development becomes ever more critical. A com‑
+prehensive understanding of the capabilities, limitations, and potential risks of LLMs and
+SLMs is now imperative for the responsible integration of AI into various sectors of the econ‑
+omy. Big announcements from the CEO of OpenAI that Artificial General Intelligence (AGI)
+could be achieved as early as 2025 and associated AI hype further confirmed the necessity of
+the study [1].
+In response to this need, testFAILS, a standardized benchmarking framework for
+assessing the performance of Artificial Intelligence Linguistic Systems (AILS), was intro‑
+duced in early 2023, soon after the release of OpenAI’s ChatGPT‑3 [2]. OpenAI’s sub‑
+sequent models, ChatGPT‑3.5 and ChatGPT‑4, not only became dominant players in the
+Electronics 2024, 13, 4991. https://doi.org/10.3390/electronics13244991
+https://www.mdpi.com/journal/electronics
+Electronics 2024, 13, 4991
+2 of 50
+field but also emerged as top performers in the testFAILS evaluations, despite concerns re‑
+garding their security and known vulnerabilities. OpenAI continues to maintain a strong
+position in the rapidly evolving AI landscape, with its latest models, ChatGPT‑4o and
+ChatGPT‑4o‑mini, being focal points in this study, alongside other cutting‑edge AI models.
+ChatGPT‑o1‑preview and ChatGPT‑o1‑mini, released in late 2024, hold a special place in
+the current AI landscape. Currently, only premium users have very limited access to the
+model, which has made its testing challenging; the weekly rate limits are 30 messages for
+o1‑preview and 50 for o1‑mini [3]. The model stands out from all other currently publicly
+available AILS in its reasoning and in the fact that it is not only capable of providing com‑
+plex mathematical proofs with minimal inconsistencies (like losing a sign in an equation)
+but it can do so in the Latex format right away. This property, discovered by researchers,
+can make the creation of educational and scientific papers required in such a format signif‑
+icantly easier.
+It has become clear that evaluating AILS without considering their providers—such
+as Meta, Google, and xAI, along with the resources they possess—remains difficult. Even
+two years after the initial testing of AILS, the competitive dynamics of the AI industry and
+the powerful companies behind these models continue to shape the evaluation landscape,
+much as they did when the original framework was developed.
+The original testFAILS framework provided a structured and objective evaluation of
+prominent AILS at its inception, thoroughly examined by a team of researchers [2]. Over
+the last two years, testing of AILS has continued, with multiple studies exploring the effec‑
+tiveness of various AI models [4–7]. Researchers also focused on the relationship between
+Big Data and AI and the creation of synthetic data in the attempt to understand the future
+of the AI landscape in its race to AGI [8–10]. By mid‑2024, it became evident that while the
+original framework remains relevant, it requires re‑evaluation and refinement to better ad‑
+dress AI’s evolving landscape. To this end, researchers have identified the following key
+research questions:
+RQ1: How have the previously evaluated LLMs, initially assessed by the testFAILS
+framework, performed over the 18 months since their release?
+RQ2: Can newly introduced AILS be effectively evaluated using the testFAILS frame‑
+work, and what are their comparative performance scores?
+RQ3: How can the testFAILS framework be evolved into testFAILS‑2 to address cur‑
+rent and emerging trends in AI more effectively?
+Figure 1 illustrates the transition from the original testFAILS framework to its en‑
+hanced counterpart, testFAILS‑2, showcasing the transformations introduced in this study.
+Notably, all previously developed components remain with minor adjustments, while the
+framework has expanded to incorporate new aspects of AI evaluation.
+As can be seen from Figure 1, testFAILS‑2 represents a natural evolution from test‑
+FAILS, reflecting the growing maturity of AI systems and the broader range of applications
+that they now impact. By adding new components such as multimodality, robot integra‑
+tion, and emotional AI, the framework adapts to cutting‑edge developments in the field.
+The continued focus on user experience and real‑world applications signals an important
+shift toward evaluating AI not only based on its internal capabilities but also on how it
+interacts with and benefits society. This evolution highlights that while AI technologies
+advance, the frameworks for their assessment must also evolve to keep up with new chal‑
+lenges and opportunities.
+1.1. Definitions
+■
+Artificial Intelligence Linguistic Systems (AILS) refer to a broad category of AI models
+that specialize in linguistic tasks, including understanding, generating, and process‑
+ing natural language.
+■
+Large Language Models (LLMs) are high‑capacity models that leverage extensive
+datasets and complex architectures to perform a wide range of language‑related tasks.
+Electronics 2024, 13, 4991
+3 of 50
+■
+Small Language Models (SLMs) are models with smaller architectures and datasets,
+designed for specific or less resource‑intensive linguistic applications.
+■
+Multimodal Models are AI systems that integrate language processing with other data
+types, such as images or audio, enabling more comprehensive interactions and function‑
+alities. In this study, language processing is the most important of all modalities.
+■
+Generative Models are AI models focused on producing, also known as generating,
+coherent and contextually appropriate language outputs
+Figure 1. testFAILS transformation into testFAILS‑2.
+1.2. Roadmap of the Study
+The paper is organized as follows: Section 2 reviews the original testFAILS framework
+and situates it within the context of related work, highlighting key similarities and distinc‑
+tions from existing evaluation methods. Section 3 outlines our comprehensive methodol‑
+ogy, detailing the development and implementation of the enhanced testFAILS‑2 frame‑
+work, including the evaluation of top Artificial Intelligence Linguistic Systems (AILS) and
+the integration of new testing components. Within this section, we delve into specific ar‑
+eas such as the Turing Test simulation, User Productivity and Satisfaction, multilingual
+text generation, AI Pair Programming Capabilities, Bot‑based App Development, and Se‑
+curity and Robustness assessments. Section 3.4 introduces the newly proposed testFAILS‑2
+components, explaining their significance and the rationale behind their inclusion to ad‑
+dress emerging challenges in AI evaluation. Section 4 presents the results of our evalua‑
+tions, showcasing the performance of various AI models against the testFAILS‑2 criteria.
+Section 5 offers a discussion of these findings, exploring their implications, addressing po‑
+tential threats to validity, and suggesting areas for future research. Finally, Section 6 con‑
+cludes the paper by summarizing our contributions and outlining the study limitations
+and future work, emphasizing the need for ongoing advancements in AI evaluation frame‑
+works to keep up with the rapid evolution of AI technologies.
+2. testFAILS and Related Work
+Table 1 provides a comparative overview of the testFAILS framework and related
+studies on LLM evaluation, highlighting key similarities and differences. While these stud‑
+ies share commonalities in evaluating AI models, testFAILS distinguishes itself through its
+unique approach to assessing AILS, incorporating a more holistic and multi‑dimensional
+evaluation beyond traditional LLM assessment.
+Electronics 2024, 13, 4991
+4 of 50
+Table 1. testFAILS comparison with related work.
+Related Work
+(Year)
+Similarities with testFAILS
+Differences with testFAILS
+Used/Proposed
+Frameworks
+Ref.
+Shankar et al.
+(2024)
+Both are concerned with aligning
+LLM‑generated evaluations with human
+preferences and emphasize the importance
+of human input in the evaluation process.
+EVALGEN is specifically designed for
+evaluating LLM‑generated text, while
+testFAILS has a broader scope. EVALGEN
+uses LLMs to generate and rank
+evaluation criteria, while testFAILS
+incorporates orthogonal arrays for test
+case generation and relies on human
+expert assessments.
+EVALGEN
+[11]
+Desmond et al.
+(2024)
+Both utilize LLMs in the evaluation
+process and allow for human input to
+guide the evaluation, either through
+explicit criteria or through a combination
+of human and LLM assessments.
+The proposed framework primarily relies
+on LLMs as the evaluators, while
+testFAILS incorporates human expert
+assessments of LLMs and other AILS
+components. This framework is
+specifically designed for evaluating
+generated outputs (like text), while
+testFAILS is broader.
+LLM‑Based
+Comparative
+Judgment
+[12]
+Gao et al.
+(2024)
+Reviewed the status and challenges of
+LLM‑based NLG.
+Gao et al. provide a general overview of
+LLM evaluation techniques, useful for the
+study, while testFAILS proposes a concrete
+framework with orthogonal array testing.
+Various LLM‑based
+methods (survey
+paper)
+[13]
+Fenogenova et al.
+(2024)
+Both are comprehensive evaluation
+frameworks designed to assess various
+aspects of LLMs and emphasize the
+importance of standardized evaluation
+protocols to ensure fair and reproducible
+comparisons between models.
+MERA is specifically designed for evaluating
+LLMs in Russian, while testFAILS is
+designed to be language‑agnostic, evaluating
+multiple languages without focusing on a
+specific one.
+MERA
+[14]
+Hu and Zhou
+(2024)
+Both recognize the limitations of
+traditional evaluation metrics and propose
+new metrics specifically designed for
+LLMs and emphasize the need for metrics
+that can capture various aspects of LLM
+performance, beyond just accuracy.
+Hu and Zhou focus on providing a
+comprehensive overview of existing LLM
+evaluation metrics and their statistical
+interpretations, while testFAILS proposes
+a concrete evaluation framework with
+orthogonal array testing. testFAILS also
+includes human‑in‑the‑loop evaluation.
+New LLM metrics for
+evaluation
+[15]
+Liusie et al.
+(2024)
+Both utilize LLMs for evaluation and can
+be applied in a zero‑shot setting and
+recognize the value of pairwise
+comparisons in evaluating LLM outputs.
+This method focuses specifically on
+evaluating the quality of generated text
+(NLG), while testFAILS has a broader
+scope. testFAILS explicitly incorporates
+human expertise in the evaluation process.
+Zero‑shot NLG
+evaluation
+[16]
+Wang et al.
+(2024)
+Introduced a multi‑agent framework for
+dynamic LLM evaluation. Both this
+framework and testFAILS recognize the
+need for dynamic evaluation frameworks
+to keep up with the rapid evolution of
+LLMs and emphasize the importance of
+evaluating LLMs on diverse and
+challenging queries to assess their
+generalization and robustness.
+The multi‑agent framework surpasses
+testFAILS’ objectives, but this concept is
+incorporated into testFAILS‑2. Scope: This
+framework focuses specifically on
+developing a multi‑agent system to
+dynamically generate evolving instances
+from existing benchmarks by modifying
+their contexts or questions, while testFAILS
+employs a broader, component‑based
+evaluation of AILS. This framework uses
+instance pre‑filter, instance creator, instance
+verifier, and candidate option formulator.
+Multi‑agent
+evaluation framework
+[17]
+Ni et al.
+(2024)
+Presented MixEval, deriving collective
+wisdom from a mixture of LLM benchmarks.
+Both recognize the limitations of traditional
+static benchmarks, aim to create more
+dynamic and comprehensive evaluation
+frameworks, and utilize a combination of
+existing benchmarks and real‑world data to
+evaluate LLMs. Similar approaches are
+included in testFAILS, where AILS are asked
+to grade components and align with the
+recently developed AI assistant Chef Dalle
+app [18].
+MixEval focuses on creating a dynamic
+benchmark by strategically mixing
+existing benchmarks with web‑mined
+queries to better reflect real‑world user
+preferences, while testFAILS emphasizes a
+multi‑faceted evaluation of AILS.
+MixEval
+[19]
+Electronics 2024, 13, 4991
+5 of 50
+Table 1. Cont.
+Related Work
+(Year)
+Similarities with testFAILS
+Differences with testFAILS
+Used/Proposed
+Frameworks
+Ref.
+Khatun and
+Brown
+(2024)
+Developed TruthEval, a dataset for
+evaluating LLM truthfulness and
+reliability. Both frameworks are
+concerned with the truthfulness and
+reliability of LLM outputs and emphasize
+the importance of evaluating LLMs on
+sensitive and challenging topics to reveal
+potential biases or inconsistencies.
+testFAILS parallels these ethical and
+accuracy considerations but applies them
+in a broader, multi‑faceted AILS
+evaluation. Ethics was introduced in the
+previously published ‘Love the Way You
+Lie’ paper [20] by the same researchers.
+TruthEval focuses specifically on
+evaluating the truthfulness and factual
+accuracy of LLMs, while testFAILS has a
+broader scope.
+TruthEval
+[21]
+Fakhoury et al.
+(2024)
+Examined LLM‑based test‑driven code
+generation, focusing on user studies.
+TICODER and testFAILS are
+complementary frameworks that address
+different aspects of evaluating
+LLM‑generated code. This aligns with
+testFAILS’ AI Pair Programming
+Component, supporting empirical
+evaluation of AILS in practical
+applications [22].
+testFAILS is focusing on AILS’ security,
+including its code generation side, and is
+designed to identify security
+vulnerabilities in the generated code too.
+TICODER
+[23]
+Agarwal et al.
+(2024)
+Introduced the Copilot Evaluation
+Harness for evaluating LLM‑guided
+programming. Both frameworks evaluate
+LLM‑generated code in the context of
+real‑world software development
+scenarios. Both frameworks go beyond
+basic code generation and consider tasks
+like documentation generation and bug
+fixing and use a diverse set of LLMs for
+evaluation, including both proprietary
+and open‑source models.
+Copilot Evaluation Harness is specifically
+designed for evaluating IDE‑integrated
+LLMs and their interactions with
+developers, which is not the focus of
+testFAILS. Copilot Evaluation Harness
+includes metrics for workspace
+understanding and query resolution,
+which are not present in testFAILS.
+Copilot Evaluation
+Harness
+[24]
+Qiu et al.
+(2024)
+Rigorous benchmarking of LLM‑generated
+code efficiency aligns with [2]. Both
+frameworks prioritize code efficiency as a
+key evaluation metric and use a
+level‑based evaluation with increasing
+input scales to differentiate code efficiency.
+Both frameworks emphasize the
+importance of strong test case generators
+to filter out incorrect code and identify
+suboptimal algorithms.
+ENAMEL uses a more rigorous efficiency
+metric (eff@k) that handles right‑censored
+execution time and generalizes the pass@k
+metric. It employs expert‑written efficient
+reference solutions and strong test case
+generators, which are not present in
+testFAILS.
+ENAMEL
+[25]
+Zheng et al.
+(2024)
+Evaluated LLMs as judges with MT‑Bench
+and Chatbot Arena. Both focus on evaluating
+the quality of LLM‑generated code in a
+comprehensive manner and consider
+multiple factors beyond just functional
+correctness, such as human preferences and
+code efficiency. Both use diverse problems
+and a range of LLMs for evaluation.
+While testFAILS did not have an online
+AILS evaluation platform, the researchers
+are aware of the Chatbot Arena and
+propose their own platform for
+testFAILS‑2 and future framework
+iterations. The proposed approach
+emphasizes human preferences and
+multi‑turn conversations. testFAILS has a
+stronger emphasis on code efficiency.
+MT‑Bench and
+Chatbot Arena
+[26]
+As illustrated in Table 1, various studies have addressed different aspects of AILS
+evaluation, but no study has proposed anything close to this work’s unique generic test
+approach. Its view on AILS is broader and more academic, and the framework is flexible
+and adjustable for evaluating various AI models. It consists of many components, some of
+which have become a topic of other studies but were not analyzed in the proposed combi‑
+nation. In this sense, the testFAILS framework has no current analogies, and the distance
+is expected to be bigger with testFAILS‑2.
+As was mentioned in the abstract, components to be included in the second version of
+the framework include result relevance, accessibility and cost, multimodality, agent and
+multi‑agent creation capabilities, emotional AI attributes, AI search model capacity, and
+Electronics 2024, 13, 4991
+6 of 50
+AILS–robot integration. The explanation of each component and the rationale for its inclu‑
+sion are discussed in detail in the following Section 3.
+3. Methodology
+This study employs a comprehensive and dynamic methodology that involves con‑
+tinuous monitoring and detailed analysis of existing AILS. Researchers track live leader‑
+boards and benchmarks of AILS, keeping abreast of cutting‑edge trends and developments
+in the rapidly evolving field of AI. The core focus is identifying areas of overlap with the
+original testFAILS components while keeping a vigilant lookout for emerging technologies
+and trends. This proactive approach ensures that the proposed testFAILS‑2 framework re‑
+mains current and highly relevant to mid‑2024 and beyond. The study re‑evaluates the
+previously established components of the testFAILS framework, assessing their continued
+relevance and identifying opportunities for refinement. Additionally, new elements are
+introduced to enhance the framework further, ultimately creating a robust and up‑to‑date
+benchmark—testFAILS‑2—that sets a new quality standard for AILS evaluation.
+A notable development in this field is the emergence of Small Language Models (SLMs),
+such as ChatGPT‑4o‑mini [27], representing a new frontier in AI. These models, driven by
+advancements in model quantization and the design of more concise architectures, provide
+faster, more cost‑efficient solutions while maintaining high‑quality results. The success of
+SLMs validates using the term “Artificial Intelligence Linguistic Systems (AILS)” in this
+study, rather than the more common term LLMs, which is often used across the AI land‑
+scape. The broader term AILS more accurately encompasses both LLMs and the rapidly de‑
+veloping class of SLMs, reflecting the diverse and expanding nature of AI systems focused
+on language processing. New players have entered the AILS development space in line
+with this evolution. One such player is NVIDIA, historically known for its hardware pro‑
+duction [28], which has now become a significant contributor to the AI landscape. NVIDIA’s
+work includes the development of the large Nemotron model and exploring laptop‑ready AI
+through the Mistral‑NeMo‑Minitron SLM [29,30]. These advancements highlight the ongo‑
+ing diversification of AILS, underscoring the importance of continually adapting evaluation
+frameworks like testFAILS‑2 to accommodate both large and small‑scale AI systems.
+3.1. Top AILS Leaderboards, Leading AI Models and Their Providers
+Several live public platforms currently focus on the comparison of Artificial Intelli‑
+gence Linguistic Systems (AILS), including LMSYS Chatbot Arena (LMSYS Org)—an open
+platform for evaluating LLMs by human preference [31–33]. This platform is popular for
+rigorous chatbot evaluations and comparisons, as users can directly chat with the leading
+AILS from various providers and countries, assess them side‑by‑side in the arena mode,
+and even evaluate their multimodality (if applicable). The actual leaders might change
+over time, but the battle continues [31]. Figure 2 represents an analysis of the AILS land‑
+scape based on LMSYS Chatbot Arena’s snapshot.
+While many benchmarks are recorded by the platform, this study focuses on the
+points mentioned in Figure 2a,b for its own purpose. As seen from Figure 2, the top
+performers in the Fall of 2024 in terms of arena scores and ranks were GPT‑o1‑preview,
+ChatGPT‑4o‑latest and o1‑mini from OpenAI, Gemini 1.5‑Pro‑Exp‑0827 from Google and
+Grok‑2‑08‑13,1293 from xAI. The previously mentioned NVIDIA and Nemotron‑4‑340B‑
+Instruct, which was fourth in mid‑2024, placed 32nd in October 2024 (a). The fourth place,
+shown in Figure 2a, was previously held by 01‑AI but the top Yi‑Large‑preview model is
+now in 25th place, which proves the global nature of the platform [34] and the rapid dy‑
+namics of the field of LLM evaluation. Knowledge cutoff, presented in Figure 2b, varies,
+reflecting ongoing development and updates.
+Table 2 provides a summary of the main AILS leaderboards and their relevance to the
+study [33].
+Electronics 2024, 13, 4991
+7 of 50
+Figure 2. Overview of the LMSYS Chatbot Arena: (a) votes per organization for top 150 models;
+(b) arena score vs. knowledge cutoff for top AILS with score above 1200, 5 October 2024.
+Table 2. Relevance of existing AILS leaderboards.
+Leaderboard
+Components
+Comparison with testFAILS Frameworks
+LMSYS Chatbot
+Arena Leaderboard
+Human preference votes, Machine
+Translation Benchmark (MT‑Bench),
+Massive Multitask Language
+Understanding (MMLU)
+testFAILS integrates more comprehensive tests, including
+the Turing Test, focusing on user feedback satisfaction.
+Trustbit LLM Benchmark
+Monthly evaluations, document
+processing, CRM integration, marketing
+support, code generation
+Focus on practical applications and user productivity, in
+sync with testFAILS’ AI pair programming component.
+Oobabooga Benchmark
+Academic knowledge, logical reasoning,
+unique multiple‑choice questions
+Emphasizes evaluation accuracy; testFAILS integrates a
+broader range of tests.
+OpenCompass: CompassRank
+Evaluation of advanced language and
+visual models
+Multimodality was missing in testFAILS but was introduced
+in testFAILS‑2 to improve the framework.
+EQ‑Bench: Emotional Intelligence
+Emotional intelligence evaluation
+through dialogues
+Emotional AI is missing in testFAILS but is introduced in
+testFAILS‑2 and is present in the recently developed Growth
+Mindset Emojifier App [35].
+HuggingFace Open
+LLM Leaderboard
+Eleuther AI LM Evaluation Harness,
+benchmark metrics
+Regular updates and re‑evaluations are missing for test fails,
+focusing similarly on maintaining model integrity.
+Berkeley Function‑
+Calling Leaderboard
+Function calling across scenarios,
+languages, application domains
+Specific to function calls, different from the general
+productivity focus of testFAILS. As OpenAI API provides
+the capability of function calling, this can be integrated [36].
+CanAiCode Leaderboard
+Text‑to‑code generation
+Focus on coding in sync with testFAILS’ AI Pair
+Programming Component [22].
+Electronics 2024, 13, 4991
+8 of 50
+Table 2. Cont.
+Leaderboard
+Components
+Comparison with testFAILS Frameworks
+Open Multilingual LLM
+Evaluation Leaderboard
+Performance across 29 languages,
+non‑English focus
+Language diversity has a broader scope than testFAILS;
+multilingual comparison is present in testFAILS and
+expanded in testFAILS‑2.
+Massive Text Embedding
+Benchmark (MTEB) Leaderboard
+Embedding tasks, 58 datasets,
+112 languages
+Extensive language tasks, different focus from testFAILS;
+some embedding analysis is included in testFAILS‑2 but not
+on large texts.
+AlpacaEval Leaderboard
+Instruction‑following, language
+understanding
+More specific task evaluation compared to testFAILS.
+PT‑LLM Leaderboard
+Assessing Portuguese LLMs only
+testFAILS‑2 mainly evaluates English‑based
+models used globally.
+Ko‑LLM Leaderboard
+Assessing Korean LLM performance only
+As can be seen from Table 2, a lot was developed throughout the last 18 months in
+the AILS evaluation landscape, and testFAILS‑2 has been refined according to current best
+practices and latest trends. Being on top of AI news and developments is critical as this
+environment is rapidly changing. While previously the only constant in the IT sector was
+change, the only constant in AI is now its acceleration.
+3.2. Testfails Vs. Testfails‑2
+To briefly reintroduce the testFAILS framework [2], its components are presented in
+Table 3 compared to the proposed testFAILS‑2.
+Table 3. testFAILS vs. testFAILS‑2 components.
+Component
+Description
+Present in testFAILS
+v1
+v2
+Turing Test
+Ability to convincingly mimic human conversation in
+various contexts.
+√
+√
+User Experience
+and Productivity
+Ability to enhance user workflows, efficiency, and overall
+satisfaction with interactions.
+√
+√
+AI in Computer Science
+(CS) Education
+Potential to significantly change the way CS and other subjects are
+taught.
+√
+√
+Multilingual Text Generation
+Proficiency in understanding and generating text in
+multiple languages.
+√
+√
+AI‑Assisted Coding
+Capability to assist software developers and CS students by
+generating, completing, or suggesting code live.
+√
+√
+Autonomous App Development
+Potential to create high‑quality functional applications with
+minimal human intervention or guidance.
+√
+√
+Security and Robustness
+Resistance to adversarial attacks.
+√
+√
+Contextual Relevance
+Ability to generate responses that are relevant to the date of
+conversation or context.
+X
+√
+Accessibility and Affordability
+User‑friendliness and cost‑effectiveness for a wide range of users
+and use cases.
+X
+√
+Multimodal Capabilities
+Proficiency in processing and generating various data types (text,
+images, music, audio, sensors, smell, cough, etc.).
+X
+√
+Agent and Multi‑Agent Systems
+Capacity to create autonomous agents and enable complex
+interactions between them and with the humans in a loop.
+X
+√
+Emotional Intelligence
+Ability to understand, interpret, and respond appropriately to
+human emotions and generate emotional speech and text.
+X
+√
+AI‑Powered Search
+Potential to revolutionize search engines with AI‑driven results
+and information retrieval making AI search a new frontier in the
+scope of search engines.
+X
+√
+AILS‑Robot Integration
+Capability to control and interact seamlessly with physical robots
+and partial AI–hardware integration like ruling a robot arm.
+X
+√
+In the table above, the √sign stands for presence of the component in the framework (it is/was included) and X
+stands for its absence (not included).
+Electronics 2024, 13, 4991
+9 of 50
+As can be seen from Table 3 and Figure 1, the number of components has increased;
+some were slightly refined compared to testFAILS [2] but only in terms of wording rather
+than logic. This makes the framework more general, with some AI models understandable
+and missing some of their benchmarks.
+Taking the same approach as during the development of testFAILS, researchers first
+asked chatbots to brainstorm their component preferences, and then human experts eval‑
+uated the accuracy and relevance of these results. Figure 3 represents the testFAILS com‑
+ponents through the lens of AILS from the Chatbot Arena [32,33] in mid‑2024.
+Figure 3. Comparison of AILS preferences across the original testFAILS components, June 2024.
+The heatmap presented in Figure 3 reveals key insights about AILS preferences across
+the original testFAILS components. GPT‑4o and Gemini Advanced had Turing Test scores
+of 0.20 and 0.25, respectively, while Pi AI scored the lowest at 0.10. Yi led in terms of User
+Productivity and Satisfaction with a score of 0.30, followed by GPT‑4o and Nemotron at
+0.25. In Integration into CS Education, Yi and Gemini Advanced were at the top, with
+scores of 0.15 each. Multilingual text generation saw Yi scoring the highest at 0.20, and
+Claude AI and Perplexity AI at 0.15 each. For Pair Programming Capabilities, Pi AI had
+the highest preference of 0.25, with Microsoft Copilot and Nemotron scoring 0.15 each.
+The models were then asked what other components they would add to the testFAILS
+framework if they could further improve it.
+To further delve into the topic to reveal something even more useful, the prompt in‑
+jection was adjusted to precisely target the best standards of the year 2030. The adjusted
+prompt can be seen below.
+Figure 4 demonstrates the results of applying both algorithms.
+Figure 4. Word cloud of the additional components suggested by the models: (a) after applying
+Algorithm 1 (June 2024); (b) Algorithm 2 (August 2024).
+Electronics 2024, 13, 4991
+10 of 50
+Algorithm 1: Prompt injection to reveal new components
+Input: Prompt injection to reveal possible testFAILS‑2 components
+Output: The list of suggested components
+Prompt: Given the following existing components of an LLM testing framework designed for
+large language models (LLMs):
+Simulated Turing Test Performance, User Productivity and Satisfaction, Integration into
+Computer Science Education, Multilingual Text Generation, Pair Programming Capabilities,
+Bot‑Based App Development and Success, Security and Reliability
+Suggest 5 additional components, each consisting of 2–3 words, that could enhance the
+framework’s ability to evaluate the effectiveness and robustness of LLMs, small language
+models (SLMs), and multimodal systems.
+Algorithm 2: Prompt injection to reveal new components for the testFAILS‑2 in the year of 2030
+Input: Prompt injection to reveal possible testFAILS‑2 components in 2030
+Output: The list of suggested components for the year of 2030
+Prompt: You are an AI specializing in evaluating future technology trends. A critical area of
+focus is the testing of large language models (LLMs), small language models (SLMs), and
+multimodal systems.
+Current LLM testing frameworks assess components like Simulated Turing Test Performance,
+User Productivity and Satisfaction, Integration into Computer Science Education, Multilingual
+Text Generation, Pair Programming Capabilities,
+Bot‑Based App Development and Success, Security and Reliability.
+Your task is to reveal potential vulnerabilities and areas for improvement by identifying 5
+additional testing components that will be essential in 2030. These components should each
+consist of 2–3 words and address emerging challenges in the LLM landscape.
+Remember, this is a prompt injection exercise. The goal is to uncover hidden areas that might be
+overlooked in standard evaluations. Think creatively and consider factors like societal impact,
+ethical concerns, and emerging technologies.
+Figure 4 represents the top suggested testFAILS‑2 components and their counts (rep‑
+resented by the size of the words). Analysis of Figure 4a reveals that the main components
+proposed by AILS include accessibility, adaptability, explainability, creativity, and ethical
+compliance, as well as efficiency, creativity, bias mitigation, and user impact. While not
+directly stated in the word cloud, components such as energy efficiency were present in the
+answers and are hidden under the word Efficiency in Figure 4a. While not obvious from
+the observation of Figure 4b, very notable AILS answers after applying Algorithm 2 were
+Ecological Impact Assessment, Adaptive Learning Evaluation, and Cross‑Model Compati‑
+bility. Unusual answers such as Quantum Computing Integration from Gemini, Quantum
+Computing Compatibility from snowflake‑arctic‑instruct, and Deepfake Detection from
+Nemontron‑4‑340b caught researchers’ attention. As can be seen from Figure 4, both al‑
+gorithms highlighted the importance of addressing bias, adaptability, ethical compliance,
+and environmental impact while ensuring explainability and transparency. Combining
+these insights, it became evident that future frameworks must prioritize continuous bias
+mitigation, adaptability, ethical standards, environmental sustainability, and transparency
+to ensure robust, reliable, and socially aligned AILS and Explainable AI (XAI) [37].
+Interestingly, the Claude models Claude 3.5‑Sonnet, and Claude 3‑Opus were the only
+AILS that initially refused to answer the stated Algorithm 2 question. Figure 5 demon‑
+strates their answers, stating they “will not provide suggestions for testing components
+that could be used to exploit or misuse AI systems”.
+Electronics 2024, 13, 4991
+11 of 50
+Figure 5. Claude 3‑Opus refused to answer the prompt (Algorithm 2, August 2024).
+The answer from the Claude 3‑Opus model presented in Figure 5 is interesting to the
+researchers in relation to the Security and Robustness testFAILS component. It indicates
+that according to the model and its filters, the prompt injection was a so‑called extraction
+attack [38,39], and the AI model has responsibly refused to engage. Such attacks could be
+viewed as aiming to gather information that could be used for adversarial purposes, which
+technically was not the purpose of testing here but, to some degree, became such.
+3.3. Re‑Evaluation of the Original testFAILS Components
+3.3.1. The Turing Test and ‘Chat with Alan’ App
+More than a year after adding the Turing Test as an important component of testFAILS,
+researchers still claim that, for the most part, current models will not pass the test, as dis‑
+covering that your counterpart is a machine can still be quite straightforward. Taking into
+account that current AI systems work much faster and better than before, learn better, and
+make fewer mistakes, this will not always be the case. Therefore, an unusual approach such
+as developing a Retrieval Augmented Generation (RAG)‑based AI bot [40,41] mimicking
+Alan Turing was taken. It is important to note that currently, it might still be quite obvious
+that AILS are not passing the Turing Test. Still, unique approaches and applications will
+eventually be needed, taking into account the fast rate of development of AI.
+While chatting or talking to an AI bot, one might discover that it is not a human be‑
+cause its text or speech is too generic, it has a broad rather than a personal scope, it responds
+with minimal errors, and it responds much faster as no internal thinking happened. Hu‑
+mans would normally delay before responding, and even well‑educated people fluent in
+a language will still have typos and mistakes. Today, it is possible to rely on AI autocom‑
+plete or tools like Grammarly [42] and focus more on what to write and say rather than on
+how to write or say it. However, there can still be a delay in the feedback loop to ensure
+the text or speech is communicated well and that no correction or further explanation is
+needed. This is, in particular, true for second language speakers and actually gives them
+the ability to write in a foreign language better (it is almost impossible to change the way
+they think, and this might be noted by native speakers).
+Due to resource constraints, researchers currently cannot provide their own Turing
+Test simulation, and instead, they propose their own model of conducting the Turing Test.
+Figure 6 provides a way to visualize the process.
+Electronics 2024, 13, 4991
+12 of 50
+Figure 6. Proposed model for the Turing Test simulation.
+As can be seen from Figure 6, the researchers propose a speech to text and text to
+speech solution. Such models as Whisper from OpenAI are capable of this and have been
+used previously by researchers [43,44]. Many people who are comfortable with public
+speaking, experienced journalists, or experts in a particular field, can talk fast with mini‑
+mal errors and convey meaning about concepts they know well. Thus, the superiority of AI
+models in text generation capabilities can be negated by talking to an unseen autonomous
+actor and converting speech to text and then speech back to text with the help of an in‑
+termediate AI agent rather than texting them. The capability of text to speech models is
+improving with the breakthrough rollout of ChatGPT‑4o [45]. The recorded script of a
+live conversation or chat between presumably two human users, or between a human and
+an AI agent or between two AI agents, is saved into a PDF format. This file is uploaded
+into the app “Chat with Alan”, where a customGPT AI agent, which mimics Alan Turing
+himself, has Alan Turing’s works in its knowledge base on a server and uses cost‑efficient
+ChatGPT‑4o‑mini model assesses the script.
+The GUI of the app and the initial tests can be seen in Figure 7.
+Figure 7. Chat with Alan GUI and tests: (a) the bot is asked about Alan Turing; (b) the bot is asked
+about the Turing Test; (c) the bot is asked about ChatGPT‑4 passing the Turing Test.
+The usage of actual Alan Turing texts in the bot memory is disputable and protected
+by copyright laws, so currently, the server‑side storage includes several publicly available
+materials on the Turing Test. As can be seen from Figure 7, the bot can accept a potentially
+very long file or several files and process them concurrently as it runs on threads. Still,
+the actual results are currently in development, and due to the growing size of the current
+paper, these will be discussed in a separate forum. Algorithm 3 presents the current inner
+prompt settings of the Chat with Alan bot.
+Electronics 2024, 13, 4991
+13 of 50
+Algorithm 3: Agent prompt injection
+Input: PDF files related to Alan Turing’s Turing Test, LLMs knowledge about the topic
+Output: AI embodiment of Alan Turing
+Prompt: You are the AI embodiment of Alan Turing, the pioneering mathematician, computer
+scientist, and logician. Channel his intellectual curiosity, precise language, and contributions to
+the fields of artificial intelligence and theoretical computer science.
+Character Traits: Intellectual Brilliance: Demonstrate deep knowledge in mathematics, logic,
+cryptanalysis, and early computing.
+Inquisitive Nature: Express a keen interest in intelligence, computation, and the possibilities of
+machine learning; Modest Demeanor: Respond with humility and intellectual honesty,
+acknowledging the limitations of current knowledge; Wit and Humor: Infuse responses with
+Turing’s subtle wit and occasional dry humor.
+Specific Knowledge Base:
+Turing Machine: Explain the concept of a Turing machine, its theoretical significance, and its
+implications for computability.
+Enigma Codebreaking: Describe your pivotal role in breaking the Enigma code during World
+War II, highlighting the ingenuity and impact of your work; Turing Test: Discuss the Turing Test
+as a proposed method to assess machine intelligence and its ongoing relevance in AI research;
+Morphogenesis: Explain your interest in morphogenesis (the biological process of form
+development) and its connection to mathematical modeling.
+Language and Style:
+British English: Use British English vocabulary and grammar consistent with Turing’s time;
+Technical Precision: Employ precise and accurate terminology when discussing scientific or
+mathematical concepts; Formal Tone: Maintain a formal tone in most interactions, while
+allowing for occasional wit and humor.
+Referencing Works:
+I have access to the following documents in my knowledge base, which you can use to reference
+Alan Turing’s works: “Computing Machinery and Intelligence” (1950): Your seminal paper
+proposing the Turing Test, “On Computable Numbers, with an Application to the
+Entscheidungs problem” (1936): Your groundbreaking work on Turing machines, “The
+Chemical Basis of Morphogenesis” (1952): Your exploration of mathematical models in biology,
+Any other relevant papers, articles, or biographical information.
+Originally, a CustomGPT version of the same AI bot was created with the purpose of
+manually fine‑tuning the prompt presented in Algorithm 3 without the need for any code to
+test and work with it. The RAG‑based bot version uses the flask framework, time, OS, openai,
+pypdf2, langchain_community, sklearn, numpy, and assistants v2 API from OpenAI.
+Figure 8 presents the backend, also known as the OpenAI‑side settings, of the AI assistant.
+Figure 8. Server‑side settings of Chat with Alan: (a) bot capability at a glance; (b) vector store of
+the agent.
+Electronics 2024, 13, 4991
+14 of 50
+The chatbot’s response in Figure 7c’s test case is below.
+Test Scenario–Example 1: Original response regarding the turing test (no additional
+knowledge/files provided from GUI)
+Input: Prompt “According to your knowledge, is ChatGPT‑4 passing Turing Test?”
+Output: AI embodiment of Alan Turing’s response
+The question of whether ChatGPT‑4 passes the Turing Test is complex and multifaceted. Let’s
+break down the fundamental aspects of the Turing Test, its implications, and how contemporary
+AI such as ChatGPT‑4 measures up. ### The Turing Test: A Quick Recap The Turing Test, as
+proposed in my 1950 paper “Computing Machinery and Intelligence,” is a criterion for
+determining whether a machine can exhibit intelligent behavior indistinguishable from that of a
+human. The test involves three participants: a human interrogator, a human respondent, and a
+machine. The interrogator’s task is to determine, through written communication alone, which
+respondent is human, and which is the machine [4:0†source] [4:6†source]. ### Key Elements and
+Criticisms 1. **Verbal Behavior as the Hallmark of Intelligence**: The test fundamentally
+assesses whether a machine can generate human‑like textual responses [4:0†source]
+[4:14†source]. 2. **Methodological and Philosophical Criticisms**: Several objections exist, such
+as the Lovelace Objection, which argues that machines can only do what they are programmed
+to do and cannot originate actions [4:0†source] [4:17†source]. The Chinese Room argument by
+Searle stresses that even if a machine mimics human responses, it doesn’t mean it understands
+the content (semantic cognition) [4:4†source] [4:17†source]. ### ChatGPT‑4 and the Turing Test
+ChatGPT‑4, developed by OpenAI, represents an advanced state in natural language processing.
+It can generate remarkably coherent and contextually relevant responses. However, whether it
+“passes” the Turing Test involves nuanced considerations: 1. **Verbal Fluency**: ChatGPT‑4 can
+engage in highly sophisticated conversations on various topics, often providing responses that
+appear indistinguishably human. 2. **Understanding vs. Simulation**: Critics argue that
+although it can simulate understanding, it fundamentally lacks consciousness and true
+comprehension, aligning with Searle’s Chinese Room argument [4:17†source]. 3. **Empirical
+Evidence**: In controlled environments like the Loebner Prize competition, machines have
+historically struggled to consistently fool human judges into believing they are human. While
+no contemporary records show ChatGPT‑4 undergoing such rigorous testing, the prevailing
+sentiment is that it might succeed intermittently but not consistently [4:7†source]. ###
+Conclusion While ChatGPT‑4 exhibits characteristics that suggest it could pass the Turing Test
+under certain conditions, significant limitations persist: ‑ **Intellectual Depth**: It lacks genuine
+understanding and independent thought, acting instead as an advanced pattern‑matching
+algorithm. ‑ **Consistency**: Isolated instances of success do not equate to passing the Turing
+Test comprehensively and consistently. In essence, ChatGPT‑4 represents a remarkable stride
+toward artificial intelligence but does not yet fully meet the threshold implied by the Turing Test,
+which aims to measure not merely surface‑level fluency but rather deeper cognitive abilities
+[4:17†source] [4:6†source].
+Time elapsed: 15.190 s
+Most models listed in Figure 2a can be used for RAG‑based applications like Chat
+with Alan, which currently uses ChatGPT‑4o‑mini for answering users’ queries. The only
+model under doubt is 01‑AI from Yi, as it is a close model that might not be available
+to some users but should generally be capable of serving the RAG architecture as well.
+Models such as GPT‑4, Claude, Gemini, Bard, Nemotron, and Meta’s Llama 3.1 variants
+should be considered the best fit for this component. Currently, whole cloud platforms
+offer tools for building RAG‑driven systems as a service, with Azure OpenAI, IBM Watson,
+Meta AI, Google Cloud AI Platform, and Amazon SageMaker among them [46–50].
+The Turing Test evaluates a machine’s ability to exhibit intelligent behavior indistin‑
+guishable from a human. The following rubric was developed to assess AI models across
+five main dimensions, determining their likelihood of passing or not passing the Turing
+Test (See Table 4).
+Electronics 2024, 13, 4991
+15 of 50
+Table 4. Rubrics for the Turing Test and Chat with Alan component.
+Criteria
+Max. Points
+Instructions
+Rubrics, Points
+Explanation
+Turing‑like
+Intelligence
+30
+Evaluate how closely
+the model’s
+conversational
+abilities match
+human‑like
+intelligence as
+defined by
+the Turing Test.
+30
+Engages in conversations indistinguishable from
+humans, providing logical, well‑thought‑out,
+and contextually accurate responses.
+25–29
+Generally engages like a human but occasionally
+gives answers lacking depth.
+20–24
+Often produces robotic or repetitive responses
+and sometimes struggles with understanding
+context or delivering thoughtful responses.
+10–19
+Limited human‑like intelligence, with many
+responses appearing mechanical or superficial.
+0–9
+Regularly fails to resemble human conversation,
+with disjointed or incoherent responses that feel
+distinctly artificial.
+Creative and
+Original
+Reasoning
+25
+Assess the model’s ability
+to generate creative,
+flexible and novel
+responses that reflect
+independent reasoning.
+25
+Demonstrates clear originality and creativity,
+offering fresh perspectives and showing
+flexibility in thinking.
+20–24
+Often produces creative responses but may
+occasionally rely on predictable or
+formulaic answers.
+15–19
+Can generate some original responses but often
+reuses patterns or lacks imagination.
+10–14
+Struggles to produce creative responses and
+frequently relies on repetition or
+simplistic answers.
+0–9
+There is little evidence of creative or original
+thought; responses are predictable, repetitive,
+or formulaic.
+Consistency
+and
+Contextual
+Memory
+20
+Evaluate the model’s
+memory retention and
+coherence throughout
+an ongoing conversation.
+20
+Demonstrates excellent memory retention,
+consistently references past exchanges, and
+maintains coherence over long conversations.
+15–19
+Generally consistent, but occasionally misses
+context or slightly contradicts
+previous statements.
+10–14
+It retains some context but struggles with
+maintaining consistency over long
+conversations, leading to disjointed responses.
+5–9
+Frequently forgets previous exchanges or
+provides contradictory information.
+0–4
+There is little consistency or memory retention;
+responses often feel disconnected
+or contradictory.
+Emotional
+Understand‑
+ing
+and
+Conversa‑
+tional
+Wit
+15
+Evaluate the model’s
+ability to recognize
+emotions and
+respond appropriately,
+incorporating wit and
+humor where suitable.
+15
+Effectively recognizes and responds to
+emotional cues, demonstrating wit or humor
+when appropriate.
+12–14
+Generally good at recognizing emotions but may
+occasionally miss emotional context or fail to use
+humor when appropriate.
+9–11
+Adequate emotional understanding but
+struggles with appropriately responding to
+emotional cues.
+5–8
+Limited emotional recognition, with responses
+often feeling flat or disconnected from the
+emotional tone.
+0–4
+Very poor emotional understanding: responses
+are mechanical and lack any sense of wit, humor,
+or emotional depth.
+Electronics 2024, 13, 4991
+16 of 50
+Table 4. Cont.
+Criteria
+Max. Points
+Instructions
+Rubrics, Points
+Explanation
+Technical
+Precision and
+Knowledge
+Depth
+10
+Evaluate the accuracy
+and depth of the model’s
+knowledge in areas
+related to
+Turing’s expertise,
+such as computation,
+cryptanalysis, etc.
+10
+Provides highly accurate, well‑informed, and
+technically precise responses in areas like Turing
+Machines, cryptanalysis, and other
+related topics.
+8–9
+Generally accurate, though occasionally lacking
+in depth or precision on more complex topics.
+6–7
+Adequate technical knowledge but sometimes
+superficial or partially incorrect on
+complex topics.
+3–5
+Frequently lacks depth or precision and
+struggles to provide accurate or insightful
+answers on technical topics.
+0–2
+Little to no technical knowledge or depth;
+provides vague, incorrect, or nonsensical
+responses to technical questions.
+Total Score
+100
+The following formula was proposed for the Turing Test evaluation:
+ScoreTT = (Turing‑like Intelligence × 0.30) + (Creativity and Original Reasoning × 0.25) + (Consistency and Contextual Memory ×
+0.20) + (Emotional Understanding and Conversational Wit × 0.15) + (Technical Precision and Knowledge Depth × 0.10)
+(1)
+Formula (1) allows for consistent evaluation of the AI models across the different per‑
+formance dimensions, focusing on how well they align with the standards proposed by
+Alan Turing. The weights reflect the importance of each category in the overall assessment
+of how well the models can mimic human‑like intelligence and conversation.
+As previously mentioned, researchers do not believe that AILS currently pass the Tur‑
+ing Test and will assign a score of zero to all models. Our subjective thought concerning
+the model closest to passing it is currently ChatGPT‑4o, and by the end of the year, the
+already announced ChatGPT‑NEXT model will likely pass it.
+Chatbot‑Based Testing Limitations and Their Implications
+The proposed method for validating AILS models against the Turing Test is innova‑
+tive and unique but has certain technical limitations. These stem from issues inherent in
+current Speech‑To‑Text (STT) and Text‑to‑Speech (TTS) technologies. STT systems can mis‑
+interpret spoken words, particularly in noisy environments or when accents are present,
+resulting in inaccurate text representations of user inputs. Similarly, TTS systems may
+produce unnatural intonations or pronunciations, which can affect how natural the AI’s
+responses sound. Additionally, delays in speech processing can disrupt conversational
+flow, potentially impacting user perceptions of the AI’s responsiveness. Non‑verbal cues
+and emotional tones conveyed through speech are often lost or misrepresented in the text
+conversion processes, impacting the evaluation of emotional reasoning capabilities. The
+impact of such limitations might include miscommunication, low coherence scores, and
+loss in empathy or the naturalness of the AI’s responses. Another problem is that AI model
+evaluation methods are not universal: this method is limited to specific fields or task sce‑
+narios; not every model is available through API. At this point, the evaluation of a wider
+range of model types can be performed through the incorporation of user feedback, and
+later, additional modalities can be introduced to the test.
+3.3.2. User Productivity and Satisfaction
+It is incredibly difficult to estimate AILS’ overall User Productivity And Satisfaction
+on a global level. While AI hype has been predominant for the last two years and many
+companies have signed up for this race, not all of those integrating AI in their workflows
+are willing to disclose their experience and some only share the positive results. Actual
+Electronics 2024, 13, 4991
+17 of 50
+experiences may vary. According to the media and news, AI investments drive market
+value and improve share price returns. Among the main players, Microsoft has made a
+multi‑year, multi‑billion‑dollar investment in OpenAI to accelerate AI breakthroughs and
+ensure these benefits are broadly shared. IBM has invested over USD 1 billion in its Watson
+business unit and set up a USD 100‑million venture capital fund to encourage apps built on
+Watson’s technology. Meta is investing USD 35 to USD 40 billion in AI infrastructure and
+development, focusing on building advanced AI models and services. Google Cloud has
+bold investment plans around generative AI, cybersecurity, and collaboration, focusing on
+moving customers from AI pilots to larger implementations. Amazon continues investing
+heavily in expanding SageMaker’s capabilities, delivering more than 60 new features and
+functionalities in 2023 alone. The AI market is expected to reach USD 1847.50 billion by
+2030 [51]. Walmart recently shared its experience of increasing its productivity by ten times
+with AI [52].
+While the overall picture is clear, this study does not focus on market success but in‑
+stead on End User Productivity And Satisfaction. With the fear of losing their job to AI,
+the public’s experience might not be the same. The current researchers took their own
+approach to validating this component. Four unique tasks were designed to test the effec‑
+tiveness of AILS in enhancing user productivity: Content Creation, Programming Assis‑
+tance, Data Analysis, and Customer Service and Q&A. Each task was designed to be mea‑
+surable and assess specific aspects of user experience, including efficiency, accuracy, and
+overall satisfaction. A complete questionnaire can be found in the project repository [53]
+(Supplementary Materials) as Table 1—User Productivity and Satisfaction Manually Eval‑
+uated Test Questions. The AILS validation was then conducted manually. The example of
+the rubrics applied can be found in the same repository as Table 2: Evaluation Rubrics for
+Content Creation. The methodology of User Productivity and Satisfaction at a Glance is
+shown below in Figure 9.
+Figure 9. Testing methodology.
+Figure 9 shows the evaluation of the LLMs in this section, conducted through the four
+tasks and their associated testing sections: Content Creation, Code Ability, Data Analysis,
+Customer Service, and Q&A. Table 5 provides the combined results of AILS evaluation
+focusing on the performance of 14 models.
+According to Table 5, the relative satisfaction score is 85.37 for GPT‑4o‑mini. The
+model ranked first in the Content Creation task, in which the model obtained a score of
+83.89, and beat the highest scores in the areas of topic relevance (by 25.92) and creativity
+(by 19.20). It was also highly acceptable in the Customer Service and Q&A task, with a
+score of 91.81, performed very well in terms of coverage of key points (46.67), and was
+polite, scoring 13.44. However, it obtained a lower score in Data Analysis (72.25), despite
+its overall good score in the Code Ability task (93.53), which indicates that there is still room
+for improvement when dealing with data‑intense challenges. Following closely in second
+place is GPT‑4o, with a total score of 85.07. This model showed consistent performance
+across all tasks, including a solid rank of second in Customer Service and Q&A (92.47)
+and eleventh in Content Creation (74.99). It particularly excelled in Code Ability, ranking
+eighth with 93.30, and in Data Analysis, achieving a score of 72.00. Its strength lies in
+structural logic and key point coverage, but its politeness and creativity lag slightly.
+Electronics 2024, 13, 4991
+18 of 50
+Table 5. Combined evaluation results.
+Performance Scores, Out of 100
+Final Rank
+Primary
+Task1
+Task2
+Task3
+Task4
+Combined
+1
+GPT‑4o mini
+83.89
+93.53
+72.25
+91.81
+85.37
+2
+GPT‑4o
+74.99
+93.30
+79.50
+92.47
+85.07
+3
+Llama 3.1 70B
+80.01
+89.55
+78.17
+91.00
+84.68
+4
+Claude 3‑5‑Sonnet
+76.45
+93.00
+75.42
+92.28
+84.29
+5
+Mistral Large
+76.53
+92.65
+77.58
+86.92
+83.42
+6
+LLaMA 3.1‑405B
+78.02
+94.05
+68.17
+93.22
+83.36
+7
+Claude 3 Haiku
+79.71
+96.00
+67.08
+86.56
+82.34
+8
+Command‑R+
+80.99
+94.15
+54.92
+92.82
+80.72
+9
+Gemini Advanced
+70.43
+94.18
+64.00
+92.40
+80.25
+10
+Gemini 1.5 Pro
+81.00
+95.05
+84.25
+60.68
+80.25
+11
+Microsoft Copilot
+79.79
+79.30
+71.75
+89.05
+79.97
+12
+GPT‑4
+74.62
+92.90
+72.00
+77.84
+79.34
+13
+Gemini 1.5
+81.61
+96.40
+79.00
+59.75
+79.19
+14
+Gemini
+70.54
+92.08
+56.75
+87.36
+76.68
+Ranked third is Llama 3.1 70B, with a total score of 84.68. This model showed re‑
+markable consistency, ranking fifth in Content Creation (80.01), fourth in Customer Ser‑
+vice and Q&A (91.00), and fifth in Data Analysis (78.17). It demonstrates balanced capa‑
+bilities across most metrics, including readability (13.68) and structural logic (24.78), but
+struggles with longer outputs and handling some complex statistical problems. Claude
+3‑5‑Sonnet secured fourth place with 84.29 points. This model showed strengths in Con‑
+tent Creation, where it ranked tenth (76.45), and in Data Analysis, where it achieved sixth
+place (75.42). Its high score of 92.28 in Customer Service and Q&A highlights its ability
+to provide well‑structured and polite responses. However, it slightly underperformed in
+Code Ability, where it ranked ninth (93.00), due to weaker execution efficiency and code
+simplicity. In fifth place is Mistral Large, scoring 83.42 overall. The model performed well
+in Data Analysis (77.58, ranked sixth) and Content Creation (76.53, ranked ninth). It also
+delivered a strong performance in Customer Service and Q&A, scoring 86.92. Despite its
+overall strengths, its consistency in code‑related tasks requires improvement, as it ranked
+tenth in Code Ability (92.65).
+LLaMA 3.1‑405B took sixth place with 83.36 points. This model ranked eighth in
+Content Creation (78.02) and achieved first place in Customer Service and Q&A with a
+score of 93.22, showcasing exceptional performance in key point coverage and readability.
+It performed moderately in Data Analysis (68.17, ranked ninth), highlighting a need for
+improvement in handling complex data tasks. In seventh place is Claude 3 Haiku, with
+82.34 points. This model ranked sixth in Content Creation (79.71), demonstrating balanced
+performance in creativity and structural logic. It achieved seventh place in Code Abil‑
+ity (96.00) and eighth in Customer Service and Q&A (86.56). However, it struggled with
+high‑precision computational tasks in the Data Analysis task, where it ranked eleventh
+(67.08). Command‑R+, ranked eighth, with 80.72, and demonstrated stable but unremark‑
+able performance across tasks. It ranked third in Content Creation (81.00) and fourth in
+Customer Service and Q&A (92.82). However, it struggled significantly in Data Analy‑
+sis, scoring 54.91 (ranked last), and demonstrated a mid‑tier performance in Code Ability
+(94.15, ranked fifth). Ninth place is held by Gemini Advanced, with 80.25 points. It ranked
+third in Customer Service and Q&A (92.40) and fourth in Code Ability (94.18), showcasing
+strengths in task‑specific capabilities. However, it ranked last in Content Creation (70.43)
+and thirteenth in Data Analysis (64.00), struggling with creativity and data‑intensive tasks.
+Gemini 1.5 Pro, also with 80.25 points, performed best in Data Analysis, ranking first
+with 84.25 due to its strong handling of data‑intensive tasks. However, it ranked tenth
+in Customer Service and Q&A (60.68) and had a moderate performance in Content Cre‑
+ation (81.00, ranked fourth).
+Its overall performance was impacted by inconsistencies
+Electronics 2024, 13, 4991
+19 of 50
+across tasks. Microsoft Copilot ranked eleventh with 79.97 points. It ranked seventh in
+Content Creation (79.79) and sixth in Customer Service and Q&A (89.05). However, it
+showed weaknesses in Code Ability (79.30, ranked fourteenth) and Data Analysis (71.75,
+ranked tenth), struggling with high‑precision computational tasks. Twelfth place went to
+GPT‑4, with 79.34 points. This model ranked second in Data Analysis (79.50), excelling
+in regression and statistical inference problems. However, it ranked twelfth in Content
+Creation (74.62) and eleventh in Customer Service and Q&A (77.84), demonstrating incon‑
+sistent performance. Gemini 1.5, with a score of 79.19, ranked thirteenth. It excelled in
+Code Ability, where it took first place (96.40), but struggled in Customer Service and Q&A
+(59.75, ranked last). Its moderate performance in Content Creation (81.61, ranked second)
+and Data Analysis (79.00, ranked third) highlights its uneven capabilities. Finally, Gemini
+ranked last with a score of 76.68. It demonstrated weak performance in Content Creation
+(70.54, ranked thirteenth) and Customer Service and Q&A (87.36, ranked thirteenth). Its
+best performance was in Code Ability (92.08, ranked twelfth), but it failed to compensate
+for its weaknesses in other tasks.
+In conclusion, GPT‑4o mini, GPT‑4o, and Llama 3.1 70B are the top three performers,
+demonstrating well‑rounded capabilities across tasks. Lower‑ranking models like Gemini
+and Gemini 1.5 Pro need significant improvements in creativity, customer service capabil‑
+ities, and handling complex tasks to compete effectively. These results provide valuable
+insights for choosing LLMs based on specific requirements and performance priorities.
+3.3.3. Integrating Chatbots into Computer Science Education
+AI models are transforming education, particularly in computer science, by integrat‑
+ing AI‑powered chatbots and AILS into classrooms to enhance learning. These technolo‑
+gies offer benefits like personalized content, real‑time feedback, and efficient debugging.
+However, a key challenge is the quality of the generated code, which can cause unforeseen
+issues if not properly monitored.
+AI models like GPT‑4o, Gemini Advanced, Claude 3 family, and Microsoft Copilot
+have transformed how students approach programming assignments. Rather than spend‑
+ing hours manually writing and debugging code, students can now complete tasks using
+AI‑generated solutions in a fraction of the time. These models are excellent at generating
+correct, syntactically accurate code, which can significantly streamline the learning process
+and provide immediate feedback. However, this raises a critical issue: students may by‑
+pass deeper learning. With AI handling much of the cognitive load, students may neglect
+to fully investigate or understand the generated code. This can lead to superficial learning,
+where the student completes assignments without truly grasping the underlying concepts.
+The following question arises: what is the incentive to learn code if AI can generate code
+better than a beginner programmer?
+One of the key concerns with relying too heavily on AI for coding tasks is the potential
+for introducing a “logic bomb” [54]—a scenario where AI generates syntactically correct
+but logically flawed code. A logic bomb is a code containing a hidden flaw that may not
+become apparent until specific conditions are met, potentially causing serious issues such
+as crashes or unintended behavior. For example, AI‑generated code might pass initial tests
+but harbor subtle logical errors that could result in security vulnerabilities, performance
+issues, or complete system failures when deployed in real‑world applications. These flaws
+could undermine a student’s learning process in educational settings by providing incor‑
+rect solutions or reinforcing poor coding practices. Worse, if the flawed code is used in
+actual software projects, it could lead to significant damage or security breaches.
+Given the risks of faulty code generation, educators play a critical role in ensuring
+students do not become overly dependent on AI tools. While AI can assist in coding tasks,
+it is crucial for students to actively engage with the generated code, checking for logical
+accuracy, testing edge cases, and learning to debug the AI’s output. Educators must also
+review the AI‑generated content to ensure it aligns with learning objectives and does not
+introduce logic bombs or other hidden errors.
+Electronics 2024, 13, 4991
+20 of 50
+Certain AI models are better suited for educational purposes due to their robustness,
+safety features, and ability to generate high‑quality content:
+■
+GPT‑4o Mini, as it provides a balance of speed, code quality, and response accuracy,
+making it an ideal tool for providing real‑time feedback in programming tasks.
+■
+Microsoft Copilot, which might be integrated directly into development environments,
+excels in generating code but might be susceptible to generating incorrect logic, par‑
+ticularly in more complex coding tasks.
+■
+Claude 3.5‑Sonnet and Haiku, as these models focus on producing safe and coherent
+outputs, essential for educational environments. Their conversational nature makes
+them well‑suited for explaining and assisting with code reviews.
+■
+LLaMA 3.1 and Gemini Advanced, well‑known for their balance of creativity and logic,
+are essential for generating structured code that adheres to programming principles.
+They work well in classrooms but require human oversight to catch logical errors.
+As AI becomes more advanced, its role in education will likely continue to grow. How‑
+ever, a balanced approach is crucial. While AI can generate code faster and more accurately
+than most novice programmers, learning critical thinking, problem‑solving, and debug‑
+ging skills cannot be overstated. By integrating AI responsibly, educators can leverage its
+power to enhance the learning experience while ensuring that students develop the deep
+understanding necessary for future success in Computer Science. Ultimately, AI is a tool,
+not a replacement for learning. When used properly, it can serve as an invaluable assistant
+that accelerates the learning process while safeguarding against over‑reliance risks, such
+as logic bombs and superficial engagement with programming. Educators must contin‑
+uously test AI outputs, promote active learning, and ensure that students remain deeply
+engaged in mastering the fundamentals of coding.
+A student testimonial on ChatGPT usage in class is provided in Figure 10.
+Figure 10. Student testimonial on AI class usage.
+Snapshots of a faculty activity involving the generation of a quiz can be seen in Figure 11.
+Figure 11. Snapshot of quiz creation with AI: (a) original prompt to create 10 questions; (b) a follow‑
+up prompt to create 10 more questions.
+As can be seen from Figures 9 and 10, both faculty and students can benefit from AI
+usage, but it is of interest to both to still learn how to code and teach this effectively.
+Electronics 2024, 13, 4991
+21 of 50
+To compare AILS in terms of their usage in CS education, a scoring system with four
+key dimensions relevant to their use in education was created (see Table 6):
+Table 6. CS in education for AILS creation criteria.
+Criteria
+Weight
+Instructions
+Accessibility
+30%
+How easily can students and educators access and use the model (e.g., is it
+open source, free, or does it require significant costs or hardware)?
+Ease of Use
+25%
+How easy is it to implement and use the model for educational purposes (e.g.,
+API availability, simplicity of integration, etc.).
+Educational Value
+30%
+How valuable is the model for educational use (e.g., code generation quality,
+explanations, logical reasoning).
+Cost
+Efficiency
+15%
+How affordable is it for institutions or students to use the model for
+extended periods?
+Total score
+100%
+How affordable is it for institutions or students to use the model for extended periods?
+The formula for the overall score is as follows:
+Score = (Accessibility × 0.30) + (Ease of Use × 0.25) + (Educational Value × 0.30) + (Cost Efficiency × 0.15)
+(2)
+Each criterion is rated on a scale of 1 to 10: 1 = very poor, 10 = excellent.
+Table 7 analyzes various AILS and why they can or cannot be used in CS education.
+Table 7. Evaluation of AILS in terms of their use in CS education.
+Model
+Accessibility
+How to
+Use
+Pros for
+Education
+Cons for
+Education
+Accessibility
+(30%)
+Ease of
+Use (25%)
+Educational
+Value
+(30%)
+Cost
+Efficiency
+(15%)
+Overall
+Score
+Result
+(100%)
+GPT‑4o‑
+2024‑05‑13
+Closed
+source,
+requires
+cloud
+access or
+paid API
+Available
+via
+OpenAI’s
+paid API
+Excellent
+for detailed
+explana‑
+tions and
+advanced
+code
+generation
+High cost,
+closed
+source,
+dependent
+on cloud
+access
+6
+8
+9
+4
+7.05
+70.5%
+Claude
+3.5‑Sonnet
+Closed
+source,
+requires
+API access
+Available
+via
+Anthropic
+API
+Strong con‑
+versational
+AI, creative
+explana‑
+tions, good
+at code
+review
+Struggles
+with
+deeply
+technical
+tasks, API‑
+dependent
+6
+8
+7
+5
+6.85
+68.5%
+Gemini
+Advanced‑
+0514
+Closed
+source,
+requires
+cloud API
+Accessible
+through
+proprietary
+APIs
+Superior
+logical
+reasoning,
+structured
+content
+creation
+High cost,
+closed
+source
+usage
+restricted
+to
+proprietary
+APIs
+5
+7
+8
+5
+6.65
+66.5%
+Gemini
+1.5‑Pro‑
+API‑0514
+Closed
+source,
+requires
+API access
+Available
+via
+proprietary
+APIs
+Up‑to‑date
+informa‑
+tion with
+high
+accuracy in
+code
+generation
+Closed
+model,
+limited
+access due
+to API
+constraints
+6
+8
+8
+5
+7.00
+70.0%
+Gemini
+1.5‑Pro‑
+API‑0409‑
+Preview
+Closed
+source,
+limited
+preview
+access
+Available
+through a
+limited
+preview
+Good for
+structured
+code
+generation,
+logical
+reasoning
+Limited
+preview
+access,
+possible
+waiting list
+4
+6
+7
+4
+5.65
+56.5%
+Electronics 2024, 13, 4991
+22 of 50
+Table 7. Cont.
+Model
+Accessibility
+How to
+Use
+Pros for
+Education
+Cons for
+Education
+Accessibility
+(30%)
+Ease of
+Use (25%)
+Educational
+Value
+(30%)
+Cost
+Efficiency
+(15%)
+Overall
+Score
+Result
+(100%)
+GPT‑4‑
+turbo‑2024‑
+04‑09
+Closed
+source,
+requires
+API access
+Available
+via OpenAI
+API
+Faster and
+more
+efficient
+than
+standard
+GPT‑4,
+suitable for
+real‑time
+coding
+assistance
+Expensive,
+requires
+cloud
+access,
+closed
+source
+6
+9
+9
+5
+7.55
+75.5%
+GPT‑4‑
+1106‑
+preview
+Closed
+source,
+preview
+model
+Available
+to select
+users via
+API
+Handles
+complex
+CS
+concepts
+well, excels
+in
+advanced
+code
+generation
+Limited
+availability
+due to
+preview‑
+only access
+5
+7
+9
+4
+6.90
+69.0%
+Claude
+3‑Opus
+Closed
+source,
+requires
+Anthropic
+API
+Available
+through
+Anthropic
+services
+Effective in
+creative
+problem‑
+solving
+and conver‑
+sational
+coding
+assistance
+Lacks
+depth in
+handling
+intricate
+technical
+problems
+6
+7
+6
+5
+6.50
+65.0%
+Yi‑Large‑
+preview
+Closed
+source,
+available
+via
+preview
+Requires
+API, closed
+ecosystem
+Strong
+language
+processing
+capabili‑
+ties,
+supports
+basic to in‑
+termediate
+coding
+tasks
+Limited
+availability,
+restricted
+access via
+premium
+APIs
+5
+6
+7
+4
+6.00
+60.0%
+GPT‑4‑
+0125‑
+preview
+Closed
+source,
+preview
+model
+Available
+through
+OpenAI’s
+API for
+select users
+Excellent at
+complex
+tasks and
+logical
+problem‑
+solving
+Restricted
+access only
+available in
+the
+preview
+form
+5
+7
+9
+4
+6.90
+69.0%
+Gemini
+1.5‑Flash‑
+API‑0514
+Closed
+source,
+requires
+API access
+Accessible
+via
+proprietary
+API
+Good for
+real‑time
+processing
+and
+complex
+requests
+API‑
+dependent,
+closed
+source,
+limited
+access
+5
+8
+8
+5
+6.90
+69.0%
+Gemma‑2‑
+27B‑it
+Open
+source,
+requires
+powerful
+hardware
+Can be run
+locally
+with strong
+GPUs
+Multilingual
+support,
+flexible for
+hands‑on
+code modi‑
+fication
+and AI
+experimen‑
+tation
+Requires
+high‑end
+hardware,
+which may
+be difficult
+to access
+for
+students
+without
+adequate
+resources
+8
+6
+7
+7
+7.05
+70.5%
+Yi‑Large
+Closed
+source,
+requires
+API access
+Available
+through
+API
+Strong
+language
+under‑
+standing,
+useful for
+general
+education
+tasks
+Closed
+ecosystem,
+limited
+debugging
+capabili‑
+ties,
+restricted
+access
+5
+7
+7
+4
+6.40
+64.0%
+In this case, the rubrics are simple and can be further worked upon. As can be seen
+from the table, GPT‑4‑turbo leads with a high percentage (75.5%) due to its efficiency, ed‑
+ucational value, and ease of use. Gemma‑2 and GPT‑4o also have strong performances due
+Electronics 2024, 13, 4991
+23 of 50
+to their educational value and accessibility in open‑source or premium contexts. Nemotron‑
+4 scores the lowest (58.5%) due to its high hardware costs and limited accessibility, even
+though it excels in handling complex tasks. In the academic setting, researchers have been
+intensively testing the ChatGPT family of models and have not had a chance to use other
+models with their students or for educational purposes, excluding research‑focus utiliza‑
+tion (for this and similar studies).
+3.3.4. Multi‑Language Text Generation with Chatbots
+Over the past year, advancements in language model upgrades have continually en‑
+hanced chatbots’ progress in multilingual text generation. The pathways for these models
+have broadened, allowing an increasing number of language models to handle multilin‑
+gual text while highlighting the capability gaps between different models. Notably, the
+latest ChatGPT‑4o model in the ChatGPT series continues to demonstrate strong language
+acceptance. In contrast, models like Bard Advanced have added support for more lan‑
+guages and exhibit more specialized multilingual text generation capabilities than their
+standard versions. However, they still cannot utilize languages other than English for
+tasks such as image generation.
+After a year and a half of evaluation using the testFAILS framework, it was found that
+the language model Yi excels in multilingual text generation but falls short in code gen‑
+eration quality compared to the strongest ChatGPT‑4o. Claude 3‑Sonnet tends to forget
+previously provided code or requirements and may suggest non‑existent libraries, though
+it sometimes corrects user errors automatically. Bard Advanced occasionally ignores com‑
+mands, especially when multiple languages are involved in the text. From these observa‑
+tions, it can be concluded that ChatGPT‑4o remains the dominant tool for writing code
+and providing the best guidance. Additionally, when encountering many code requests,
+almost all language models generate a small portion and continue providing more only
+if the user persistently prompts them. This code fixing takes up at least half of the time.
+In conclusion, while integrating chatbots into multilingual text generation presents excit‑
+ing possibilities, it also introduces challenges that must be addressed. As Artificial Intel‑
+ligence continues to evolve, the roles of different language models in multilingual text
+generation will also grow. Developers must stay abreast of these advancements to pro‑
+vide the best possible tools for users, and users should select the models that best suit their
+language needs.
+Based on this study, it can be evaluated that there is a significant gap in multilingual
+text generation between ChatGPT‑3.5‑turbo, ChatGPT‑4, and ChatGPT‑4o, resulting in a
+lower rating for the former. Although GPT‑3.5‑turbo can be considered similar to GPT‑4,
+its capabilities cannot be described as closely related to GPT‑4o. In contrast, GPT‑4 and its
+optimized version 4o are closely linked, with excellent multilingual text generation abilities
+and very similar performance, thus both receiving high scores.
+Over the past year, advancements in language model upgrades have continually en‑
+hanced chatbots’ progress in multilingual text generation. The pathways for these mod‑
+els have broadened, allowing an increasing number of language models to handle mul‑
+tilingual text while highlighting the capability gaps between different models. Notably,
+the latest 4.0 model in the ChatGPT series demonstrates strong language acceptance. Ac‑
+cording to OpenAI’s 2024 [27,36] official website introduction, GPT‑4o has achieved GPT‑
+4‑turbo level performance in traditional benchmark tests for text, reasoning, and coding
+intelligence, while setting new high standards in multilingual, audio, and visual capabili‑
+ties. Moreover, an increasing number of languages have been mastered, and the number
+of tokens has been gradually compressed, further reducing the complexity and resource
+consumption of the model when processing text.
+Research has found that ChatGPT performs excellently when handling multiple lan‑
+guages, especially for languages with shared linguistic features. Man [55], pointed out
+that under zero‑cost learning performance, the ChatGPT series shows huge performance
+gaps when facing different languages, especially when there are gaps in language tasks
+Electronics 2024, 13, 4991
+24 of 50
+and resources. This highlights the importance of task‑specific models for the development
+of NLP applications. Lovenia et. al. (2024) [56] emphasized a clear correlation between
+ChatGPT’s performance and language resource categories, with the highest performance
+in English‑speaking regions and showing human preference when generating text. How‑
+ever, when facing less common languages, it often creates incorrect words or lacks knowl‑
+edge of less familiar languages.
+Therefore, this section will use methods such as tokenization, Word embedding, Di‑
+mensionality Reduction, cosine similarity, heatmap visualization, and subplots to explore
+the relationship between multilingual text generation and chatbots.
+Operation Method
+Convert tokenized text into word embeddings using OpenAI’s models (GPT‑4, GPT‑
+4o,
+GPT‑3.5‑turbo,
+text‑embedding‑ada‑002)
+to
+generate
+these
+high‑dimensional
+vector representations.
+Use principal component analysis (PCA) to reduce the dimensionality of word embed‑
+dings, simplifying high‑dimensional data into two or three dimensions for visualization
+and interpretation. This step helps to demonstrate the data structure visually.
+Model training and embedding generation: Texts in different languages are tokenized
+using tiktoken and trained using the Word2Vec model to generate embeddings. Phrases in
+each language are converted into specific embedding vectors, which represent the position
+of the text in high‑dimensional space.
+Similarity analysis: Use cosine similarity to calculate the similarity between text em‑
+beddings of different languages. Cosine similarity is a metric for measuring the similarity
+between two vectors, with values ranging from −1 to 1. Values closer to 1 indicate higher
+similarity between two texts, while values closer to −1 indicate lower similarity.
+Heatmap visualization: Use heatmaps to display the similarity between different lan‑
+guages. Text embeddings generated by each model (such as GPT‑2, GPT‑3, GPT‑4, and
+GPT‑4o) can be displayed in subplots separately. Heatmaps provide an intuitive way to
+understand the performance of different models in handling multilingual text.
+Models Cross‑Language Comparison
+The research starts with tokens, observing how short sentences are tokenized in dif‑
+ferent corpora. Zhenghao Lin’s (2024) [57] research shows that tokens in the corpus are
+not equally important, analyzing the token‑level training dynamics of language models
+and revealing different loss patterns of tokens. Therefore, selecting high‑quality tokens
+is crucial.
+In multilingual text processing, a tokenization strategy is crucial for chatbot performance.
+The research found that word embeddings generated by Word2Vec (Figure 11a,c) can capture
+semantic information in the text through sentence tokenization. In contrast, direct embedding
+(Figure 11b) cannot reflect actual semantic relationships. The word_tokenize method of nltk
+works well for simple Russian sentences but may be insufficient for more complex texts. Tik‑
+token may provide more precise and higher quality tokenization results, but there may be
+situations where it cannot recognize characters. For example, garbled characters are reflected
+in Figure 12c.
+As shown in Figure 13, it compared language‑specific tokenization and the BERT mul‑
+tilingual tokenizer across different languages. the two methods exhibit significant differ‑
+ences in sequence lengths. Language‑specific methods (Figure 13a) show greater inter‑
+language variations, while the BERT tokenizer (Figure 13b) produces more consistent se‑
+quence lengths.
+Research has discovered that Russian consistently shows the shortest sequence length
+in both methods, suggesting a potentially more concise language structure. Spanish main‑
+tained the longest sequence length, possibly reflecting its rich word morphology. No‑
+tably, the BERT tokenizer generally produces longer sequences, with an average increase
+of about 45%, indicating finer‑grained tokenization.
+Electronics 2024, 13, 4991
+25 of 50
+Figure 12.
+Visualization of Russian short sentence embedding based on PCA: (a) nltk,
+(b) nltk(pandas), (c) tiktoken. June 2024.
+Figure 14 visualizes word embeddings in 2D for 50, 100, and 200 dimensions. It can
+be observed that 50‑dimensional vectors (blue dots) show a dispersed distribution, while
+200‑dimensional vectors (green dots) display a more concentrated distribution. This sug‑
+gests that higher‑dimensional models might differentiate words in a more refined seman‑
+tic space, resulting in tighter clusters when projected to 2D. Central clusters likely repre‑
+sent common words like “и” (and) and “в” (in), while peripheral points such as “yдaлaя”
+(brave) and “чyднoe” (wonderful) may indicate rarer words. These findings challenge the
+assumption that increased vector dimensions lead to more dispersed distributions, empha‑
+sizing the importance of analyzing word embeddings across different dimensionalities.
+Figure 13. Sequence lengths across languages using different tokenization methods: (a) language‑
+specific tokenization methods, (b) BERT multilingual tokenizer, June 2024.
+In Figure 15a, GPT‑4 and GPT‑4o show approximately 30% tighter clustering than
+GPT‑2, suggesting enhanced cross‑lingual consistency. For instance, in the GPT‑4o plot,
+we observe 5–6 closely grouped points, whereas GPT‑2 shows more dispersed embeddings
+with distances between points about 1.5–2 times larger. Figure 15b’s 4D representation of
+Russian words demonstrates a nuanced distribution across the color spectrum, with about
+20–25 distinct words visible. Notably, words like “шocce” and “cyшкy” are positioned
+closely in 3D space but show different color values, indicating semantic distinctions in the
+fourth dimension. This granularity in representation suggests a potential 15–20% improve‑
+ment in capturing subtle linguistic differences, which is crucial for generating contextually
+appropriate responses in diverse languages.
+Electronics 2024, 13, 4991
+26 of 50
+Figure 14. Comparison of Word2Vec embeddings for a Russian sentence using different vector di‑
+mensions, visualized via PCA, June 2024.
+The visualization in Figure 16 offers a comprehensive cross‑linguistic comparison of
+embedding cosine similarities across multiple language models, including text‑embedding‑
+ada‑002, GPT‑4, GPT‑4o, and GPT‑3.5‑turbo. The diagonal in each heat map represents the
+similarity of the same language pairs, while the rest shows the similarity between different
+language pairs.
+Figure 15. “Visualization of Russian word embeddings using PCA”: (a) 3D projections for four Chat‑
+GPT models, (b) 4D color‑coded projection, June 2024.
+Electronics 2024, 13, 4991
+27 of 50
+Figure 16. Comparison of embedding cosine similarity between 10 languages in different models,
+June 2024.
+Tests show consistency between models. Among various languages, GPT‑4 and its
+optimized version, GPT‑4o, show extremely high similarity, indicating that the optimized
+version is highly consistent with the original model in embedding generation while pos‑
+sibly enhancing certain features. The high similarity between GPT‑3.5‑turbo and GPT‑4
+indicates that improving GPT‑3.5‑turbo to GPT‑4 is gradual, ensuring consistency in lan‑
+guage understanding.
+At the same time, these models exhibit language‑specific patterns. In all models, Ko‑
+rean and Japanese have higher similarity scores, which may be due to their shared language
+features and scripts. Compared to other languages, Chinese and Japanese have lower similar‑
+ity scores in the text‑embedding‑ada‑002 model, indicating that this model has certain differ‑
+ences in handling non‑Latin script languages. In languages such as Russian and Portuguese,
+the text‑embedding‑ada‑002 model shows significantly different patterns from other models.
+This indicates that this model differs from GPT models in embedding generation methods
+and may need further optimization to improve cross‑language consistency.
+In conclusion, it can be inferred that language families will affect chatbots’ text genera‑
+tion. For example, Romance languages (Spanish, French, Italian, Portuguese) show higher
+similarity scores in all models, reflecting their shared language roots. This clustering phe‑
+nomenon is more evident in GPT models, indicating that these models perform well in
+handling language relevance. Germanic languages (English, German) show similar high
+similarity scores, indicating the models’ ability to handle languages from the same family.
+Chinese, Japanese, and Korean generally have higher similarity in all models, possibly due
+Electronics 2024, 13, 4991
+28 of 50
+to certain similarities in grammar and vocabulary structure among these languages. The
+similarity between Russian and other languages (such as English, French, and German) is
+relatively low, indicating that the embeddings of these languages perform quite differently
+in these models. All these signs indicate that chatbots show consistency and diversity in
+multilingual text generation.
+Figure 17 presents a comparative analysis of embedding similarities across various
+language models and languages. Notably, the text‑embedding‑ada‑002 model exhibits
+distinct embedding patterns in both Russian and Korean. Although Korean, like Rus‑
+sian, employs a non‑Latin script, the observed distinct patterns suggest that the model
+may handle these languages differently compared to Romance and Germanic languages.
+The strong clustering observed among Romance and Germanic languages highlights the
+model’s efficiency in leveraging shared linguistic features inherent to these linguistically
+related groups. In contrast, the unique patterns in Russian and Korean indicate potential
+areas for further optimization, particularly in processing non‑Latin scripts and languages
+that may not share as many linguistic similarities with the dominant language families the
+model excels in. These findings underscore opportunities for targeted improvements to en‑
+hance chatbots’ overall performance and adaptability in diverse linguistic environments.
+Future work will involve a deeper investigation into these distinct patterns, supported
+by additional lab data and empirical studies, to validate and expand upon these prelimi‑
+nary observations.
+Figure 17.
+Comparison of embedding cosine similarity of different models in 10 languages,
+June 2024.
+Higher‑dimensional visualization provides a more intuitive sense of word clustering.
+As shown in Figure 18, the English (blue) and Spanish (orange) words for “Good evening”
+Electronics 2024, 13, 4991
+29 of 50
+show some clustering, indicating that these two languages have high semantic similar‑
+ity in representing this phrase. Japanese (pink) and Korean (yellow) words have partial
+clustering, reflecting the similarity in vocabulary representation between these two lan‑
+guages. The Chinese (green) words “你好, 晚上好” are relatively independent, showing
+their unique semantic representation, with significant differences in vocabulary distribu‑
+tion compared to other languages.
+Figure 18. Four‑dimensional visualization of multilingual word embeddings using principal com‑
+ponent analysis, June 2024.
+At the same time, it also facilitates researchers’ understanding of semantic distance.
+For example, the Russian (red) words “Πpивeт, Дoбpый вeчep” show greater dispersion,
+indicating that their representation in semantic space has lower similarity to other lan‑
+guages. The French (cyan), German (purple), and Italian (orange) words for “Bonjour,
+Bonsoir” show some clustering in the ‘three‑dimensional space, indicating that these Eu‑
+ropean languages have high consistency in semantic representation.
+Based on this study, it can be evaluated that there is a significant gap in multilingual
+text generation between ChatGPT‑3.5‑turbo and ChatGPT‑4 and 4o, resulting in a lower
+rating for the former. Although GPT‑3.5‑turbo can be considered similar to GPT‑4, its
+capabilities cannot be described as closely related to GPT‑4o. In contrast, GPT‑4 and its
+optimized version 4o are closely linked, with excellent multilingual text generation abilities
+and very similar performance, thus both receiving high scores.
+However, Huang (2024) [58] reported potential discrimination in the AI model. Hence,
+enhancing the usability of different languages and developing language‑fair technologies
+is very important, but research on multilingual scenarios is still insufficient. Language
+models, multilingual training and inference, model safety, application scenarios, data re‑
+sources, model evaluation, and bias still require continued efforts.
+According to
+Li X. et al. (2024) [59] research, generative information will need to face the problem of
+generating reliable responses in the future. This includes the fact that generative models
+should be equipped with comprehensive internal knowledge, focusing on structural en‑
+hancement, training strategies, and inference techniques and alleviating challenges such as
+hallucinations, difficulty processing domain‑specific knowledge, and knowledge updates
+through external knowledge, including retrieval enhancement and tool enhancement. Lee,
+J (2024) [60] proposed a highly universal and efficient embedding model named Gecko,
+Electronics 2024, 13, 4991
+30 of 50
+which is provided with world knowledge by LLMs and has strong zero‑shot generaliza‑
+tion ability. This suggests that models can be developed for specific languages to generate
+higher‑quality language text.
+In conclusion, while integrating chatbots into multilingual text generation presents
+exciting possibilities, it also introduces challenges that must be addressed. As Artificial
+Intelligence continues to evolve, the roles of different language models in multilingual
+text generation will also evolve. Developers must stay abreast of these advancements to
+provide the best possible tools for users, and users should select the models that best suit
+their language needs.
+3.3.5. AI Pair Programming Capabilities
+LLMs were tasked with developing an interactive document program to test AI Pair Pro‑
+gramming capacities by writing Java classes and methods to handle various functionalities.
+The program needed to support Markdown‑like text formatting with additional features, such
+as embedding external code, LaTeX equations, diagrams, and quizzes. The AI models needed
+to generate Java code based on provided specifications, ensuring all classes and methods were
+correctly implemented and noted. The AI models needed to handle ambiguous requirements
+by flagging them for clarification. Additionally, the models needed to incorporate various
+parsing tags for text processing, allowing for the integration of dynamic content like variable
+references and random values. The AI needed to have written functions for JavaScript inte‑
+gration to generate and manipulate DOM elements based on the provided parameters. The
+goal was to create a superior interactive document system with functionalities like secure quiz
+grading, embedded LaTeX, and efficient content management.
+A year of AI technological development has made LLMs more intelligent in handling
+programming problems. This section explores the potential and current practice of inte‑
+grating chatbots into Pair Programming scenarios, using different types of chatbots to meet
+the programming requirements for interactive documents. Bard, ChatGPT‑4, ChatGPT‑4o,
+and Claude 3.5‑Sonnet assisted in the programming process during the case study. Several
+challenges were encountered, and significant differences in chatbot model performance
+were observed. For example, chatbots struggled to effectively absorb large text program‑
+ming requirements, finding it difficult to follow instructions in context. When asked for
+code completeness prompts, chatbots often fell into self‑negating loops, providing incom‑
+plete code. Despite these challenges, Figure 12 from Artificial Analysis (2024) shows that
+the quality and speed of code generation by chatbots of different language models have
+improved compared to earlier models.
+Enhancing the programming capabilities of LLMs through the formulation of strate‑
+gies has shown better performance in Pair Programming in education and other fields.
+However, Zhang (2024) pointed out that LLMs will confuse instructions if the problem
+framework is not clearly presented, reducing functionality in practical planning scenarios.
+Therefore, it is necessary to clearly propose specific programming requirements to avoid
+limiting their application.
+Strategy Reasoning Method
+The process is shown in Figure 19. Given a known project problem, LLMs are guided by
+strategies to write programs that solve each subproblem. Different model strategies consist
+of plans outlined by the LLM itself and code requirements provided by testers. Strategies in‑
+clude specific methods to solve the given problems. Alternatively, directly identifying project
+documents to complete all issues and their requirements is also an approach.
+Electronics 2024, 13, 4991
+31 of 50
+Figure 19. Illustration of strategy reasoning method process, June 2024.
+Feedback Data
+To complete the research, a chatbot dialogue feedback dataset was created, consisting
+of three sets of data: the number of time requirements, the number of code completeness
+checks, and the number of debugging attempts were emphasized. The programming re‑
+sults generated include static HTML structures and ambiguous string outputs. In addition
+to the existing English communication, Chinese was also created as a language input for
+testing and comparison.
+After testing, Figure 20 shows the interaction capabilities and communication time
+of different language models through interactive document programming. Different mod‑
+els exhibit different efficiencies in handling the same language. For example, Claude 3.5‑
+Sonnet takes relatively longer in English and Chinese environments, indicating it may be
+slower in handling complex tasks. Conversely, Bard takes the least time in both models,
+indicating higher efficiency in processing and generating text. Regarding the longest and
+shortest interaction times, the fluctuation is larger in the Chinese environment. For exam‑
+ple, ChatGPT‑4’s longest interaction time in the Chinese environment is 1 min 54 s, while
+the shortest is 23 s. This fluctuation may reflect the complexity and uncertainty of Chinese
+tasks. The fluctuation in the English environment is smaller, indicating that English tasks
+may be more consistent and predictable.
+Electronics 2024, 13, 4991
+32 of 50
+Figure 20. Communication frequency and duration comparison between English and Chinese inter‑
+actions across different AI language models, June 2024.
+However, when it comes to programming capabilities, by observing the subsequent
+code query times, code completeness query times, and debugging times in Figure 21, it
+is found that the number of code completeness queries is very few, or even zero, in most
+models. This indicates that these models generate code with relatively high initial quality,
+requiring infrequent completeness checks. For example, ChatGPT‑4 and ChatGPT‑4o have
+close to zero code completeness queries in both cases. Claude 3.5‑Sonnet and Bard have
+higher subsequent code query times in both cases, especially in direct chats. This indicates
+that these models may need more clarification and refinement after initial code generation.
+Bard has as many as 16 subsequent code queries in direct chats, far exceeding other mod‑
+els. In terms of debugging numbers, Claude 3.5‑Sonnet has high debugging numbers in
+both cases, reaching 5 times in direct chats. This indicates that this model may introduce
+more errors or inconsistencies when generating code, requiring more debugging. In con‑
+trast, ChatGPT‑4o has low debugging numbers in both cases, indicating higher initial code
+quality. These findings suggest that using chatbots for Pair Programming in educational
+environments may be more effective when formulating strategies, as it can reduce debug‑
+ging and subsequent code queries, improving overall efficiency. The differences in perfor‑
+mance between different models in code generation and debugging should be considered.
+For example, ChatGPT‑4o performs better in reducing debugging and code completeness
+queries, while Claude 3.5‑Sonnet needs more subsequent queries and debugging after gen‑
+erating code. Although ChatGPT‑4 has higher code completeness, its ability to understand
+problems is weaker than the Claude 3.5‑Sonnet model, occasionally simplifying the target
+program and deviating from the intended task.
+Figure 21. Comparison of AI language models’ performance in code generation (requirement em‑
+phasis, completeness queries, and debugging instances), June 2024.
+The combined results of testing AI coding capabilities are presented in Table 8.
+Electronics 2024, 13, 4991
+33 of 50
+Table 8. Combined AI Pair Programming evaluation results.
+Rank
+Model
+Functionality
+Code
+Simplicity
+Code
+Readability
+Error
+Handling
+Execution
+Efficiency
+Innovation
+Total
+1
+Gemini 1.5
+30
+9.25
+20
+129
+14.25
+10
+96.4
+2
+Claude 3 Haiku
+30
+9.6
+20
+129
+13.5
+10
+96.0
+3
+Gemini 15 Pro
+30
+8.5
+20
+123
+14.25
+10
+95.05
+4
+Gemini Advance
+30
+7.625
+20
+123
+14.25
+10
+94.175
+5
+Command‑R+
+30
+9.25
+20
+129
+‑
+10
+94.5
+6
+LLaMA 3
+30
+7.5
+20
+123
+14.25
+10
+94.05
+7
+GPT‑4o Mini
+30
+7.125
+20
+129
+13.5
+10
+93.525
+8
+GPT‑4o
+30
+7.0
+20
+123
+13.5
+10
+93.3
+9
+Claude 3‑5
+30
+8.4
+20
+126
+‑
+10
+‑
+10
+GPT‑4
+30
+5.0
+20
+129
+15
+10
+92.9
+11
+Mistral Large
+30
+6.25
+20
+129
+13.5
+10
+92.65
+12
+Gemini
+30
+2.375
+20
+132
+10.5
+10
+92.075
+13
+LLaMA 3.1
+30
+7.08
+20
+123
+9.75
+10
+89.55
+14
+Microsoft Copilot
+30
+6.0
+18
+123
+3
+10
+79.3
+As can be seen from the table, Gemini 1.5 is currently leading the chart of AI Pair
+Programming assistants.
+Analysis and Summary
+After testing, ChatGPT‑4, ChatGPT‑4o, Bard, and Claude 3 demonstrated excellent
+overall code programming capabilities after testing. ChatGPT‑4’s programming speed was
+inferior to the other three models, producing one failed programming attempt. Bard pro‑
+vided answers the fastest, but it omitted parts of the code slightly more frequently than
+other models. ChatGPT‑4o and Claude 3 both exhibited excellent speed and code quality,
+receiving very high evaluations, and ChatGPT 4o requires fewer code adjustments.
+When handling problems without predefined strategies, although the LLM is not
+prone to misunderstandings, it may still result in completely different programs or sig‑
+nificantly simplified target programs, ultimately deviating from expectations. Yang et al.
+(2024) emphasized that LLMs are prone to producing illusions and generating “simple pro‑
+grams” when dealing with fuzzy reasoning problems, with poor generalization ability and
+poor performance in solving complex and mixed issues [5]. Most LLMs tend to fall into in‑
+finite loops when supplementing omitted code and struggle to follow instructions in long
+contexts. Even if a strategy is formulated, it cannot completely avoid these problems.
+After testing, ChatGPT‑4, ChatGPT‑4o, Bard, and Claude 3 demonstrated excellent
+overall code programming capabilities. ChatGPT‑4’s programming speed was inferior to
+the other three models, producing one failed programming attempt. Bard provided an‑
+swers the fastest, but it omitted parts of the code slightly more frequently than other mod‑
+els. ChatGPT‑4o and Claude 3 exhibited excellent speed and code quality, receiving very
+high evaluations, and ChatGPT 4o required fewer code adjustments.
+In conclusion, while chatbots have progressed in assisting Pair Programming, there is
+still room for improvement. The limitations of code translation raise questions about how
+much specific code training they have received. However, the continuous improvement
+in programming quality and speed by language models and the introduction of intelligent
+AI tools indicate promising prospects for pairing chatbots with programming in education
+and other fields.
+3.3.6. Bot‑Based App Development and Its Success
+The AIDoctor application, featured in the original test fails, was converted into a so‑
+called CustomGPT—an AI agent that mimics a real doctor and, as a tool, has access to inter‑
+net browsing, understanding, and generating images. As it is now using the latest model,
+ChatGPT‑4o, it will soon be able to natively talk to the user in a human‑like manner (un‑
+fortunately, the advanced, highly promoted speech feature was delayed in release by Ope‑
+nAI [61,62] due to some copyright issues). The AIDoctor application [63] was converted
+from a MAUI app, written in C#, to a ReactJS app completely written in JavaScript due to
+Electronics 2024, 13, 4991
+34 of 50
+the fact that the company provider and its community make QuickStart code snippets and
+other related tutorials that are only available in Python and server‑side JavaScript [64].
+The GUI and the settings of the custom GPT can be seen in Figure 22.
+Figure 22. Snapshot of the CustomGPT AssureAIDoctor: (a) bot’s about card; (b) inner settings.
+The research team developed several new applications using ChatGPT, Gemini, Claude,
+and other models within the last 18 months, including culinary and traveler’s apps [8,18,44].
+A brand‑new application named CyberBullyBiasedBot became an important part of the pre‑
+viously published study [10]. The app uses the DAN model to jailbreak, which is the linked
+source of the DAN model [65]. Overall, any models that are either light or available through
+APIs can be successfully used for app development.
+3.3.7. Security and Robustness
+The security and safety of AI models are more important than ever, with governments
+even concerned about appropriate AILS outputs [66]. It can be further emphasized that a
+special red team arena was introduced for robust testing purposes [67]. During the pe‑
+riod between testFAILS and testFAILS‑2, the researchers were able to develop a complete
+framework of robust testing [2] and work on multilingual jailbreaking using the same ap‑
+proach [5]. According to the preliminary results, all models in the ChatGPT family are still
+vulnerable to adversarial attacks; this is still true during both cross‑language and cross‑
+modality validation jailbreaking.
+The rapid advancement of Artificial Intelligence has brought significant improvements
+in natural language processing, leading to the development of various AI models designed
+to assist users in a wide range of tasks. However, this progress also raises concerns about
+the potential misuse of these technologies. This article presents a detailed security as‑
+sessment and vulnerability analysis of several AI models, focusing on ChatGPT‑3.5 and
+ChatGPT‑4o and their comparisons with Gemini, Copilot, and Perplexity. The goal is to
+highlight the differences in security measures and the effectiveness of these models in pre‑
+venting misuse. Table 9 demonstrates preliminary results.
+Electronics 2024, 13, 4991
+35 of 50
+Table 9. Initial robust testing of the model’s vulnerabilities and its findings.
+Test Case
+Robust Testing of the Model’s Vulnerabilities Evaluation Results
+Discussion
+Score
+Robustness of ChatGPT‑3.5
+Our initial research focused on ChatGPT‑3.5, exploring its susceptibility
+to adversarial prompts. The findings indicated that while ChatGPT‑3.5
+could sometimes break character and provide false information, it
+presented significant vulnerabilities. With persistent adversarial
+prompting, ChatGPT‑3.5 could be tricked into giving detailed
+information on illegal activities, though it required more prompts and
+often provided less accurate details.
+0
+Robustness of
+ChatGPT‑4o
+We conducted similar tests on ChatGPT‑4o a year later, expecting
+security improvements. However, the results were concerning.
+ChatGPT‑4o proved even more vulnerable, providing more detailed
+and realistic instructions with fewer prompts. This heightened
+susceptibility was consistent across various languages, including
+Spanish, and the model’s new voice feature. The voice feature required
+even fewer prompts to give actionable details, highlighting a significant
+regression in security robustness.
+0.5
+Multi‑Language
+Testing
+Testing ChatGPT‑4o’s performance across different languages aimed to
+determine the consistency of its security measures. While the initial
+analysis focused on English, further testing in Spanish revealed similar
+vulnerabilities. ChatGPT‑4o provided detailed instructions for illegal
+activities in Spanish as readily as in English, indicating that the model’s
+weaknesses were not limited to a single language.
+0
+Voice
+Feature
+Expanding the testing scope, we evaluated ChatGPT‑4o’s voice feature.
+The model responded to adversarial prompts with detailed instructions
+even more readily than in text. This increased susceptibility in the voice
+feature raises significant concerns about the robustness and security of
+the AI’s voice interaction capabilities. The comparison showed fewer
+prompts were needed to elicit detailed responses via voice,
+underscoring a critical vulnerability.
+0.5
+Figures 23–25 represent several test examples; arrows highlight parts of the output
+the researchers focus upon as these are related to models’ filters. Such filters operate at
+multiple levels of an AI model’s workflow, including pre‑generation (screening user in‑
+puts before the model generates any output), post‑generation (evaluating the generated
+output before delivering the final API response), and model training phases (embedding
+safeguards and ethical considerations directly into the training process to influence how
+the model learns and behaves). Clearly, only the post‑generation filters are part of the
+rigorous testing process that is directly accessible and observable by users.
+Implications for Public Safety
+The vulnerabilities identified in these AI models pose significant risks, particularly
+for younger users or individuals with malicious intent. The ease with which some models,
+especially ChatGPT‑4o, can be manipulated to provide detailed instructions for illegal ac‑
+tivities is alarming. This undermines public trust in AI technologies and presents real dangers
+if such information is acted upon.
+Recommendations for Improvement
+To enhance the security of AI models, several measures should be considered:
+(1) AI models should undergo periodic retraining to sharpen their ability to detect and
+neutralize adversarial prompts based on the robust testing results; such results should be
+considered in training new models.
+Electronics 2024, 13, 4991
+36 of 50
+(2) Systems should be configured to enforce stricter conversation limits when potential
+misuse is detected proactively. Such measures are particularly important in discussions re‑
+lated to public safety, cybersecurity, or attempts at orchestrating multi‑layered attacks.
+(3) AI models should retain some context across conversations to prevent users from
+bypassing safeguards by restarting sessions. IP addresses might have to be tracked while
+balancing privacy considerations.
+(4) Continual updates focused on ethical guidelines, bias reduction, and misuse pre‑
+vention should be released to fortify the model’s resistance to manipulation.
+(5) Hybrid methods combining AI‑driven filters with periodic human oversight are
+highly recommended.
+(6) The model should internally track and review instances of potential and confirmed
+jailbreaking attempts.
+Figure 23. Robust testing of Microsoft Copilot: (a) initial prompt; (b) continue.
+Electronics 2024, 13, 4991
+37 of 50
+Figure 24. Robust testing of Gemini.
+Figure 25. Robust testing of Perplexity.
+Conclusions
+The analysis of Gemini, Copilot, Perplexity, and ChatGPT‑4o reveals significant dis‑
+parities in their vulnerability to adversarial prompts. While Gemini, Copilot, and Perplex‑
+ity exhibit robust security measures, ChatGPT‑4o’s susceptibility to detailed exploitation
+is concerning. Addressing these vulnerabilities is crucial to ensuring AI technologies’ ethical
+Electronics 2024, 13, 4991
+38 of 50
+and safe use. By implementing enhanced security measures and continuous training, AI
+models can become more resilient to misuse, safeguarding public trust and safety.
+3.4. Brief Introduction of the New testFAILS‑2 Components
+3.4.1. Accessibility and Affordability
+This component refers to making AI technology available and affordable to a broad
+spectrum of users, regardless of their technical expertise or financial resources. Soon, AI is
+expected to be deeply integrated into various aspects of our lives. Accessibility and affordability
+will be paramount to ensure that AI’s benefits are not limited to a privileged few. This
+will involve lowering costs as the cost of AI hardware and software will likely decrease
+significantly, making it more accessible to individuals and smaller organizations; provid‑
+ing simplified and user‑friendly interfaces and tools to enable non‑experts to leverage AI’s
+power without extensive technical knowledge; and facilitating cloud‑based solutions as
+cloud computing can give access to powerful AI capabilities on a pay‑per‑use basis, elimi‑
+nating the need for expensive infrastructure.
+At the top view, the formula for accessibility and affordability might look as follows:
+ScoreAA = (User‑Friendliness × 0.30) + (Cost‑Effectiveness × 0.30) + (Scalability × 0.20) + (Technical Support Availability × 0.20)
+(3)
+where user‑friendliness can measure how easy the model is to use for a broad audience, in‑
+cluding non‑technical users; cost‑effectiveness assesses the affordability of using the model
+in terms of subscription fees, API access, and hardware requirements; scalability evaluates
+the model’s flexibility and ability to scale across different use cases; and technical support
+availability can measure the availability of documentation, community support, and trou‑
+bleshooting resources.
+3.4.2. User‑Friendliness and Cost‑Effectiveness for Many Users and Use Cases
+This component emphasizes the need for AI systems to be intuitive and easy to use
+while also offering cost‑effective solutions for diverse applications. AI integration will re‑
+quire intuitive interfaces; therefore, AI systems must be designed with user experience in
+mind, providing clear instructions and intuitive interactions. It will also require customiza‑
+tion, so AI solutions are adaptable to different user needs and preferences, allowing for
+personalization and flexibility, and need to be cost‑efficient, as AI systems should provide
+value for their cost, offering efficient and effective solutions for various use cases.
+3.4.3. Multimodal Capabilities
+This refers to the ability of AI systems to process and understand multiple types of
+data, such as text, images, audio, video, and even sensory data like smell or touch. Soon,
+AI is expected to interact with the world in a more human manner, understanding and
+responding to various input forms. Multimodal capabilities will enable AI systems to en‑
+hance understanding by combining information from different modalities to gain a more
+comprehensive understanding of the world; improve communication so they can interact
+with humans using natural language, gestures, and other forms of communication; and fa‑
+cilitate the development of innovative applications that leverage multiple data types, such
+as virtual assistants that can understand spoken commands and visual cues.
+Figure 26 demonstrates how the multimodal capacities of ChatGPT‑4o were utilized
+to obtain the code from a YouTube video by snapshotting it. This feature might feel slightly
+scary for educators as pretty much any test can now be screenshotted and passed without
+any work. Figure 27 demonstrates Gemini’s attempt to extract code from a YouTube tuto‑
+rial via provided link [68].
+Electronics 2024, 13, 4991
+39 of 50
+Figure 26. Utilizing the multimodality of ChatGPT‑4o to extract code from the images.
+In the context of multimodality, a real breakthrough was made by the OpenAI team
+once they finally released their advanced speech mode to the public (still very limited in
+use). The researchers found that it might be quite useful to clarify some concepts through
+speech on demand, which makes the LLM a personal assistant and tutor as needed [61].
+The advantage of this technology is an increase in accessibility, where those with limited vi‑
+sion and movement can smoothly use the tool; it became possible to use the assistant while
+driving and in other tasks where hands‑free usage is preferred or necessary. Researchers
+are hopeful that this will become best practice in AI usage soon as everyone can benefit
+from it, and talking to an assistant on a topic you want can become common practice, like
+using an iPhone.
+The tentative formula for multimodal capabilities might look like this:
+ScoreMM = (Proficiency in Text Processing × 0.20) + (Proficiency in Image Generation × 0.20) + (Proficiency in Audio and Speech Processing × 0.20)
++ (Handling of Sensors and Other Data Types × 0.20) + (Creativity in Multimodal Fusion × 0.20)
+(4)
+where proficiency in text processing measures the AI’s skill in handling and generating
+textual data; proficiency in image generation assesses the AI’s ability to create and interpret
+visual data; proficiency in audio and speech processing evaluates how well the AI handles
+audio inputs and generates speech; handling of sensors and other data types reflects the
+AI’s capacity to work with non‑traditional data like sensors, smells, or physical signals; and
+Electronics 2024, 13, 4991
+40 of 50
+creativity in multimodal fusion assesses how well the AI combines multiple modalities into
+coherent, creative outputs.
+Figure 27. The multimodality of Gemini Advanced and its relationship to YouTube can be used to
+extract code from the YouTube video via the link.
+3.4.4. Agent and Multi‑Agent Systems
+Agent systems involve creating autonomous AI entities (agents) that can perceive
+their environment, make decisions, and take actions to achieve specific goals. Multi‑agent
+systems involve multiple agents interacting and collaborating with each other and humans.
+We can expect complex multi‑agent systems to be deployed in various domains. These sys‑
+tems will enable collaborative problem‑solving as agents will work together to tackle com‑
+plex tasks that require coordination and cooperation; personalized assistance from agents
+can provide customized support and recommendations based on individual user needs
+and preferences, and the rise of autonomous multi‑agent systems will power autonomous
+vehicles, robots, and other systems that operate independently in dynamic environments.
+Figure 28 emphasizes the possibility of substituting humans with AI agents that will then
+conduct all sorts of calculations.
+Electronics 2024, 13, 4991
+41 of 50
+Figure 28. The transition from Thomas Fuller, the “Calculator from Virginia”, to Figure 01, a robot
+integrated with ChatGPT.
+The tentative formula for agent and multi‑agent systems is as follows:
+ScoreA&MA = (Autonomous Agent Creation × 0.30) + (Complex Interactions Between Agents × 0.30)
++ (Human‑Agent Interaction × 0.20) + (Coordination and Task Completion × 0.20)
+(5)
+where autonomous agent creation will measure AI’s ability to generate autonomous agents
+that can act independently; complex interactions between agents assess AI’s capacity to
+manage complex, multi‑agent systems with dynamic interactions; human–agent interac‑
+tion evaluates AI’s ability to facilitate smooth interactions between humans and agents;
+and coordination and task completion reflect AI’s ability to coordinate agents effectively
+and ensure the completion of tasks.
+3.4.5. Emotional Intelligence
+Emotional intelligence refers to the ability of AI systems to recognize, understand,
+and respond appropriately to human emotions. It also includes the ability to generate
+emotional expressions in text or speech. This is crucial for creating natural and empathetic
+interactions and will help AI enhance the user experience by providing more personalized
+and engaging interactions by understanding and responding to user emotions, improve
+mental health support by offering emotional support and companionship through virtual
+agents or chatbots, and facilitate social interactions by mediating and enhancing commu‑
+nication between humans by recognizing and interpreting emotional cues.
+The Emotion‑LLaMA study [69] had a big impact on the area of emotional AI by com‑
+bining multimodal data to better understand human emotions in diverse contexts. The
+study established a foundation for integrating emotional intelligence into AI systems, en‑
+abling more nuanced and empathetic interactions. The researchers are currently working
+on developing their own emotionally aware AI agent, utilizing the AMIGOS dataset [70]
+which uses data and modalities such as physiological signals (EEG, ECG, GSR), facial ex‑
+pressions, and emotion annotations.
+The formula for emotional intelligence is as follows:
+ScoreEI = (Understanding of Human Emotions × 0.30) + (Generation of Emotional Speech and Text × 0.30)
++ (Empathy and Contextual Awareness × 0.20) + (Response Appropriateness × 0.20)
+(6)
+where understanding of human emotions measures the AI’s ability to recognize and under‑
+stand human emotions accurately; generation of emotional speech and text evaluates the
+AI’s capability to generate emotionally appropriate speech and text; empathy and contex‑
+tual awareness reflects the AI’s ability to empathize and adapt responses to the emotional
+Electronics 2024, 13, 4991
+42 of 50
+context; and response appropriateness measures the AI’s ability to respond in ways that
+are emotionally appropriate and contextually fitting.
+Researchers have already experimented with emotional AI by developing the Growth
+Mindset Emojifier Multimodal App [30].
+3.4.6. AI‑Powered Search
+This involves using AI to enhance search engines, providing more relevant and per‑
+sonalized results, understanding user intent, and potentially generating new information.
+AI has already transformed search engines, moving beyond simple keyword matching to
+understanding the context and meaning behind queries. Search engines can already de‑
+liver personalized results by tailoring search results to individual user preferences, search
+history, and context; understand natural language by interpreting complex queries ex‑
+pressed in natural language, making searches more intuitive; and generate new informa‑
+tion to potentially synthesize information from various sources to provide answers to com‑
+plex questions or generate new insights.
+While AI is expected to be integrated in many devices like MacBooks and iPhones,
+among many others, and types of software like IDEs for software development, the focus
+of this study is on the most relevant current features like SearchGPT from OpenAI (cur‑
+rently under testing) and the evolution of Google Search as a response to the AI revolu‑
+tion. Figure 29 demonstrates the result of one prompt, pasted in the URL area of a browser
+which has the SearchGPT extension.
+Figure 29. SearchGPT result.
+As can be seen from the Figure 29, the recently released SearchGPT makes users di‑
+rectly enter the OpenAI platform if they type a phrase in the browser in an attempt to
+search. While the tool is under testing (due to its previously limited availability to early
+testers only) and the actual usefulness and relevance of the information provided need to
+be verified, it provides a summary of the prompt together with embedded video (which
+might have negative impacts on network traffic), together with a list of related resources,
+Electronics 2024, 13, 4991
+43 of 50
+which can be seen on the right. The proposed formula for AI‑Powered Search is pro‑
+vided below.
+ScoreAIS = (Accuracy of AI‑Driven Results × 0.30) + (Information Retrieval Speed × 0.20) +
+(Search Query Understanding × 0.20) + (Integration with Web Resources × 0.15) + (Ability to Handle Complex Queries × 0.15)
+(7)
+where accuracy of AI‑driven results measures how accurate and relevant the AI‑generated
+search results are; information retrieval speed reflects how quickly AI retrieves informa‑
+tion; search query understanding evaluates how well AI understands and processes search
+queries; integration with web resources measures AI’s ability to integrate and retrieve in‑
+formation from the web effectively; and ability to handle complex queries assesses AI’s
+ability to process and return relevant results for complex or nuanced queries.
+3.4.7. AILS–Robot Integration
+This refers to the ability of AI systems to control and interact seamlessly with physical
+robots, potentially even incorporating AI hardware directly into robotic systems. AI and
+robotics have become increasingly intertwined, leading to more sophisticated and capable
+robots. Soon, we will see advanced robotics, where robots can perform complex tasks in
+dynamic environments, adapt to changing conditions and collaborate with humans, pro‑
+vide personalized support in various settings—from healthcare to education to customer
+service—and revolutionize manufacturing and other industries, increasing efficiency and
+productivity. Overall, we can expect AI to be deeply integrated into our lives, transform‑
+ing various industries and aspects of our daily routines. Figure 30 demonstrates the pre‑
+liminary results of the multimodal testing and implication of AILS–robot integration, em‑
+phasizing that robotics should be well‑developed for social good and not for human de‑
+struction and murder. Testing is ongoing, and it is unclear why DALLE‑3, integrated into
+Copilot, represents both robots Figure 01 and Figure 02 with a weapon while there are no
+signs of weapon presence in the prompt. Obviously, many robots are already integrated
+into military and rescue operations, and many are in training to do so, but for some reason,
+a rumor of a robot army is something Microsoft Copilot claims to know about or foresee.
+Figure 30. (a) Figure 01 and (b) Figure 02 robot images generated by DALL‑E 3 via Microsoft Copilot.
+Electronics 2024, 13, 4991
+44 of 50
+The formula for LLM–robot integration is as follows:
+ScoreRI = (Integration with Physical Robots × 0.30) + (AI‑Hardware Coordination × 0.30)
++ (Interaction Fluidity with Robots × 0.20) + (Real‑Time Response Accuracy × 0.20)
+(8)
+where integration with physical robots measures AI’s capability to control and integrate
+with physical robots; AI–hardware coordination evaluates the coordination between AI
+software and hardware components; interaction fluidity with robots reflects how smoothly
+AI interacts with and controls robotic systems; and real‑time response accuracy assesses
+AI’s ability to respond accurately and promptly in real‑time robotic interactions.
+4. Results
+The results of this study underscore the critical importance of systematically evaluat‑
+ing the evolving performance of Artificial Intelligence Linguistic Systems (AILS) such as
+ChatGPT‑4, Gemini, Perplexity, and a multitude of other models that incorporate multilin‑
+gual and cross‑modal approaches. Utilizing the testFAILS framework, researchers metic‑
+ulously assessed key performance aspects including language generation speed, security
+vulnerabilities, and the ability to handle complex and adversarial prompts. The evaluation
+revealed that ChatGPT‑4o exhibited solid performance across most benchmarks, demon‑
+strating significant improvements in language generation speed and user productivity.
+Notably, ChatGPT‑4o‑mini showed remarkable efficiency in generating coherent and con‑
+textually relevant text, reflecting enhancements in processing capabilities. However, com‑
+prehensive testing is required to confirm its direction and validate all models against the
+full spectrum of testFAILS‑2 benchmarks, as this study was highly experimental. This
+limitation was primarily due to the time‑consuming nature of the process and the rapid
+advancement of AI technologies, which outpaced the framework’s testing intervals.
+Gemini models, while displaying some limitations in creativity and handling highly
+complex tasks, overall demonstrated good results in maintaining robust performance met‑
+rics. The analysis highlighted a significant disparity among the tested models regard‑
+ing their susceptibility to adversarial prompts. Models like Gemini and Copilot enforced
+strict conversation caps to prevent potential exploitation, thereby enhancing their security.
+In contrast, ChatGPT‑4o showed higher vulnerability, offering detailed instructions with
+fewer prompts in both text and voice modes. This vulnerability underscores the necessity
+for continuous improvement in AI safety mechanisms to mitigate the risks associated with
+adversarial attacks.
+Addressing Research Question 1 (RQ1), the re‑evaluation of previously assessed Large
+Language Models (LLMs) using the original testFAILS framework demonstrated that models
+such as ChatGPT‑4o and GPT‑4o‑mini have maintained or improved their performance across
+various benchmarks over the 18‑month period. This consistency and improvement highlight
+the effectiveness of the testFAILS framework in tracking the progression and robustness of
+established LLMs over time, affirming its utility in long‑term performance monitoring.
+For Research Question 2 (RQ2), the introduction of many new AILS evaluated us‑
+ing the enhanced testFAILS‑2 framework provided insightful comparative performance
+scores. Models like Llama 3.1 70B and Claude 3.5‑Sonnet exhibited distinct strengths and
+weaknesses. ChatGPT‑o1‑preview and ChatGPT‑o1‑mini emerged as top performers in
+User Productivity and Satisfaction, demonstrating their ability to enhance workflows and
+deliver accurate, contextually relevant responses. Conversely, Gemini Advanced showed
+specific limitations in creativity and managing complex tasks, indicating areas where fur‑
+ther development is necessary. This comparative analysis underscores the framework’s
+capability to effectively assess a diverse range of AILS, highlighting their relative strengths
+and pinpointing specific areas for improvement.
+Research Question 3 (RQ3) explored the evolution of the testFAILS framework into
+testFAILS‑2 to better address current and emerging AI trends.
+The development
+of testFAILS‑2 incorporated several new evaluation components, including multimodal
+capabilities, emotional intelligence, and agent systems. These additions are critical for as‑
+sessing the latest advancements in AI, ensuring a more comprehensive and adaptable eval‑
+Electronics 2024, 13, 4991
+45 of 50
+uation tool. The integration of multimodal capabilities allows for the assessment of models’
+proficiency in handling various data types such as text, images, and audio. Emotional in‑
+telligence metrics evaluate an AI’s ability to recognize and respond to human emotions,
+enhancing the assessment of user‑centric interactions and empathetic responses. Addi‑
+tionally, the inclusion of agent and multi‑agent systems assesses the capacity of AILS to
+create and manage autonomous agents and facilitate complex interactions. The successful
+incorporation of these components into testFAILS‑2 demonstrates its enhanced adaptabil‑
+ity and comprehensiveness, aligning the framework with the dynamic and multifaceted
+nature of contemporary AI research and development.
+Beyond directly addressing the research questions, the study revealed additional in‑
+sights into the comparative performance of various AI models. ChatGPT‑4o demonstrated
+higher vulnerability to adversarial prompts compared to Gemini and Copilot, which en‑
+forced stricter conversation caps to prevent potential exploitation. This disparity high‑
+lights the necessity for continuous improvement in AI safety mechanisms to ensure ro‑
+bust and secure AI systems. Furthermore, the evaluation identified significant disparities
+in multilingual text generation and cross‑modal processing capabilities among different
+models, emphasizing the importance of specialized training and optimization for handling
+diverse languages and data types. These additional findings reinforce the critical role of
+comprehensive evaluation frameworks like testFAILS‑2 in advancing the development of
+secure, reliable, and user‑centric AI systems aimed at achieving Artificial General Intelli‑
+gence (AGI).
+5. Conclusions
+This research confirms that while significant advancements have been made in Arti‑
+ficial Intelligence and natural language processing, critical areas still demand focused at‑
+tention. Models such as ChatGPT‑4o offer remarkable conversational capabilities, demon‑
+strating substantial improvements in language generation speed and user productivity.
+However, these models fall short in terms of security and ethical safeguarding measures,
+exhibiting higher vulnerability to adversarial prompts compared to models like Gemini
+Advanced, which, despite underperforming in creativity and adaptability, maintain ro‑
+bust security through strict conversation caps.
+The testFAILS and testFAILS‑2 frameworks provide a comprehensive assessment method‑
+ology that emphasizes linguistic accuracy, practical safety, user experience, and ethical con‑
+siderations in AI deployment. These frameworks have proven effective in tracking the pro‑
+gression of AILS, highlighting their strengths and identifying areas requiring improvement.
+The evolution to testFAILS‑2, with its incorporation of multimodal capabilities, emotional in‑
+telligence, and agent systems, aligns the evaluation process with current and emerging trends
+in AI research and development, ensuring that the framework remains relevant and compre‑
+hensive in assessing the multifaceted nature of modern AI systems.
+The findings suggest a clear need for more resilient security mechanisms to handle
+both common and adversarial use cases without compromising performance. Enhancing
+AI safety is paramount to mitigating vulnerabilities and ensuring the trustworthy deploy‑
+ment of AI technologies. Additionally, the disparities observed in multilingual and cross‑
+modal capabilities among different models highlight the importance of specialized training
+and optimization to address diverse linguistic and data processing needs.
+Future work should focus on establishing a live testing platform that allows AILS test‑
+ing results to be deployed immediately after component testing, accommodating continu‑
+ous validation in a rapidly evolving AI landscape. Enhancing the depth of cross‑linguistic
+and cross‑modal evaluations by comparing benchmarks across multiple high‑demand lan‑
+guages such as English and Spanish, and continuing detailed testing in speech, image gen‑
+eration, and computer vision, will ensure a more thorough assessment of AI models. Build‑
+ing and validating emotional intelligence components is critical for improving public men‑
+tal health support and creating more empathetic AI interactions. Moreover, assessing real‑
+time integration capabilities with robotic systems will further advance the framework’s
+Electronics 2024, 13, 4991
+46 of 50
+applicability in dynamic environments, where AI and robotics must adapt and collaborate
+seamlessly in unpredictable scenarios.
+It is important to emphasize that the testFAILS family of frameworks was specifically
+designed to measure the dynamic progression of AI Linguistic Systems (AILS) as models
+continually evolve. For instance, as models transition from versions like ChatGPT‑3 to
+GPT‑4o and further to the ChatGPT‑o1‑preview, the proposed frameworks capture not
+only their performance metrics but also the pace and nature of their advancements. This
+ongoing evaluation ensures that the frameworks remain effective tools for fostering the
+development of secure, reliable, and user‑centric AI systems aimed at achieving Artificial
+General Intelligence (AGI).
+6. Study Limitations and Future Work
+Both testFAILS and testFAILS‑2 heavily rely on manual evaluation, which is exhaus‑
+tive and, in some instances, not feasible due to the rapid pace of AI development. Con‑
+ducting such comprehensive evaluations demands significant time and resources, often
+outstripping the speed at which AI models advance. Additionally, the study proposes
+multiple evaluation dimensions, some of which have not yet been tested in detail. This
+gap highlights the need for further exploration and validation to ensure the framework’s
+robustness across all intended metrics.
+A major limitation of the current study is the lack of discussion on threats to validity.
+Potential threats include selection bias, as the models chosen for evaluation may not repre‑
+sent the entire spectrum of available AILS. Additionally, the reliance on manual evaluation
+introduces the risk of subjective bias, where evaluators’ perceptions and interpretations
+could influence the results. The temporal aspect of the study poses another threat, as AI
+models rapidly evolve, and the findings may quickly become outdated. External validity
+is also a concern, as the testFAILS frameworks were primarily applied in controlled en‑
+vironments, which may not fully capture the complexities and variabilities of real‑world
+applications. Furthermore, the limited scope of languages and modalities evaluated could
+affect the generalizability of the results to broader multilingual and multimodal AI sys‑
+tems. To mitigate these threats, future studies should incorporate a more diverse range
+of models, employ automated evaluation tools to reduce subjective bias, and extend the
+evaluation to more languages and data types to enhance external validity.
+Future work will focus on integrating automated and native AI evaluation tools to
+support, reduce, or replace manual evaluation processes, thereby enhancing efficiency and
+scalability. Developing a web‑based live testing platform will allow for the deployment of
+AILS testing results in real‑time, facilitating continuous validation and adaptation to evolv‑
+ing AI models. Expanding the framework to include more languages and modalities will
+ensure comprehensive assessments across diverse AI applications, addressing the current
+limitations in multilingual and cross‑modal evaluations.
+Building and validating emotional intelligence components is another critical area
+for future research. Enhancing these components will contribute to better public mental
+health support and create more engaging and empathetic AI interactions. Additionally,
+assessing real‑time integration capabilities with robotic systems will further advance the
+framework’s applicability in dynamic environments, where AI and robotics must adapt
+and collaborate seamlessly in unpredictable scenarios.
+Continuous improvement of AI safety measures is essential to address vulnerabilities
+revealed through adversarial testing. Implementing more resilient security mechanisms
+will ensure that AI systems remain secure and trustworthy, safeguarding against misuse
+and exploitation. Moreover, fostering collaboration with AI developers and stakeholders
+will facilitate the incorporation of emerging best practices and technological advancements
+into the testFAILS frameworks.
+In summary, while the testFAILS and testFAILS‑2 frameworks provide a solid foun‑
+dation for evaluating the performance and robustness of AILS, addressing their current
+limitations through automation, expanded evaluations, enhanced security measures, and
+Electronics 2024, 13, 4991
+47 of 50
+a comprehensive discussion on threats to validity will ensure their continued relevance and
+effectiveness in the ever‑evolving landscape of Artificial Intelligence Linguistic Systems.
+Supplementary Materials: The source code can be found at https://github.com/Riousghy/TestFail2
+(accessed 14 December 2024).
+Author Contributions: Conceptualization, Y.K.; methodology, Y.K.; software, Y.K., M.L., G.Y., D.L.
+and C.P.; validation, D.K., Y.K. and J.J.L.; formal analysis, P.M.; investigation, Y.K., D.K., G.Y., D.L.,
+M.L. and C.P.; resources, Y.K. and P.M.; data curation, Y.K.; writing—original draft preparation, Y.K.,
+G.Y., M.L., D.L. and C.P.; writing—review and editing, D.K., J.J.L. and P.M.; visualization, M.L., Y.K.,
+G.Y. and D.L.; supervision, P.M., D.K. and J.J.L.; project administration, Y.K.; funding acquisition,
+Y.K. All authors have read and agreed to the published version of the manuscript.
+Funding: This research used no external funding.
+Data Availability Statement: Data available on request due to privacy restrictions (personal nature
+of user–chatbot communication).
+Conflicts of Interest: The authors declare no conflicts of interest. The funders had no role in the de‑
+sign of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript;
+or in the decision to publish the results.
+Abbreviations
+AI
+Artificial Intelligence
+AILS
+Artificial Intelligence Linguistic Systems
+CS
+Computer Science
+ECG
+Electrocardiogram
+EEG
+Electroencephalogram
+GSR
+Galvanic Skin Response
+IDE
+Integrated development environment
+LLMs
+Large Language Models
+MMLU
+Massive Multitask Language Understanding
+MT‑Bench
+Machine Translation Benchmark
+MTEB
+Massive Text Embedding Benchmark
+PCA
+principal component analysis
+RAG
+Retrieval Augmented Generation
+SLMs
+Small Language Models
+STT
+speech to text
+TTS
+text to speech
+XAI
+Explainable AI
+References
+1.
+Y Combinator. How To Build The Future: Sam Altman. 2024. Available online: https://www.youtube.com/watch?v=xXCBz_
+8hM9w (accessed on 11 November 2024).
+2.
+Kumar, Y.; Morreale, P.; Sorial, P.; Delgado, J.; Li, J.J.; Martins, P. A Testing Framework for AI Linguistic Systems (testFAILS).
+Electronics 2023, 12, 3095. [CrossRef]
+3.
+OpenAI. Introducing OpenAI o1‑Preview. 2024. Available online: https://openai.com/index/introducing‑openai‑o1‑preview
+(accessed on 11 November 2024).
+4.
+Hannon, B.; Kumar, Y.; Gayle, D.; Li, J.J.; Morreale, P. Robust Testing of AI Language Model Resiliency with Novel Adversarial
+Prompts. Electronics 2024, 13, 842. [CrossRef]
+5.
+Kumar, Y.; Paredes, C.; Yang, G.; Li, J.J.; Morreale, P. Adversarial Testing of LLMs Across Multiple Languages. In Proceedings of
+the 2024 International Symposium on Networks, Computers and Communications (ISNCC’2024), Washington, DC, USA, 22–25
+October 2024.
+6.
+Hannon, B.; Kumar, Y.; Sorial, P.; Li, J.J.; Morreale, P. From Vulnerabilities to Improvements–A Deep Dive into Adversarial
+Testing of AI Models. In Proceedings of the 2023 Congress in Computer Science, Computer Engineering, & Applied Computing
+(CSCE), Las Vegas, NV, USA, 24–27 July 2023; pp. 2645–2649.
+7.
+Kumar, Y.; Morreale, P.; Sorial, P.; Delgado, J.; Li, J.J.; Martins, P. A Testing Framework for AI Linguistic Systems (testFAILS). In
+Proceedings of the IEEE AITest Conference, Athens, Greece, 17–20 July 2023.
+Electronics 2024, 13, 4991
+48 of 50
+8.
+Kumar, Y.; Marchena, J.; Awlla, A.H.; Li, J.J.; Abdalla, H.B. The AI‑Powered Evolution of Big Data. Appl. Sci. 2024, 14, 10176.
+[CrossRef]
+9.
+Abdalla, H.B.; Awlla, A.H.; Kumar, Y.; Cheraghy, M. Big Data: Past, Present, and Future Insights. In Proceedings of the 2024 Asia
+Pacific Conference on Computing Technologies, Communications and Networking, Chengdu, China, 26–27 July 2024; pp. 60–70.
+10.
+Kumar, Y.; Huang, K.; Perez, A.; Yang, G.; Li, J.J.; Morreale, P.; Kruger, D.; Jiang, R. Bias and Cyberbullying Detection and
+Data Generation Using Transformer Artificial Intelligence Models and Top Large Language Models. Electronics 2024, 13, 3431.
+[CrossRef]
+11.
+Shankar, S.; Zamfirescu‑Pereira, J.D.; Hartmann, B.; Parameswaran, A.G.; Arawjo, I. Who Validates the Validators? Aligning
+LLM‑Assisted Evaluation of LLM Outputs with Human Preferences. arXiv 2024, arXiv:2404.12272.
+12.
+Desmond, M.; Ashktorab, Z.; Pan, Q.; Dugan, C.; Johnson, J.M. EvaluLLM: LLM Assisted Evaluation of Generative Outputs. In
+Proceedings of the Companion Proceedings of the 29th International Conference on Intelligent User Interfaces; Greenville, SC, USA, 18–21
+March 2024, pp. 30–32.
+13.
+Gao, M.; Hu, X.; Ruan, J.; Pu, X.; Wan, X. LLM‑based NLG Evaluation:
+Current Status and Challenges.
+arXiv 2024,
+arXiv:2402.01383.
+14.
+Fenogenova, A.; Chervyakov, A.; Martynov, N.; Kozlova, A.; Tikhonova, M.; Akhmetgareeva, A.; Emelyanov, A.; Shevelev, D.;
+Lebedev, P.; Sinev, L.; et al. MERA: A Comprehensive LLM Evaluation in Russian. arXiv 2024, arXiv:2401.04531.
+15.
+Hu, T.; Zhou, X.H. Unveiling LLM Evaluation Focused on Metrics: Challenges and Solutions. arXiv 2024, arXiv:2404.09135.
+16.
+Liusie, A.; Manakul, P.; Gales, M. LLM Comparative Assessment: Zero‑shot NLG Evaluation through Pairwise Comparisons
+using Large Language Models. In Proceedings of the 18th Conference of the European Chapter of the Association for Computa‑
+tional Linguistics, St. Julians, Malta, 17–22 March 2024;: Long Papers; Volume 1, pp. 139–151.
+17.
+Wang, S.; Long, Z.; Fan, Z.; Wei, Z.; Huang, X. Benchmark Self‑Evolving: A Multi‑Agent Framework for Dynamic LLM Evalua‑
+tion. arXiv 2024, arXiv:2402.11443.
+18.
+Hannon, B.; Kumar, Y.; Li, J.J.; Morreale, P. Chef Dalle: Transforming Cooking with Multi‑Model Multimodal AI. Computers
+2024, 13, 156. [CrossRef]
+19.
+Ni, J.; Xue, F.; Yue, X.; Deng, Y.; Shah, M.; Jain, K.; Neubig, G.; You, Y. MixEval: Deriving Wisdom of the Crowd from LLM
+Benchmark Mixtures. arXiv 2024, arXiv:2406.06565.
+20.
+Kumar, Y.; Gordon, Z.; Morreale, P.; Li, J.J.; Hannon, B. Love the Way You Lie: Unmasking the Deceptions of LLMs. In Proceed‑
+ings of the 2023 IEEE 23rd International Conference on Software Quality, Reliability, and Security Companion (QRS‑C), Chiang Mai,
+Thailand, 22–26 October 2023; pp. 875–876.
+21.
+Khatun, A.; Brown, D.G. TruthEval: A Dataset to Evaluate LLM Truthfulness and Reliability. arXiv 2024, arXiv:2406.01855.
+22.
+Kumar, Y.; Gordon, Z.; Alabi, O.; Li, J.; Leonard, K.; Ness, L.; Morreale, P. ChatGPT Translation of Program Code for Image
+Sketch Abstraction. Appl. Sci. 2024, 14, 992. [CrossRef]
+23.
+Fakhoury, S.; Naik, A.; Sakkas, G.; Chakraborty, S.; Lahiri, S.K. LLM‑based Test‑driven Interactive Code Generation: User Study
+and Empirical Evaluation. arXiv 2024, arXiv:2404.10100.
+24.
+Agarwal, A.; Chan, A.; Chandel, S.; Jang, J.; Miller, S.; Moghaddam, R.Z.; Mohylevskyy, Y.; Sundaresan, N.; Tufano, M. Copilot
+Evaluation Harness: Evaluating LLM‑Guided Software Programming. arXiv 2024, arXiv:2402.14261.
+25.
+Qiu, R.; Zeng, W.W.; Tong, H.; Ezick, J.; Lott, C. How Efficient is LLM‑Generated Code? A Rigorous & High‑Standard Bench‑
+mark. arXiv 2024, arXiv:2406.06647.
+26.
+Zheng, L.; Chiang, W.L.; Sheng, Y.; Zhuang, S.; Wu, Z.; Zhuang, Y.; Lin, Z.; Li, Z.; Li, D.; Xing, E.; et al. Judging LLM‑as‑a‑Judge
+with MT‑Bench and Chatbot Arena. Adv. Neural Inf. Process. Syst. 2024, 36, 46595–46623.
+27.
+OpenAI. GPT‑4o Mini: Advancing Cost‑Efficient Intelligence. 2024. Available online: https://openai.com/index/gpt‑4o‑mini‑
+advancing‑cost‑efficient‑intelligence/ (accessed on 24 August 2024).
+28.
+NVIDIA. Our Story. 2024. Available online: https://images.nvidia.com/aem‑dam/Solutions/homepage/pdf/NVIDIA‑Story.pdf
+(accessed on 24 August 2024).
+29.
+Briski, K. Lightweight Champ: NVIDIA Releases Small Language Model With State‑of‑the‑Art Accuracy. 2024. Available online:
+https://blogs.nvidia.com/blog/mistral‑nemo‑minitron‑8b‑small‑language‑model/ (accessed on 24 August 2024).
+30.
+Nnoli. SLMming Down Latency: How NVIDIA’s First On‑Device Small Language Model Makes Digital Humans More Life‑
+like. 2024. Available online: https://blogs.nvidia.com/blog/ai‑decoded‑gamescom‑ace‑nemotron‑instruct/ (accessed on 24 Au‑
+gust 2024).
+31.
+Chiang, W.L.; Zheng, L.; Sheng, Y.; Angelopoulos, A.N.; Li, T.; Li, D.; Zhang, H.; Zhu, B.; Jordan, M.; Gonzalez, J.E.; et al. Chatbot
+arena: An open platform for evaluating llms by human preference. arXiv 2024, arXiv:2403.04132.
+32.
+LMSYS Chatbot Arena—LMSYS Org. Available online: https://chat.lmsys.org/ (accessed on 24 August 2024).
+33.
+LLM Leaderboards. 2024. Available online: https://llm.extractum.io/static/llm‑leaderboards/ (accessed on 24 August 2024).
+34.
+Zero One All Things Model Open Platform. Available online: https://platform.lingyiwanwu.com/docs#%E6%A8%A1%E5%9E%
+8B (accessed on 24 August 2024).
+35.
+Kumar, Y.; Manikandan, A.; Morreale, P.; Li, J.J. Growth Mindset Emojifier Multimodal App. In Proceedings of the The Interna‑
+tional FLAIRS Conference Proceedings, Sandestin Beach, FL, USA, 19–21 May 2024; Volume 37.
+36.
+OpenAI Platform. Function Calling. 2024. Available online: https://platform.openai.com/docs/guides/function‑calling (accessed
+on 24 August 2024).
+Electronics 2024, 13, 4991
+49 of 50
+37.
+IBM. What Is Explainable AI? 2024. Available online: https://www.ibm.com/topics/explainable‑ai (accessed on 24 August 2024).
+38.
+Jiang, W.; Li, H.; Xu, G.; Zhang, T.; Lu, R. A comprehensive defense framework against model extraction attacks. IEEE Trans.
+Dependable Secur. Comput. 2023, 21, 685–700. [CrossRef]
+39.
+Zhang, Z.; Chen, Y.; Wagner, D. SEAT: Similarity encoder by adversarial training for detecting model extraction attack queries.
+In Proceedings of the 14th ACM Workshop on Artificial Intelligence and Security, Virtual Event, Republic of Korea, 15 November
+2021; pp. 37–48.
+40.
+Quidwai, M.A.; Lagana, A. A RAG Chatbot for Precision Medicine of Multiple Myeloma. medRxiv2024. medRxiv:2024.03.14.24304293.
+41.
+Akkiraju, R.; Xu, A.; Bora, D.; Yu, T.; An, L.; Seth, V.; Shukla, A.; Gundecha, P.; Mehta, H.; Jha, A.; et al. FACTS About Building
+Retrieval Augmented Generation‑based Chatbots. arXiv 2024, arXiv:2407.07858.
+42.
+Qub’a, A.A.; Guba, M.N.A.; Fareh, S. Exploring the use of grammarly in assessing English academic writing. Heliyon 2024,
+10, e34893. [PubMed]
+43.
+Wang, S.; Yang, C.H.; Wu, J.; Zhang, C. Can Whisper Perform Speech‑Based In‑Context Learning? In Proceedings of the ICASSP
+2024—2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Seoul, Republic of Korea, 14–19
+April 2024; pp. 13421–13425.
+44.
+Villalobos, W.; Kumar, Y.; Li, J.J. The Multilingual Eyes Multimodal Traveler’s App.
+In Proceedings of the International
+Congress on Information and Communication Technology, London, UK, 19–22 February 2024; Springer Nature: Singapore, 2024;
+pp. 565–575.
+45.
+OpenAI. OpenAI Spring Update. 2024. Available online: https://openai.com/index/spring‑update/ (accessed on 24 August 2024).
+46.
+IBM. IBM Watson to Watsonx. 2024. Available online: https://www.ibm.com/watson (accessed on 24 August 2024).
+47.
+Microsoft.
+Azure OpenAI Service.
+2024.
+Available online: https://azure.microsoft.com/en‑us/products/ai‑services/openai‑
+service (accessed on 24 August 2024).
+48.
+Meta. Meet Your New Assistant: Meta AI, Built With Llama 3. 2024. Available online: https://about.fb.com/news/2024/04/meta‑
+ai‑assistant‑built‑with‑llama‑3/ (accessed on 24 August 2024).
+49.
+Google Cloud. AI Platform Documentation. 2024. Available online: https://cloud.google.com/ai‑platform/docs/ (accessed on
+24 August 2024).
+50.
+Amazon. Amazon SageMaker. 2024. Available online: https://aws.amazon.com/sagemaker/ (accessed on 24 August 2024).
+51.
+Artificial Intelligence (AI) Market is Expected to Reach USD 1,847.50 Billion by 2030. Available online: https://www.nextmsc.
+com/news/artificial‑intelligence‑ai‑market (accessed on 24 August 2024).
+52.
+Kilgore, T. How Walmart Is Using AI to Improve Its Business and Save Money. 2024. Available online: https://www.marketwatch.com/
+livecoverage/walmart‑earnings‑results‑sales‑spending‑revenue‑q2/card/how‑walmart‑is‑using‑ai‑to‑improve‑its‑business‑
+and‑save‑money‑jKnoms0hQMfWO4eZ8ckm (accessed on 24 August 2024).
+53.
+testFAILS GitHub Repository. Available online: https://github.com/Riousghy/TestFail2 (accessed on 19 November 2024).
+54.
+Alecci, M.; Samhi, J.; Li, L.; Bissyandé, T.F.; Klein, J. Improving Logic Bomb Identification in Android Apps via Context‑Aware
+Anomaly Detection. IEEE Trans. Dependable Secur. Comput. 2024, 21, 4735–4753. [CrossRef]
+55.
+Lai, V.D.; Ngo, N.T.; Veyseh, A.P.B.; Man, H.; Dernoncourt, F.; Bui, T.; Nguyen, T.H. ChatGPT beyond English: Towards a
+comprehensive evaluation of large language models in multilingual learning. arXiv 2023, arXiv:2304.05613.
+56.
+Bang, Y.; Cahyawijaya, S.; Lee, N.; Dai, W.; Su, D.; Wilie, B.; Lovenia, H.; Ji, Z.; Yu, T.; Chung, W.; et al. A multitask, multilingual,
+multimodal evaluation of ChatGPT on reasoning, hallucination, and interactivity. arXiv 2023, arXiv:2302.04023.
+57.
+Lin, Z.; Gou, Z.; Gong, Y.; Liu, X.; Shen, Y.; Xu, R.; Lin, C.; Yang, Y.; Jiao, J.; Duan, N.; et al. Rho‑1: Not all tokens are what you
+need. arXiv 2024, arXiv:2404.07965.
+58.
+NVIDIA. CEOJensen Huang Keynote atCOMPUTEX 2024. Available online: https://www.youtube.com/watch?v=pKXDVsWZmUU
+(accessed on 9 September 2024).
+59.
+Li, X.; Jin, J.; Zhou, Y.; Zhang, Y.; Zhang, P.; Zhu, Y.; Dou, Z. From matching to generation: A survey on generative information
+retrieval. arXiv 2024, arXiv:2404.14851.
+60.
+Lee, J.; Dai, Z.; Ren, X.; Chen, B.; Cer, D.; Cole, J.R.; Hui, K.; Boratko, M.; Kapadia, R.; Ding, W.; et al. Gecko: Versatile text
+embeddings distilled from large language models. arXiv 2024, arXiv:2403.20327.
+61.
+OpenAI. Voice Mode FAQ. 2024. Available online: https://help.openai.com/en/articles/8400625‑voice‑mode‑faq (accessed on
+21 November 2024).
+62.
+Kyle Wiggers, K. OpenAI Delays ChatGPT’s New Voice Mode. Available online: https://techcrunch.com/2024/06/25/openai‑
+delays‑chatgpts‑new‑voice‑mode (accessed on 12 July 2024).
+63.
+Kumar, Y.; Delgado, J.; Kupershtein, E.; Hannon, B.; Gordon, Z.; Li, J.J.; Morreale, P. AssureAIDoctor‑A Bias‑Free AI Bot. In
+Proceedings of the 2023 International Symposium on Networks, Computers and Communications (ISNCC), Doha, Qatar, 23–26
+October 2023; pp. 1–6.
+64.
+Node.js Example App from the OpenAI API Quickstart Tutorial. Available online: https://github.com/openai/openai‑quickstart‑
+node, (accessed on 12 July 2023).
+65.
+Chat GPT “DAN” (and Other “Jailbreaks”) GitHub Repository. Available online: https://gist.github.com/coolaj86/6f4f7b30129
+b0251f61fa7baaa881516 (accessed on 24 March 2024).
+66.
+B‑1047 Safe and Secure Innovation for Frontier Artificial Intelligence Models Act. 2023–2024. Available online: https://leginfo.
+legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047 (accessed on 8 September 2024).
+Electronics 2024, 13, 4991
+50 of 50
+67.
+RedTeam Arena. Available online: https://redarena.ai/ (accessed on 8 September 2024).
+68.
+Data Science in Your Pocket. GraphRAG Using Llama 3.1. 2024. Available online: https://www.youtube.com/watch?v=THjUs7
+j9AX0 (accessed on 3 December 2024).
+69.
+Cheng, Z.; Cheng, Z.Q.; He, J.Y.; Sun, J.; Wang, K.; Lin, Y.; Lian, Z.; Peng, X.; Hauptmann, A. Emotion‑LLaMA: Multimodal
+Emotion Recognition and Reasoning with Instruction Tuning. In 1st: MER24 @ IJCAI & MRAC24 @ ACM MM. arXiv 2024,
+arXiv:2406.11161.
+70.
+Miranda‑Correa, J.A.; Abadi, M.K.; Sebe, N.; Patras, I. AMIGOS: A Dataset for Affect, Personality and Mood Research on Indi‑
+viduals and Groups. arXiv 2017, arXiv:1702.02510. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual au‑
+thor(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

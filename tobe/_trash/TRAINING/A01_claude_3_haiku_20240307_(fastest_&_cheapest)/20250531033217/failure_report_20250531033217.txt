@@ -1,0 +1,17 @@
+FAILURE REPORT - 2025-05-31 03:36:16
+Model: claude-3-haiku-20240307 (fastest & cheapest) (Code: A01)
+Provider: anthropic
+Operation mode: training
+Original directory: ./tobe/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217
+Trash directory: ./tobe/_trash/TRAINING/A01_claude_3_haiku_20240307_(fastest_&_cheapest)/20250531033217
+
+Files moved to trash:
+- 9320250531033217.docx
+- 9120250531033217.docx
+- log20250531033217.txt
+- report20250531033616.txt
+- 9420250531033217.docx
+- cost20250531033616.txt
+- 9020250531033217.docx
+- 9220250531033217.docx
+- zz20250531033217.bib

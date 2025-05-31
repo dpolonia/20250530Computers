@@ -17,3 +17,4 @@ pybliometrics==3.5.2
 # wos==0.4.1
 requests-cache==1.1.0
 tenacity==8.2.3
+libcst==1.1.0

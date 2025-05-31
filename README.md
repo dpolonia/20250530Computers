@@ -1,81 +1,120 @@
-# Paper Revision Tool
+# Paper Revision System
 
-This project automates parts of the paper revision workflow for the *Computers* journal with academic API integration.
+A system for analyzing, revising, and improving academic papers based on reviewer comments using state-of-the-art language models.
 
-## Usage
+## Features
 
-### Basic Usage
+- Automated paper analysis and understanding
+- Reviewer comment processing and categorization
+- Solution generation for addressing reviewer concerns
+- Revision implementation with tracked changes
+- Citation verification and improvement
+- Multi-model support (Anthropic, OpenAI, Google)
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- Required Python packages (see `requirements.txt`)
+- API keys for at least one of the supported LLM providers:
+  - Anthropic Claude
+  - OpenAI GPT
+  - Google Gemini
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/paper-revision-system.git
+   cd paper-revision-system
+   ```
+
+2. Set up a virtual environment (recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   pip install -r security_requirements.txt
+   ```
+
+4. Initialize security settings:
+   ```bash
+   python scripts/initialize_security.py
+   ```
+
+5. Configure API keys:
+   ```bash
+   python scripts/manage_credentials.py store anthropic
+   # Follow the prompts to enter your API key
+   ```
+
+### Usage
+
+#### Command Line Interface
 
 ```bash
-python paper_revision.py --mode [training|finetuning|final]
+python paper_revision.py --original-paper path/to/paper.pdf --reviewer-comments path/to/comments.pdf --provider anthropic --model claude-3-opus-20240229
 ```
 
-### Operation Modes
-
-- **Training**: Uses cheapest models for workflow activation (minimal cost)
-- **Finetuning**: Uses mid-range models for workflow optimization (balanced)
-- **Final**: Uses best available models for final revisions (highest quality)
-
-### Advanced Usage
+#### Interactive Mode
 
 ```bash
-python paper_revision.py --provider [anthropic|openai|google] --model [model_name]
+python paper_revision.py --interactive
 ```
 
-### API Integration
+## Testing
 
-The tool integrates with academic citation databases:
+Run the test suite:
 
 ```bash
-# Use Scopus API integration
-python paper_revision.py --api scopus --key YOUR_API_KEY
+# Run all tests
+python -m pytest
 
-# Enable Web of Science integration (will prompt for credentials if not provided)
-python paper_revision.py --api wos 
-
-# Use both APIs together
-python paper_revision.py --api scopus,wos --key YOUR_SCOPUS_KEY
+# Run with coverage
+python -m pytest --cov=src
 ```
 
-### Output Files
-
-All output files are stored in the `tobe` directory using this structure:
-- `tobe/[ModelCode]_[ModelName]/[Timestamp]/`
-
-Where:
-- `ModelCode`: A standardized code (e.g., A01, B01, C01) that identifies the provider and model
-- `ModelName`: The name of the model used
-- `Timestamp`: The timestamp when the revision was started
-
-## Integration with Claude
-
-The tool includes intelligent integration with Claude that only activates when errors occur:
+Generate a test report:
 
 ```bash
-./run_for_claude.sh --mode [training|finetuning|final]
+python scripts/generate_test_report.py
 ```
 
-For successful runs:
-1. The script will analyze logs and cost reports
-2. Provide a summary of the run with model information
-3. Extract cost analysis and token usage statistics
-4. Show optimization recommendations
-5. Report any warnings or issues detected in the logs
+## Architecture
 
-For error cases only:
-1. The script will automatically capture the error output
-2. Format it for easy sharing with Claude
-3. Save it to a file named `claude_error_TIMESTAMP.txt`
-4. Provide the command to send the file to Claude
+The system is built with a modular, maintainable architecture:
 
-This ensures Claude is only used when needed, while still providing useful analytics for successful runs.
+- **Interface-based design**: Components are defined by interfaces for loose coupling
+- **Dependency injection**: Dependencies are injected rather than hard-coded
+- **Factory pattern**: Component creation is managed by factory classes
+- **Service layer**: Business logic is encapsulated in service classes
+- **Repository pattern**: Data access is abstracted through repositories
 
-## Error Handling
+## Documentation
 
-If the paper revision process fails, files will be automatically copied to the trash directory:
-- `tobe/_trash/[ModelCode]_[ModelName]/[Timestamp]/`
+- [Security Guide](docs/SECURITY_GUIDE.md): Security best practices and configuration
+- [Maintainability Guide](docs/MAINTAINABILITY_GUIDE.md): Coding standards and maintainability patterns
+- [Testing Guide](tests/TESTING_GUIDE.md): Testing practices and examples
 
-This directory will contain:
-- All generated files from the failed run
-- A detailed failure report
-- Error logs with diagnostic information
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- [Anthropic Claude](https://www.anthropic.com/claude) for advanced language model capabilities
+- [OpenAI GPT](https://openai.com/gpt-4) for additional language processing
+- [Google Gemini](https://deepmind.google/technologies/gemini/) for multimodal capabilities

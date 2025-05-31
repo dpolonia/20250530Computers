@@ -1,0 +1,89 @@
+2025-05-31 08:40:51,621 - INFO - Paper revision started with google model: gemini-1.5-pro
+2025-05-31 08:40:51,621 - INFO - Model code: C05
+2025-05-31 08:40:51,621 - INFO - Operation mode: final
+2025-05-31 08:40:51,621 - INFO - Output directory: /home/dpolonia/20250530Computers/FINAL_20250531084051
+2025-05-31 08:40:51,621 - INFO - Trash directory (used on failure): ./tobe/_trash/FINAL/C05_gemini_1.5_pro/20250531084051
+2025-05-31 08:40:51,621 - INFO - Creating special FINAL directory in root: /home/dpolonia/20250530Computers/FINAL_20250531084051
+2025-05-31 08:40:51,621 - INFO - Interactive stop points enabled - press Enter to continue at each step
+2025-05-31 08:40:51,937 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 08:40:51,937 - INFO - SUCCESS: Successfully initialized GOOGLE client with model gemini-1.5-pro (Code: C05)
+2025-05-31 08:40:51,937 - INFO - Starting paper revision process
+2025-05-31 08:40:51,941 - INFO - Step 1: Analyzing original paper
+2025-05-31 08:40:51,941 - INFO - Loading original paper
+2025-05-31 08:40:52,026 - INFO - Analyzing paper structure and content
+2025-05-31 08:41:06,014 - WARNING - Error parsing evaluation response: Extra data: line 18 column 2 (char 842)
+2025-05-31 08:41:06,020 - INFO - Response Quality - Score: 4/5, Task: paper_analysis, Evaluator: basic_algorithm
+2025-05-31 08:41:06,020 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 08:41:06,020 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 08:41:06,040 - WARNING - LLM didn't return valid JSON. Using basic analysis.
+2025-05-31 08:41:06,041 - INFO - SUCCESS: Paper analysis completed
+2025-05-31 08:41:06,046 - INFO - Step 2: Analyzing reviewer comments
+2025-05-31 08:41:06,046 - INFO - Analyzing reviewer 1 comments
+2025-05-31 08:41:06,128 - WARNING - LLM didn't return valid JSON for reviewer 1. Using basic analysis.
+2025-05-31 08:41:06,128 - INFO - Analyzing reviewer 2 comments
+2025-05-31 08:41:06,190 - WARNING - LLM didn't return valid JSON for reviewer 2. Using basic analysis.
+2025-05-31 08:41:06,190 - INFO - Analyzing reviewer 3 comments
+2025-05-31 08:41:06,255 - WARNING - LLM didn't return valid JSON for reviewer 3. Using basic analysis.
+2025-05-31 08:41:06,255 - INFO - SUCCESS: Reviewer comment analysis completed
+2025-05-31 08:41:06,256 - INFO - Step 3: Processing editor letter and PRISMA requirements
+2025-05-31 08:41:06,256 - INFO - Processing editor letter
+2025-05-31 08:41:06,289 - INFO - Processing PRISMA requirements
+2025-05-31 08:41:06,314 - WARNING - LLM didn't return valid JSON for editor requirements. Using basic analysis.
+2025-05-31 08:41:06,314 - INFO - SUCCESS: Editor requirements analysis completed
+2025-05-31 08:41:06,315 - INFO - Step 4: Analyzing journal style and requirements
+2025-05-31 08:41:06,315 - INFO - Processing journal information
+2025-05-31 08:41:06,599 - INFO - Processing Scopus information from ./asis/07.pdf
+2025-05-31 08:41:06,826 - INFO - Processing Scopus information from ./asis/08.pdf
+2025-05-31 08:41:06,845 - INFO - Processing highly cited papers for style analysis
+2025-05-31 08:41:07,141 - INFO - Processing similar papers for style analysis
+2025-05-31 08:41:07,189 - INFO - Analyzing reference style
+2025-05-31 08:41:16,329 - WARNING - Error parsing evaluation response: Extra data: line 19 column 1 (char 682)
+2025-05-31 08:41:16,330 - INFO - Response Quality - Score: 4/5, Task: general, Evaluator: basic_algorithm
+2025-05-31 08:41:16,330 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 08:41:16,330 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 08:41:16,341 - WARNING - LLM didn't return valid JSON for journal style. Using basic analysis.
+2025-05-31 08:41:16,341 - INFO - SUCCESS: Journal style analysis completed
+2025-05-31 08:41:16,341 - INFO - Step 5: Generating revision summary
+2025-05-31 08:41:16,341 - INFO - Generating revision plan
+2025-05-31 08:41:32,348 - WARNING - Error parsing evaluation response: Extra data: line 21 column 1 (char 879)
+2025-05-31 08:41:32,348 - INFO - Response Quality - Score: 4/5, Task: revision_planning, Evaluator: basic_algorithm
+2025-05-31 08:41:32,348 - INFO - Quality Issues: Invalid JSON format
+2025-05-31 08:41:32,348 - INFO - Quality Highlights: Response length is appropriate, Good relevance to original prompt
+2025-05-31 08:41:32,359 - WARNING - LLM didn't return valid JSON for revision plan. Using basic plan.
+2025-05-31 08:41:32,359 - INFO - SUCCESS: Generated revision plan with 3 issues and 3 solutions
+2025-05-31 08:41:32,359 - INFO - Creating revision summary document
+2025-05-31 08:41:32,393 - INFO - SUCCESS: Created revision summary at /home/dpolonia/20250530Computers/FINAL_20250531084051/9020250531084051.docx
+2025-05-31 08:41:32,393 - INFO - Step 6: Generating changes document
+2025-05-31 08:41:32,393 - INFO - Generating specific text changes
+2025-05-31 08:41:32,395 - WARNING - LLM didn't return valid JSON for changes. Using basic changes.
+2025-05-31 08:41:32,395 - INFO - SUCCESS: Generated 3 specific text changes
+2025-05-31 08:41:32,395 - INFO - Creating changes document
+2025-05-31 08:41:32,419 - INFO - SUCCESS: Created changes document at /home/dpolonia/20250530Computers/FINAL_20250531084051/9120250531084051.docx
+2025-05-31 08:41:32,419 - INFO - Step 7: Validating and updating references
+2025-05-31 08:41:32,419 - INFO - Validating and updating references
+2025-05-31 08:42:04,049 - INFO - Found 41 valid and 17 invalid references
+2025-05-31 08:42:04,051 - INFO - Step 8: Creating revised paper with track changes
+2025-05-31 08:42:04,052 - INFO - Creating revised paper with track changes
+2025-05-31 08:42:04,146 - INFO - SUCCESS: Applied 0 changes to the paper
+2025-05-31 08:42:04,146 - INFO - SUCCESS: Created revised paper at /home/dpolonia/20250530Computers/FINAL_20250531084051/9220250531084051.docx
+2025-05-31 08:42:04,146 - INFO - Step 9: Creating assessment document
+2025-05-31 08:42:04,146 - INFO - Creating assessment document
+2025-05-31 08:42:04,156 - WARNING - LLM didn't return valid JSON for assessment. Using basic assessment.
+2025-05-31 08:42:04,165 - INFO - SUCCESS: Created assessment document
+2025-05-31 08:42:04,165 - INFO - SUCCESS: Created assessment document at /home/dpolonia/20250530Computers/FINAL_20250531084051/9320250531084051.docx
+2025-05-31 08:42:04,165 - INFO - Step 10: Creating letter to editor with process disclosure
+2025-05-31 08:42:04,165 - INFO - Creating letter to editor
+2025-05-31 08:42:04,174 - WARNING - Error getting review process summary: 'NoneType' object is not subscriptable
+2025-05-31 08:42:04,192 - INFO - SUCCESS: Created letter to editor
+2025-05-31 08:42:04,192 - INFO - SUCCESS: Created letter to editor at /home/dpolonia/20250530Computers/FINAL_20250531084051/9420250531084051.docx
+2025-05-31 08:42:04,192 - INFO - Quality Statistics Summary:
+2025-05-31 08:42:04,193 - INFO - Total evaluations: 3
+2025-05-31 08:42:04,193 - INFO - Average quality score: 4.0/5.0
+2025-05-31 08:42:04,193 - INFO - Top issues: Invalid JSON format, Low relevance to prompt (few keyword matches)
+2025-05-31 08:42:04,193 - INFO - Top highlights: Response length is appropriate, Good relevance to original prompt
+2025-05-31 08:42:04,195 - INFO - SUCCESS: Cost report exported to /home/dpolonia/20250530Computers/FINAL_20250531084051/cost20250531084204.txt
+2025-05-31 08:42:04,195 - INFO - Performing final mode verification
+2025-05-31 08:42:04,195 - ERROR - Error in paper revision process: 'NoneType' object is not subscriptable
+2025-05-31 08:42:04,195 - ERROR - Exception: 'NoneType' object is not subscriptable
+2025-05-31 08:42:04,195 - INFO - Paper revision process failed after 72.57 seconds
+2025-05-31 08:42:04,200 - INFO - Moving files to trash directory: ./tobe/_trash/FINAL/C05_gemini_1.5_pro/20250531084051

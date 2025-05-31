@@ -1,0 +1,92 @@
+---
+# Paper Revision Tool Configuration
+
+# LLM provider configuration
+llm:
+  provider: anthropic
+  model_name: claude-3-opus-20240229
+  verify_model: true
+  competitor_evaluation: true
+  competing_evaluator: openai/gpt-4o
+
+# Budget and cost optimization
+budget:
+  budget: 15.0
+  optimize_costs: true
+  warning_threshold: 0.75
+  critical_threshold: 0.90
+
+# File paths and directories
+files:
+  # These will typically be provided by command-line arguments
+  # original_paper_path: /path/to/paper.pdf
+  # reviewer_comment_files:
+  #   - /path/to/reviewer1.txt
+  #   - /path/to/reviewer2.txt
+  # editor_letter_path: /path/to/editor.txt
+  output_dir: ./output
+  use_cache: true
+
+# Output file configuration
+output:
+  include_timestamp: true
+  format: docx
+  file_naming:
+    analysis: paper_analysis.json
+    reviewer_analysis: reviewer_analysis.json
+    changes_document: changes_document.docx
+    revised_paper: revised_paper.docx
+    assessment: assessment.docx
+    editor_letter: editor_letter.docx
+    references: references.bib
+    cost_report: cost_report.txt
+
+# Logging configuration
+logging:
+  level: INFO
+  log_to_file: true
+  log_dir: ./logs
+  log_format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# External API integration
+api:
+  enabled_apis: []  # Can include: scopus, wos
+  # scopus_api_key: null  # Will be loaded from environment if needed
+  # wos_username: null    # Will be loaded from environment if needed
+  # wos_password: null    # Will be loaded from environment if needed
+
+# Operation mode configuration
+operation_mode:
+  current_mode: finetuning
+  modes:
+    training:
+      description: "Training Mode - Less expensive models, optimized for cost"
+      provider_recommendations:
+        anthropic: claude-3-haiku-20240307
+        openai: gpt-4o-mini
+        google: gemini-1.5-flash
+      optimize_costs: true
+      budget: 5.0
+      competitor_evaluation: false
+    finetuning:
+      description: "Fine-tuning Mode - Balanced models with moderate quality"
+      provider_recommendations:
+        anthropic: claude-3-5-sonnet-20241022
+        openai: gpt-4o
+        google: gemini-1.5-pro
+      optimize_costs: true
+      budget: 10.0
+      competitor_evaluation: true
+    final:
+      description: "Final Mode - Highest quality models, best output quality"
+      provider_recommendations:
+        anthropic: claude-opus-4-20250514
+        openai: gpt-4.5-preview
+        google: gemini-2.5-pro-preview
+      optimize_costs: false
+      budget: 20.0
+      competitor_evaluation: true
+
+# Application-wide settings
+interactive: false  # Set to true for interactive mode
+version: 1.0.0

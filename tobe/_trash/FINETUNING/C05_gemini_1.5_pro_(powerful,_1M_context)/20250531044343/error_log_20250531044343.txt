@@ -1,0 +1,71 @@
+2025-05-31 04:43:43,688 - INFO - Paper revision started with google model: gemini-1.5-pro (powerful, 1M context)
+2025-05-31 04:43:43,688 - INFO - Model code: C05
+2025-05-31 04:43:43,688 - INFO - Operation mode: finetuning
+2025-05-31 04:43:43,688 - INFO - Output directory: ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343
+2025-05-31 04:43:43,688 - INFO - Trash directory (used on failure): ./tobe/_trash/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343
+2025-05-31 04:43:45,121 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 04:43:45,121 - INFO - SUCCESS: Successfully initialized GOOGLE client with model gemini-1.5-pro (powerful, 1M context) (Code: C05)
+2025-05-31 04:43:45,122 - INFO - Starting paper revision process
+2025-05-31 04:43:45,137 - INFO - Step 1: Analyzing original paper
+2025-05-31 04:43:45,137 - INFO - Loading original paper
+2025-05-31 04:43:45,366 - INFO - Analyzing paper structure and content
+2025-05-31 04:43:45,367 - WARNING - LLM didn't return valid JSON. Using basic analysis.
+2025-05-31 04:43:45,367 - INFO - SUCCESS: Paper analysis completed
+2025-05-31 04:43:45,372 - INFO - Step 2: Analyzing reviewer comments
+2025-05-31 04:43:45,372 - INFO - Analyzing reviewer 1 comments
+2025-05-31 04:43:45,434 - WARNING - LLM didn't return valid JSON for reviewer 1. Using basic analysis.
+2025-05-31 04:43:45,434 - INFO - Analyzing reviewer 2 comments
+2025-05-31 04:43:45,486 - WARNING - LLM didn't return valid JSON for reviewer 2. Using basic analysis.
+2025-05-31 04:43:45,486 - INFO - Analyzing reviewer 3 comments
+2025-05-31 04:43:45,533 - WARNING - LLM didn't return valid JSON for reviewer 3. Using basic analysis.
+2025-05-31 04:43:45,533 - INFO - SUCCESS: Reviewer comment analysis completed
+2025-05-31 04:43:45,533 - INFO - Step 3: Processing editor letter and PRISMA requirements
+2025-05-31 04:43:45,533 - INFO - Processing editor letter
+2025-05-31 04:43:45,558 - INFO - Processing PRISMA requirements
+2025-05-31 04:43:45,576 - WARNING - LLM didn't return valid JSON for editor requirements. Using basic analysis.
+2025-05-31 04:43:45,576 - INFO - SUCCESS: Editor requirements analysis completed
+2025-05-31 04:43:45,576 - INFO - Step 4: Analyzing journal style and requirements
+2025-05-31 04:43:45,576 - INFO - Processing journal information
+2025-05-31 04:43:45,817 - INFO - Processing Scopus information from ./asis/07.pdf
+2025-05-31 04:43:46,038 - INFO - Processing highly cited papers for style analysis
+2025-05-31 04:43:46,138 - INFO - Analyzing reference style
+2025-05-31 04:43:48,699 - WARNING - LLM didn't return valid JSON for journal style. Using basic analysis.
+2025-05-31 04:43:48,699 - INFO - SUCCESS: Journal style analysis completed
+2025-05-31 04:43:48,699 - INFO - Step 5: Generating revision summary
+2025-05-31 04:43:48,699 - INFO - Generating revision plan
+2025-05-31 04:43:48,700 - WARNING - LLM didn't return valid JSON for revision plan. Using basic plan.
+2025-05-31 04:43:48,700 - INFO - SUCCESS: Generated revision plan with 3 issues and 3 solutions
+2025-05-31 04:43:48,700 - INFO - Creating revision summary document
+2025-05-31 04:43:48,763 - INFO - SUCCESS: Created revision summary at ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/9020250531044343.docx
+2025-05-31 04:43:48,763 - INFO - Step 6: Generating changes document
+2025-05-31 04:43:48,763 - INFO - Generating specific text changes
+2025-05-31 04:43:48,765 - WARNING - LLM didn't return valid JSON for changes. Using basic changes.
+2025-05-31 04:43:48,765 - INFO - SUCCESS: Generated 3 specific text changes
+2025-05-31 04:43:48,765 - INFO - Creating changes document
+2025-05-31 04:43:48,800 - INFO - SUCCESS: Created changes document at ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/9120250531044343.docx
+2025-05-31 04:43:48,800 - INFO - Step 7: Validating and updating references
+2025-05-31 04:43:48,800 - INFO - Validating and updating references
+2025-05-31 04:45:26,101 - INFO - Found 41 valid and 17 invalid references
+2025-05-31 04:45:26,111 - INFO - Step 8: Creating revised paper with track changes
+2025-05-31 04:45:26,111 - INFO - Creating revised paper with track changes
+2025-05-31 04:45:26,211 - INFO - SUCCESS: Applied 0 changes to the paper
+2025-05-31 04:45:26,211 - INFO - SUCCESS: Created revised paper at ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/9220250531044343.docx
+2025-05-31 04:45:26,211 - INFO - Step 9: Creating assessment document
+2025-05-31 04:45:26,211 - INFO - Creating assessment document
+2025-05-31 04:45:26,222 - WARNING - LLM didn't return valid JSON for assessment. Using basic assessment.
+2025-05-31 04:45:26,231 - INFO - SUCCESS: Created assessment document
+2025-05-31 04:45:26,231 - INFO - SUCCESS: Created assessment document at ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/9320250531044343.docx
+2025-05-31 04:45:26,231 - INFO - Step 10: Creating letter to editor with process disclosure
+2025-05-31 04:45:26,231 - INFO - Creating letter to editor
+2025-05-31 04:45:26,241 - WARNING - Error getting review process summary: 'NoneType' object is not subscriptable
+2025-05-31 04:45:26,260 - INFO - SUCCESS: Created letter to editor
+2025-05-31 04:45:26,260 - INFO - SUCCESS: Created letter to editor at ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/9420250531044343.docx
+2025-05-31 04:45:26,262 - INFO - SUCCESS: Cost report exported to ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/cost20250531044526.txt
+2025-05-31 04:45:26,262 - INFO - SUCCESS: Paper revision process completed successfully!
+2025-05-31 04:45:26,262 - INFO - SUCCESS: Detailed revision report saved to ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/report20250531044526.txt
+2025-05-31 04:45:26,262 - INFO - SUCCESS: Log file saved to ./tobe/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343/log20250531044343.txt
+2025-05-31 04:45:26,268 - ERROR - Error in paper revision process: unsupported format string passed to NoneType.__format__
+2025-05-31 04:45:26,268 - ERROR - Exception: unsupported format string passed to NoneType.__format__
+2025-05-31 04:45:26,268 - INFO - Paper revision process failed after 102.58 seconds
+2025-05-31 04:45:26,272 - INFO - Moving files to trash directory: ./tobe/_trash/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343
+2025-05-31 04:45:26,274 - INFO - SUCCESS: Files copied to trash directory: ./tobe/_trash/FINETUNING/C05_gemini_1.5_pro_(powerful,_1M_context)/20250531044343

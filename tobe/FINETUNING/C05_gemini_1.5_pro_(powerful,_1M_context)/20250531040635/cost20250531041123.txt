@@ -1,0 +1,50 @@
+COST OPTIMIZATION REPORT - 2025-05-31 04:11:23
+==================================================
+STATISTICS SUMMARY:
+Operation mode: FINETUNING
+Time elapsed: 00:04:48
+Tokens used (main): 7,676
+Estimated cost (main): $0.0269
+Tokens used (evaluation): 13,517
+Estimated cost (evaluation): $0.0061
+Total tokens: 21,193
+Total cost: $0.0330
+Evaluation requests: 9
+API requests: 10
+Cached requests: 0
+Files processed: 10
+Files created: 6
+Token budget remaining: 72,224
+Cost budget remaining: $4.9028
+Provider: google (C)
+Model: gemini-1.5-pro (powerful, 1M context) (Code: C05)
+Competitor evaluation: Enabled
+Cost optimization: Enabled
+Maximum papers analyzed: 2
+==================================================
+
+DETAILED MODEL USAGE:
+[GOOGLE] Model: gemini-1.5-pro
+Total requests: 10
+Total tokens used: 7,676
+Total cost: $0.026866
+
+CACHE STATISTICS:
+Cache directory: /home/dpolonia/20250530Computers/.cache
+Cache entries: 60
+
+Most recent cache entries:
+1. 50b890b1c6a9ce694dbe33cc98493b15.json - 2025-05-31 04:11:23
+2. 0652b52d98af451f91fc820751e96fb3.json - 2025-05-31 04:09:32
+3. b225203780bcfb34731c5058d8a8ea7a.json - 2025-05-31 04:09:10
+4. 71b42b002e5b3e08c75edbe9f4508525.json - 2025-05-31 04:08:58
+5. 520bfea50f877b6af0c0ecc77d2be769.json - 2025-05-31 04:08:49
+
+
+ESTIMATED COST BREAKDOWN:
+
+Total cost: $0.0269
+
+
+OPTIMIZATION RECOMMENDATIONS:
+- Enable caching between runs for similar operations

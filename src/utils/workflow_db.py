@@ -7,13 +7,37 @@ the workflow data for the paper revision process. It handles storing:
 - Model evaluations and quality metrics
 - Revision steps and progress
 - Usage statistics and token/cost tracking
+
+Uses parameterized queries and input validation to prevent SQL injection.
 """
 
 import os
 import json
 import sqlite3
 import datetime
+import logging
 from typing import Dict, List, Any, Optional, Tuple
+
+from src.security.query_sanitizer import (
+    create_parameterized_query,
+    create_parameterized_insert,
+    create_parameterized_update,
+    create_parameterized_delete,
+    execute_query,
+    sanitize_table_name,
+    sanitize_column_name,
+    QuerySanitizationError
+)
+from src.security.input_validator import (
+    validate_string_input,
+    validate_numeric_input,
+    validate_file_path,
+    validate_directory_path,
+    ValidationError
+)
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 class WorkflowDB:
     """SQLite database manager for workflow data."""
@@ -23,17 +47,46 @@ class WorkflowDB:
         
         Args:
             db_path: Path to the SQLite database file
+            
+        Raises:
+            ValidationError: If db_path is invalid
         """
-        self.db_path = db_path
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
-        
-        # Initialize the database
-        self.conn = sqlite3.connect(db_path)
-        self.conn.row_factory = sqlite3.Row  # Return rows as dictionaries
-        self.cursor = self.conn.cursor()
-        
-        # Create tables if they don't exist
-        self._create_tables()
+        try:
+            # Validate db_path
+            if db_path:
+                db_path = validate_string_input(db_path)
+                # Ensure parent directory exists
+                parent_dir = os.path.dirname(db_path)
+                if parent_dir:
+                    validate_directory_path(parent_dir, must_exist=False, create_if_missing=True)
+            else:
+                db_path = "./.cache/workflow.db"
+                
+            self.db_path = db_path
+            
+            # Create directory if it doesn't exist
+            os.makedirs(os.path.dirname(db_path), exist_ok=True)
+            
+            # Initialize the database with secure options
+            self.conn = sqlite3.connect(db_path)
+            
+            # Enable secure configuration
+            self.conn.execute("PRAGMA journal_mode=WAL")  # Write-Ahead Logging for crash recovery
+            self.conn.execute("PRAGMA foreign_keys=ON")   # Enforce foreign key constraints
+            self.conn.execute("PRAGMA secure_delete=ON")  # Securely delete data when deleted
+            
+            self.conn.row_factory = sqlite3.Row  # Return rows as dictionaries
+            self.cursor = self.conn.cursor()
+            
+            # Create tables if they don't exist
+            self._create_tables()
+            
+        except ValidationError as e:
+            logger.error(f"Database path validation error: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Database initialization error: {e}")
+            raise
     
     def _create_tables(self):
         """Create the database tables if they don't exist."""
@@ -459,6 +512,66 @@ class WorkflowDB:
         if run:
             return dict(run)
         return None
+        
+    def get_output_files(self, run_id: str) -> List[Dict[str, Any]]:
+        """Get output files for a specific run.
+        
+        Args:
+            run_id: Unique ID for the run
+            
+        Returns:
+            List of dictionaries with file information
+        """
+        # First, try to get files from the 'files' table
+        self.cursor.execute('SELECT * FROM files WHERE run_id = ?', (run_id,))
+        files = self.cursor.fetchall()
+        file_list = []
+        
+        if files:
+            for file in files:
+                file_dict = dict(file)
+                file_list.append({
+                    "file_type": file_dict.get("file_type"),
+                    "file_path": file_dict.get("processed_path"),
+                    "original_path": file_dict.get("original_path")
+                })
+        
+        # Then, try to get output files from the 'steps' table
+        self.cursor.execute('SELECT step_name, output_file FROM steps WHERE run_id = ? AND output_file IS NOT NULL', (run_id,))
+        step_files = self.cursor.fetchall()
+        
+        if step_files:
+            for step_file in step_files:
+                step_dict = dict(step_file)
+                
+                # Determine file type based on step name
+                file_type = "unknown"
+                step_name = step_dict.get("step_name", "").lower()
+                
+                if "revision summary" in step_name:
+                    file_type = "revision_summary"
+                elif "changes document" in step_name:
+                    file_type = "changes_document"
+                elif "revised paper" in step_name:
+                    file_type = "revised_paper"
+                elif "assessment" in step_name:
+                    file_type = "assessment"
+                elif "editor letter" in step_name:
+                    file_type = "editor_letter"
+                elif "bibliography" in step_name:
+                    file_type = "bibliography"
+                elif "log" in step_name:
+                    file_type = "log"
+                elif "cost report" in step_name:
+                    file_type = "cost_report"
+                
+                file_list.append({
+                    "file_type": file_type,
+                    "file_path": step_dict.get("output_file"),
+                    "original_path": None
+                })
+        
+        return file_list
     
     def get_runs(self, limit: int = 10, operation_mode: Optional[str] = None) -> List[Dict]:
         """Get a list of recent runs.

@@ -1,0 +1,109 @@
+2025-05-31 04:02:37,972 - INFO - Paper revision started with openai model: gpt-4o (powerful)
+2025-05-31 04:02:37,972 - INFO - Model code: B03
+2025-05-31 04:02:37,972 - INFO - Operation mode: finetuning
+2025-05-31 04:02:37,972 - INFO - Output directory: ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237
+2025-05-31 04:02:37,972 - INFO - Trash directory (used on failure): ./tobe/_trash/FINETUNING/B03_gpt_4o_(powerful)/20250531040237
+2025-05-31 04:02:39,763 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 04:02:39,764 - INFO - SUCCESS: Successfully initialized OPENAI client with model gpt-4o (powerful) (Code: B03)
+2025-05-31 04:02:39,764 - INFO - Starting paper revision process
+2025-05-31 04:02:39,778 - INFO - Step 1: Analyzing original paper
+2025-05-31 04:02:39,778 - INFO - Loading original paper
+2025-05-31 04:02:39,940 - INFO - Analyzing paper structure and content
+2025-05-31 04:02:52,530 - WARNING - Error parsing evaluation response: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 04:02:52,531 - INFO - Response Quality - Score: 4/5, Task: paper_analysis, Evaluator: basic_algorithm
+2025-05-31 04:02:52,531 - INFO - Quality Issues: Moderate relevance to prompt, Invalid JSON format
+2025-05-31 04:02:52,531 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:02:52,547 - WARNING - LLM didn't return valid JSON. Using basic analysis.
+2025-05-31 04:02:52,548 - INFO - SUCCESS: Paper analysis completed
+2025-05-31 04:02:52,553 - INFO - Step 2: Analyzing reviewer comments
+2025-05-31 04:02:52,553 - INFO - Analyzing reviewer 1 comments
+2025-05-31 04:03:03,162 - WARNING - Error parsing evaluation response: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 04:03:03,163 - INFO - Response Quality - Score: 4/5, Task: reviewer_analysis, Evaluator: basic_algorithm
+2025-05-31 04:03:03,163 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 04:03:03,163 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:03:03,188 - WARNING - LLM didn't return valid JSON for reviewer 1. Using basic analysis.
+2025-05-31 04:03:03,189 - INFO - Analyzing reviewer 2 comments
+2025-05-31 04:03:13,916 - WARNING - Error parsing evaluation response: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 04:03:13,916 - INFO - Response Quality - Score: 4/5, Task: reviewer_analysis, Evaluator: basic_algorithm
+2025-05-31 04:03:13,916 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 04:03:13,916 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:03:13,931 - WARNING - LLM didn't return valid JSON for reviewer 2. Using basic analysis.
+2025-05-31 04:03:13,931 - INFO - Analyzing reviewer 3 comments
+2025-05-31 04:03:28,138 - WARNING - Error parsing evaluation response: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 04:03:28,138 - INFO - Response Quality - Score: 4/5, Task: reviewer_analysis, Evaluator: basic_algorithm
+2025-05-31 04:03:28,138 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 04:03:28,138 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:03:28,156 - WARNING - LLM didn't return valid JSON for reviewer 3. Using basic analysis.
+2025-05-31 04:03:28,157 - INFO - SUCCESS: Reviewer comment analysis completed
+2025-05-31 04:03:28,157 - INFO - Step 3: Processing editor letter and PRISMA requirements
+2025-05-31 04:03:28,157 - INFO - Processing editor letter
+2025-05-31 04:03:28,201 - INFO - Processing PRISMA requirements
+2025-05-31 04:03:41,333 - WARNING - Error parsing evaluation response: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 04:03:41,334 - INFO - Response Quality - Score: 4/5, Task: general, Evaluator: basic_algorithm
+2025-05-31 04:03:41,334 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 04:03:41,334 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:03:41,361 - WARNING - LLM didn't return valid JSON for editor requirements. Using basic analysis.
+2025-05-31 04:03:41,361 - INFO - SUCCESS: Editor requirements analysis completed
+2025-05-31 04:03:41,361 - INFO - Step 4: Analyzing journal style and requirements
+2025-05-31 04:03:41,361 - INFO - Processing journal information
+2025-05-31 04:03:41,841 - INFO - Processing Scopus information from ./asis/07.pdf
+2025-05-31 04:03:42,065 - INFO - Processing highly cited papers for style analysis
+2025-05-31 04:03:42,216 - INFO - Analyzing reference style
+2025-05-31 04:03:58,071 - WARNING - Error parsing evaluation response: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 04:03:58,072 - INFO - Response Quality - Score: 4/5, Task: general, Evaluator: basic_algorithm
+2025-05-31 04:03:58,072 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 04:03:58,072 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:03:58,092 - WARNING - LLM didn't return valid JSON for journal style. Using basic analysis.
+2025-05-31 04:03:58,092 - INFO - SUCCESS: Journal style analysis completed
+2025-05-31 04:03:58,093 - INFO - Step 5: Generating revision summary
+2025-05-31 04:03:58,093 - INFO - Generating revision plan
+2025-05-31 04:04:14,939 - WARNING - Error parsing evaluation response: Extra data: line 25 column 1 (char 1062)
+2025-05-31 04:04:14,939 - INFO - Response Quality - Score: 4/5, Task: revision_planning, Evaluator: basic_algorithm
+2025-05-31 04:04:14,939 - INFO - Quality Issues: Moderate relevance to prompt, Invalid JSON format
+2025-05-31 04:04:14,939 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:04:14,954 - WARNING - LLM didn't return valid JSON for revision plan. Using basic plan.
+2025-05-31 04:04:14,954 - INFO - SUCCESS: Generated revision plan with 3 issues and 3 solutions
+2025-05-31 04:04:14,954 - INFO - Creating revision summary document
+2025-05-31 04:04:15,028 - INFO - SUCCESS: Created revision summary at ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/9020250531040237.docx
+2025-05-31 04:04:15,029 - INFO - Step 6: Generating changes document
+2025-05-31 04:04:15,029 - INFO - Generating specific text changes
+2025-05-31 04:04:34,719 - WARNING - Error parsing evaluation response: Extra data: line 23 column 1 (char 895)
+2025-05-31 04:04:34,720 - INFO - Response Quality - Score: 4/5, Task: text_generation, Evaluator: basic_algorithm
+2025-05-31 04:04:34,720 - INFO - Quality Issues: Low relevance to prompt (few keyword matches), Invalid JSON format
+2025-05-31 04:04:34,720 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:04:34,740 - WARNING - LLM didn't return valid JSON for changes. Using basic changes.
+2025-05-31 04:04:34,741 - INFO - SUCCESS: Generated 3 specific text changes
+2025-05-31 04:04:34,741 - INFO - Creating changes document
+2025-05-31 04:04:34,797 - INFO - SUCCESS: Created changes document at ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/9120250531040237.docx
+2025-05-31 04:04:34,797 - INFO - Step 7: Validating and updating references
+2025-05-31 04:04:34,797 - INFO - Validating and updating references
+2025-05-31 04:05:54,143 - INFO - Found 41 valid and 17 invalid references
+2025-05-31 04:05:54,145 - INFO - Step 8: Creating revised paper with track changes
+2025-05-31 04:05:54,145 - INFO - Creating revised paper with track changes
+2025-05-31 04:05:54,242 - INFO - SUCCESS: Applied 0 changes to the paper
+2025-05-31 04:05:54,242 - INFO - SUCCESS: Created revised paper at ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/9220250531040237.docx
+2025-05-31 04:05:54,242 - INFO - Step 9: Creating assessment document
+2025-05-31 04:05:54,242 - INFO - Creating assessment document
+2025-05-31 04:06:10,924 - WARNING - Error parsing evaluation response: Extra data: line 22 column 2 (char 1359)
+2025-05-31 04:06:10,925 - INFO - Response Quality - Score: 4/5, Task: general, Evaluator: basic_algorithm
+2025-05-31 04:06:10,925 - INFO - Quality Issues: Moderate relevance to prompt, Invalid JSON format
+2025-05-31 04:06:10,925 - INFO - Quality Highlights: Response length is appropriate
+2025-05-31 04:06:10,941 - WARNING - LLM didn't return valid JSON for assessment. Using basic assessment.
+2025-05-31 04:06:10,971 - INFO - SUCCESS: Created assessment document
+2025-05-31 04:06:10,971 - INFO - SUCCESS: Created assessment document at ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/9320250531040237.docx
+2025-05-31 04:06:10,971 - INFO - Step 10: Creating letter to editor with process disclosure
+2025-05-31 04:06:10,971 - INFO - Creating letter to editor
+2025-05-31 04:06:10,981 - WARNING - Error getting review process summary: 'NoneType' object is not subscriptable
+2025-05-31 04:06:10,996 - INFO - SUCCESS: Created letter to editor
+2025-05-31 04:06:10,996 - INFO - SUCCESS: Created letter to editor at ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/9420250531040237.docx
+2025-05-31 04:06:10,997 - INFO - Quality Statistics Summary:
+2025-05-31 04:06:10,997 - INFO - Total evaluations: 9
+2025-05-31 04:06:10,997 - INFO - Average quality score: 4.0/5.0
+2025-05-31 04:06:10,997 - INFO - Top issues: Invalid JSON format, Low relevance to prompt (few keyword matches), Moderate relevance to prompt
+2025-05-31 04:06:10,997 - INFO - Top highlights: Response length is appropriate
+2025-05-31 04:06:10,997 - INFO - SUCCESS: Cost report exported to ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/cost20250531040610.txt
+2025-05-31 04:06:10,997 - INFO - SUCCESS: Paper revision process completed successfully!
+2025-05-31 04:06:10,997 - INFO - SUCCESS: Detailed revision report saved to ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/report20250531040610.txt
+2025-05-31 04:06:10,997 - INFO - SUCCESS: Log file saved to ./tobe/FINETUNING/B03_gpt_4o_(powerful)/20250531040237/log20250531040237.txt
+2025-05-31 04:06:11,007 - INFO - Paper revision process completed successfully
+2025-05-31 04:06:11,007 - INFO - Total time elapsed: 213.03 seconds

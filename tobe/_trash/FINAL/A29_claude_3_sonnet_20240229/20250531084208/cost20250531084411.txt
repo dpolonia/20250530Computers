@@ -1,0 +1,52 @@
+COST OPTIMIZATION REPORT - 2025-05-31 08:44:11
+==================================================
+STATISTICS SUMMARY:
+Operation mode: FINAL
+Time elapsed: 00:02:02
+Tokens used (main): 19,829
+Estimated cost (main): $0.0990
+Tokens used (evaluation): 23,178
+Estimated cost (evaluation): $0.1311
+Total tokens: 43,007
+Total cost: $0.2302
+Evaluation requests: 9
+API requests: 10
+Cached requests: 0
+Files processed: 14
+Files created: 6
+Token budget remaining: 369,254
+Cost budget remaining: $24.4371
+Provider: anthropic (A)
+Model: claude-3-sonnet-20240229 (Code: A29)
+Competitor evaluation: Enabled
+Cost optimization: Disabled
+Maximum papers analyzed: 5
+==================================================
+
+DETAILED MODEL USAGE:
+[ANTHROPIC] Model: claude-3-sonnet-20240229
+Total requests: 10
+Total tokens used: 19,829
+Total cost: $0.099039
+
+CACHE STATISTICS:
+Cache directory: /home/dpolonia/20250530Computers/.cache
+Cache entries: 75
+
+Most recent cache entries:
+1. b5cc9551461b310abd4e96f0af6f570c.json - 2025-05-31 08:44:11
+2. 8e6694ba4d148f6618491e168d50fa4e.json - 2025-05-31 08:43:35
+3. 5b997c01040cb5335e3d48966aad2378.json - 2025-05-31 08:43:20
+4. ab2a5411c148b767a4b59d2d97eb1e36.json - 2025-05-31 08:43:02
+5. 0c0944690d9f010982efcc0d5de845b1.json - 2025-05-31 08:42:53
+
+
+ESTIMATED COST BREAKDOWN:
+Input tokens cost (estimated): $0.0595
+Output tokens cost (estimated): $0.2974
+
+Total cost: $0.0990
+
+
+OPTIMIZATION RECOMMENDATIONS:
+- Enable caching between runs for similar operations

@@ -1,0 +1,52 @@
+COST OPTIMIZATION REPORT - 2025-05-31 08:40:00
+==================================================
+STATISTICS SUMMARY:
+Operation mode: FINAL
+Time elapsed: 00:01:08
+Tokens used (main): 12,606
+Estimated cost (main): $0.0744
+Tokens used (evaluation): 16,099
+Estimated cost (evaluation): $0.0504
+Total tokens: 28,705
+Total cost: $0.1248
+Evaluation requests: 3
+API requests: 4
+Cached requests: 6
+Files processed: 14
+Files created: 6
+Token budget remaining: 465,330
+Cost budget remaining: $24.8044
+Provider: openai (B)
+Model: gpt-4o (Code: B03)
+Competitor evaluation: Enabled
+Cost optimization: Disabled
+Maximum papers analyzed: 5
+==================================================
+
+DETAILED MODEL USAGE:
+[OPENAI] Model: gpt-4o
+Total requests: 4
+Total tokens used: 12,606
+Total cost: $0.074360
+
+CACHE STATISTICS:
+Cache directory: /home/dpolonia/20250530Computers/.cache
+Cache entries: 63
+
+Most recent cache entries:
+1. 393d772535488409d9d20f44e55a7309.json - 2025-05-31 08:39:35
+2. 07ade8d166895a4087388a11d854a40a.json - 2025-05-31 08:39:20
+3. 6b072f8c101e09fc9a29b1a12d19ef42.json - 2025-05-31 08:39:08
+4. model_scores.json - 2025-05-31 08:38:52
+5. 50b890b1c6a9ce694dbe33cc98493b15.json - 2025-05-31 04:11:23
+
+
+ESTIMATED COST BREAKDOWN:
+Input tokens cost (estimated): $0.0630
+Output tokens cost (estimated): $0.1891
+
+Total cost: $0.0744
+
+
+OPTIMIZATION RECOMMENDATIONS:
+- Consider using a cheaper model like GPT-3.5 for initial drafts

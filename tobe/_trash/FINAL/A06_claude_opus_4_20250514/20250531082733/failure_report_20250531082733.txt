@@ -1,0 +1,9 @@
+FAILURE REPORT - 2025-05-31 08:27:45
+Model: claude-opus-4-20250514 (Code: A06)
+Provider: anthropic
+Operation mode: final
+Original directory: /home/dpolonia/20250530Computers/FINAL_20250531082733
+Trash directory: ./tobe/_trash/FINAL/A06_claude_opus_4_20250514/20250531082733
+
+Files moved to trash:
+- log20250531082733.txt

@@ -1,0 +1,18 @@
+2025-05-31 08:28:06,004 - INFO - Paper revision started with openai model: gpt-4.5-preview
+2025-05-31 08:28:06,004 - INFO - Model code: B06
+2025-05-31 08:28:06,004 - INFO - Operation mode: final
+2025-05-31 08:28:06,004 - INFO - Output directory: /home/dpolonia/20250530Computers/FINAL_20250531082805
+2025-05-31 08:28:06,004 - INFO - Trash directory (used on failure): ./tobe/_trash/FINAL/B06_gpt_4.5_preview/20250531082805
+2025-05-31 08:28:06,004 - INFO - Creating special FINAL directory in root: /home/dpolonia/20250530Computers/FINAL_20250531082805
+2025-05-31 08:28:06,004 - INFO - Interactive stop points enabled - press Enter to continue at each step
+2025-05-31 08:28:07,617 - INFO - Model verification skipped. Run verify_models.py to check model accuracy separately.
+2025-05-31 08:28:07,617 - INFO - SUCCESS: Successfully initialized OPENAI client with model gpt-4.5-preview (Code: B06)
+2025-05-31 08:28:07,617 - INFO - Starting paper revision process
+2025-05-31 08:28:07,624 - INFO - Step 1: Analyzing original paper
+2025-05-31 08:28:07,624 - INFO - Loading original paper
+2025-05-31 08:28:07,711 - INFO - Analyzing paper structure and content
+2025-05-31 08:28:35,549 - ERROR - Error in paper revision process: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 08:28:35,549 - ERROR - Exception: 'PaperRevisionTool' object has no attribute 'model'
+2025-05-31 08:28:35,549 - INFO - Paper revision process failed after 29.55 seconds
+2025-05-31 08:28:35,563 - INFO - Moving files to trash directory: ./tobe/_trash/FINAL/B06_gpt_4.5_preview/20250531082805
+2025-05-31 08:28:35,564 - INFO - SUCCESS: Files copied to trash directory: ./tobe/_trash/FINAL/B06_gpt_4.5_preview/20250531082805

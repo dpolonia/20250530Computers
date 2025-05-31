@@ -1,0 +1,38 @@
+COST OPTIMIZATION REPORT - 2025-05-30 18:04:41
+==================================================
+STATISTICS SUMMARY:
+Operation mode: TRAINING
+Time elapsed: 00:01:00
+Tokens used: 5,178.0
+Estimated cost: $0.0018
+API requests: 9
+Cached requests: 0
+Files processed: 10
+Files created: 6
+Token budget remaining: 11,362.5
+Cost budget remaining: $0.9935
+Provider: google
+Model: gemini-1.5-flash (fast, 1M context)
+Cost optimization: Enabled
+Maximum papers analyzed: 1
+==================================================
+
+CACHE STATISTICS:
+Cache directory: /home/dpolonia/20250530Computers/.cache
+Cache entries: 27
+
+Most recent cache entries:
+1. 2f3d3f01260e6e677f7c0591918d8713.json - 2025-05-30 18:04:41
+2. e6a62d4e29b9ea0c210ffe5c88308df2.json - 2025-05-30 18:04:05
+3. a7a20a36ece9b7f383ded572e33091e6.json - 2025-05-30 18:03:56
+4. bc872041db78ac33d810f5021d20e7de.json - 2025-05-30 18:03:52
+5. f4dcfc6e8651ba8591ed34a1d63d334f.json - 2025-05-30 18:03:50
+
+
+ESTIMATED COST BREAKDOWN:
+
+Total cost: $0.0018
+
+
+OPTIMIZATION RECOMMENDATIONS:
+- Enable caching between runs for similar operations

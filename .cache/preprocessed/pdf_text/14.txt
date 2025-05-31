@@ -1,0 +1,758 @@
+Citation: Montenegro-Rueda, M.;
+Fernández-Cerero, J.;
+Fernández-Batanero, J.M.;
+López-Meneses, E. Impact of the
+Implementation of ChatGPT in
+Education: A Systematic Review.
+Computers 2023, 12, 153. https://
+doi.org/10.3390/computers12080153
+Academic Editor: Ananda Maiti
+Received: 5 July 2023
+Revised: 25 July 2023
+Accepted: 27 July 2023
+Published: 29 July 2023
+Copyright:
+© 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed
+under
+the
+terms
+and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+computers
+Review
+Impact of the Implementation of ChatGPT in Education: A
+Systematic Review
+Marta Montenegro-Rueda 1
+, José Fernández-Cerero 1, José María Fernández-Batanero 1
+and Eloy López-Meneses 2,*
+1
+Department of Teaching and Educational Organization, University of Sevilla, 41013 Sevilla, Spain;
+mmontenegro1@us.es (M.M.-R.); jfcerero@us.es (J.F.-C.); batanero@us.es (J.M.F.-B.)
+2
+Department of Education and Social Psychology, Pablo de Olavide University, 41013 Sevilla, Spain
+*
+Correspondence: elopmen@upo.es
+Abstract: The aim of this study is to present, based on a systematic review of the literature, an
+analysis of the impact of the application of the ChatGPT tool in education. The data were obtained
+by reviewing the results of studies published since the launch of this application (November 2022)
+in three leading scientiﬁc databases in the world of education (Web of Science, Scopus and Google
+Scholar). The sample consisted of 12 studies. Using a descriptive and quantitative methodology, the
+most signiﬁcant data are presented. The results show that the implementation of ChatGPT in the
+educational environment has a positive impact on the teaching–learning process, however, the results
+also highlight the importance of teachers being trained to use the tool properly. Although ChatGPT
+can enhance the educational experience, its successful implementation requires teachers to be familiar
+with its operation. These ﬁndings provide a solid basis for future research and decision-making
+regarding the use of ChatGPT in the educational context.
+Keywords: ChatGPT; artiﬁcial intelligence; education; impact; systematic review
+1. Introduction
+Over the past decades, artiﬁcial intelligence (AI) has experienced rapid growth and
+has transformed many areas of society. AI has positioned itself at the forefront of research
+ﬁelds ranging from medicine and robotics to education and autonomous driving. Broadly
+speaking, artiﬁcial intelligence refers to the ability of a computer system to mimic the
+behaviour of the human brain. This involves receiving information in the form of external
+data, learning through training and based on that learning, achieving the goals for which it
+was designed [1].
+The implementation of artiﬁcial intelligence in education has had a signiﬁcant impact,
+evidenced by improvements in the efﬁciency of the educational process, the promotion of
+global learning, the personalisation of learning, the creation of more intelligent content and
+the optimisation of educational management in terms of effectiveness and efﬁciency [2].
+Nowadays, new technologies play a fundamental role in optimising the teaching–learning
+process. Education is not limited to being a mere product but is a process in which learning
+goes beyond the simple acquisition of knowledge. In this sense, artiﬁcial intelligence (AI)
+emerges as a new technology with great potential in the ﬁeld of education, as AI-based
+systems could foster personalised learning, adapting to the needs and interests of each
+student [3].
+Within education, it is critical to recognise that the implementation of AI raises signif-
+icant challenges and ethical considerations. Issues such as data privacy, equity of access
+to education and the impact on the role of the educator require careful attention. It is
+essential to address these aspects in a responsible manner to ensure that AI is used in
+a beneﬁcial and equitable way for all learners [4]. In this regard, it is critical to ﬁnd a
+Computers 2023, 12, 153. https://doi.org/10.3390/computers12080153
+https://www.mdpi.com/journal/computers
+Computers 2023, 12, 153
+2 of 13
+balance between technology and the essential role of educators to ensure that the focus
+remains on the holistic development of students and their preparation for an ever-changing
+world. Due to the short time between the launch of ChatGPT (end of November 2022),
+no systematic reviews addressing its impact on education have been found [5]. Therefore,
+the main objective of this systematic review is to analyse the existing literature on the use
+of ChatGPT in education in order to identify its impact, beneﬁts, challenges and areas
+of application in teaching and learning. In this regard, the following research questions
+are addressed:
+1.
+What is the general state of scientiﬁc research on the use of ChatGPT in education?
+2.
+What are the beneﬁts and challenges of implementing ChatGPT in the classroom?
+3.
+What are the future trends and emerging research areas in the use of ChatGPT in
+education?
+2. Use of ChatGPT in Education
+The use of ChatGPT in education has generated considerable interest due to its po-
+tential to enrich the learning experience of students. By providing quick and personalised
+responses, this system has the ability to address individual student needs, offer immediate
+feedback and facilitate the understanding of complex concepts. In this way, it becomes a
+promising tool that promotes a student’s active participation and cognitive advancement
+by adapting to their learning pace and offering continuous support in their knowledge
+acquisition process [6].
+Following this line, it has proven to be a valuable tool to promote the development of
+writing skills in students. By interacting with the system, students can receive grammatical
+corrections, suggestions for improvement and detailed feedback on their writing, which
+gives them the opportunity to improve their written communication and achieve greater
+effectiveness in their written expression [7]. Thus, this application presents itself as an
+invaluable assistance tool for scientiﬁc writing; however, it is essential to understand that
+it should not be considered as a complete solution for scientiﬁc content creation. Writers
+must exercise their knowledge and experience to validate and complement the information
+provided by the tool. However, it also excels in its ability to facilitate group discussions
+and promote collaborative student participation in projects and assignments. This fosters a
+sense of community among learners by allowing interaction and an exchange of ideas [8].
+Several studies have tried to explore the potential impact of artiﬁcial intelligence,
+especially with the famous ChatGPT tool for students in education. Various applications of
+artiﬁcial intelligence in education were studied, such as personalised learning experiences,
+adaptive testing, predictive analytics and chatbots. As a result, it shows an incredible
+potential to improve learning efﬁciency and provide personalised educational support to
+both students and teachers. However, it is essential to consider the risks and limitations
+associated with these technologies, such as data privacy, cultural differences, language
+proﬁciency and associated ethical implications [9].
+Its inﬂuence over the last year has sparked a growing interest in education. This
+innovative tool has positioned itself as a disruptive technology that is revolutionising the
+way students are taught, promoted, and supported in academic environments. In this sense,
+educational centres are rethinking how to incorporate this technology into their didactic
+models in order to improve the teaching and learning process of educational agents [10].
+Therefore, teachers must approach this tool in the classroom and present it as an additional
+resource that complements the learning process. However, it is crucial to highlight that
+this tool does not replace the cognitive processes necessary in learning or other sources of
+information such as books, articles or interactions with others.
+3. Method
+Following an explicit and systematic search strategy, with inclusion and exclusion
+criteria, a systematic review of the literature will be carried out. For this, the researchers
+have followed the recommendations of the PRISMA Statement [11].
+Computers 2023, 12, 153
+3 of 13
+3.1. Search Strategy
+The selected databases were Web of Science, Scopus, and Google Scholar. The search
+string (Table 1) was applied in the three international databases in the ﬁeld of education, in
+the ﬁelds of title, abstract and/or keywords. The literature search was conducted between
+May and June 2023, with an initial identiﬁcation of 154 records.
+Table 1. Search strategy.
+Topic
+Search Terms
+Artiﬁcial Intelligence
+“ChatGPT” OR “Chatbot” OR “Artiﬁcial Intelligence”
+Context
+“Education” OR “Educational Institution”
+3.2. Inclusion and Exclusion Criteria
+After eliminating duplicate studies (n = 73), the inclusion and exclusion criteria were
+established to ensure that the selected studies were relevant and met the objectives of the
+review (Table 2). These criteria were applied independently by two reviewers to ensure
+objectivity and to minimise bias in the selection of studies. It was decided to limit the
+search to articles published from the year 2022 onwards, as this was the year in which this
+artiﬁcial intelligence chatbot developed by OpenIA was launched.
+Table 2. Inclusion and exclusion criteria.
+Inclusion Criteria
+Exclusion Criteria
+Publication period
+Published between 2022—present
+(June 2023)
+Published before 2022
+Type of document
+Scientiﬁc article published in
+peer-reviewed journal
+Not an article published in a
+peer-reviewed journal
+Type of study
+Theoretical and empirical research
+Other research (review, opinions,
+letters to the editor...)
+Language
+English or Spanish
+Neither in English nor in Spanish
+Population
+Education
+No focus on education
+Research topic
+Use of ChatGPT in education
+Does not use ChatGPT
+3.3. Methodological Quality Assessment
+The Johanna Briggs Checklist (JBI) is a tool used to assess the methodological quality
+of research studies. It consists of a set of criteria used to determine the rigour and validity of
+a study. When applying the JBI checklist, aspects such as study design, participant selection,
+data collection and analysis, among others, are analysed. The 14 identiﬁed articles were
+assessed for their methodological quality. The included studies were examined through a
+critical and independent review using an eleven-point checklist developed by Aromataris
+and Munn [12].
+To ensure an unbiased assessment, a masked review of the checklist was conducted
+by two independent researchers, unrelated to the study. This measure was implemented
+to avoid any assessment bias on the part of the study authors themselves. The selected
+studies had to meet at least four of the checklist criteria. The checklist used covered the
+following assessment criteria:
+-
+Is the purpose of the research clearly speciﬁed?
+-
+Does it address the use and impact of ChatGPT in education?
+-
+Are the data extraction instruments appropriate?
+-
+Are the results obtained useful to the research community?
+-
+Are the authors’ conclusions supported by the data analysed?
+-
+Are recommendations made for future research?
+Computers 2023, 12, 153
+4 of 13
+Two studies [7,13] were excluded based on the quality issues raised in the checklist, as
+they did not meet at least four of the criteria provided above.
+3.4. Selection of Studies
+A total of 154 records were identiﬁed in the three electronic databases analysed. After
+removing duplicate records (n = 73), studies were reviewed by title and abstracts to assess
+eligibility (n = 81). A total of 67 studies were excluded as they did not meet the established
+inclusion and exclusion criteria. Subsequently, the remaining 14 studies were assessed for
+methodological quality, eliminating 2 studies. Finally, a total of 12 studies were eligible for
+inclusion in the review. Figure 1 shows the ﬂow chart of the record selection process based
+on the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA)
+guidelines [11].
+ 
+Figure 1. Flow chart of the study selection process.
+3.5. Data Extraction and Analysis
+In order to address the research questions posed previously, we carried out a content
+analysis combining qualitative and quantitative approaches to the 12 research studies
+obtained. The quantitative analysis allowed us to visualise and understand general aspects
+of the topic through descriptive graphs. For the qualitative analysis, we used the VOSviewer
+1.6.15. tool to identify the main trends and scientiﬁc impact of the research ﬁeld [14,15].
+Each of these clusters has a different number of elements, colour, and size. The size is
+determined by the frequency of occurrence. The larger the circle, the more frequently that
+keyword is used in the studies [16]. The main characteristics of the studies included in the
+review related to ChatGPT in education are provided in Table 3.
+Computers 2023, 12, 153
+5 of 13
+Table 3. Characteristics of the studies included in the review.
+Authors/Year
+Methodology
+Country/Continent
+Findings
+Advantages
+Disadvantages
+Diego Olite et al.
+(2023) [17]
+Theoretical
+Cuba, America
+•
+Strategy that will bring
+about changes in the
+way of thinking and
+educating (educational
+process).
+•
+Lack of training.
+García Peñalvo
+(2023) [10]
+Theoretical
+Spain, Europe
+•
+Promotes the
+development of critical
+thinking.
+•
+Provides training for
+both teachers and
+students to encourage
+appropriate and
+ethical use.
+Sánchez García
+(2023) [6]
+Theoretical
+Mexico, America
+•
+Educational
+institutions should
+take into account the
+concerns expressed by
+students when using
+artiﬁcial intelligence.
+Halaweh (2023) [18]
+Theoretical
+United Arab Emirates,
+Asia
+•
+It offers numerous
+opportunities for
+teachers and lecturers
+to
+develop ideas.
+•
+Provides teacher
+training on the
+functions of artiﬁcial
+intelligence tools, as
+well as how to
+evaluate and use it
+correctly.
+Rahman and Watanobe
+(2023) [19]
+Quantitative
+Bangladesh, Asia
+•
+Very useful as a
+support for
+educational work.
+•
+Lack of training.
+•
+Lack of common sense
+in its use.
+•
+Difﬁculties in complex
+reasoning.
+Ausat et al. (2023) [20]
+Quantitative
+Malaysia, Asia
+•
+Offers improvements
+in learning.
+•
+It does not completely
+replace the role of the
+teacher. Therefore, a
+teacher’s digital
+competence is
+necessary to integrate
+it effectively and
+appropriately.
+Rincón Castillo et al.
+(2023) [21]
+Qualitative
+Indonesia, Asia
+•
+ChatGPT signiﬁcantly
+impacts the
+teaching–learning
+process.
+•
+Many students use
+ChatGPT to manage
+and deliver their work
+without learning
+anything.
+Javaid et al. (2023) [22]
+Theoretical
+Mexico, America
+•
+Both students and
+faculty can beneﬁt
+from this tool.
+•
+Faculty can save time
+on numerous tasks by
+using these
+technologies.
+•
+Students can use it as a
+support tool.
+•
+Lack of training.
+Computers 2023, 12, 153
+6 of 13
+Table 3. Cont.
+Authors/Year
+Methodology
+Country/Continent
+Findings
+Advantages
+Disadvantages
+Qadir (2023) [8]
+Theoretical
+India, Asia
+•
+It offers numerous
+beneﬁts in the
+teaching–learning
+process.
+•
+It is important to use
+these tools with
+caution, as they can be
+misleading.
+•
+Provides equitable
+access to advanced
+technology, especially
+for marginalised
+communities, so as not
+to exacerbate existing
+inequalities.
+Firat (2023) [23]
+Qualitative
+Qatar, Asia
+•
+This tool can increase
+student engagement
+and satisfaction.
+•
+It can enhance
+learning experiences
+and transform the role
+of educators.
+•
+Need to improve the
+training of teachers
+and students.
+Fauzi (2023) [24]
+Qualitative
+Turkey, Asia
+•
+It offers learners the
+chance to improve
+their language skills.
+•
+Facilitates
+collaboration.
+•
+Increases time
+efﬁciency and
+effectiveness.
+•
+Provides support and
+motivation.
+•
+Lack of training.
+Strzelecki (2023) [25]
+Quantitative
+Indonesia, Asia
+•
+Tool accepted by
+university students.
+•
+Increases students’
+performances.
+•
+Increases students’
+motivation.
+•
+Lack of training.
+4. Results
+Once the studies related to the impact of ChatGPT application in education were
+collected, a total of 12 relevant articles were selected for this systematic review. When
+observing the distribution of the collected research according to the year of publication,
+it is evident that all the articles found belong to the year 2023. This is due to the fact that
+the implementation of ChatGPT in education was implemented at the end of 2022, which
+did not allow enough time for studies to be conducted and articles on its impact to be
+published until the following year. Looking at the distribution of the studies according
+to the place of publication, research from the Asian continent predominates with 66.67%
+of the research collected, coming from countries such as the United Arab Emirates, Qatar,
+Indonesia, Turkey, India and Bangladesh. However, we also found research from the
+Americas (25%) and Europe (8.33%) to a lesser extent. Some of these countries are Spain,
+Mexico, Poland and Cuba. No articles were found from the African or Oceanic continent
+(Figure 2).
+Computers 2023, 12, 153
+7 of 13
+Figure 2. Distribution of studies by population location.
+Regarding the methodology used in the selected articles, it is worth noting that most of
+the research published on the impact of ChatGPT in the educational ﬁeld has been carried
+out through a theoretical approach (50%), with the aim of understanding the potential
+and challenges of this tool. To a lesser extent, there are other studies that have chosen to
+approach the study from both a qualitative and quantitative methodology (25%) (Figure 3).
+Figure 3. Distribution of studies by methodology used.
+Considering the main ﬁndings that were found after reading the selected articles,
+Figure 4 shows that the main result obtained was that the use of ChatGPT in education
+is a great educational support in the teaching and learning process for both students and
+teachers (82%). This is closely linked to the improvement of performance, motivation,
+organization and efﬁcient time management, as well as the promotion of a more effective
+and collaborative learning environment. At the same time, there is a lack of teacher train-
+ing regarding the use of ChatGPT for its subsequent application and use in educational
+Computers 2023, 12, 153
+8 of 13
+classrooms (58%), as many teachers do not have the necessary skills to apply it efﬁciently.
+However, it is necessary that all educational agents know how to use this tool in a responsi-
+ble way, following ethical guidelines, since inappropriate use could be an obstacle in the
+learning process of students (52%). On the other hand, and closely related to the previous
+ﬁnding, a large part of the research collected in their articles shows the great changes at the
+educational level that the use of ChatGPT can create by generating a strong impact on the
+way of teaching and carrying out tasks (46%). Lastly, the articles reﬂect a concern for the
+clear need for student training (32%) and the possible problems in the educational system
+that can be generated after prolonged use of this application (28%).
+Figure 4. Main ﬁndings of the analysed studies.
+Finally, to ﬁnd out the lines of research in this ﬁeld, three clusters were obtained from
+the mapping of VOSviewer. The three clusters obtained are (Figure 5):
+Figure 5. Labelled bibliometric map.
+Computers 2023, 12, 153
+9 of 13
+-
+Cluster 1 (red). The cluster marked in red has 19 items, including application, artiﬁcial
+intelligence, challenge, ChatGPT, critical thinking, education, future, impact, implica-
+tion, limitation, need, opportunity, research, strategy, teacher, teaching, technology,
+tool and use. This cluster is therefore linked to research on the role of the teacher in
+an educational environment driven by artiﬁcial intelligence, including their training,
+the impact of using artiﬁcial intelligence tools and their adaptation to changes in their
+pedagogical practice.
+-
+Cluster 2 (blue). The cluster marked in blue has 18 items, including approach, chatbot,
+chatbot technology, class, context, data, development, experiment, feedback, inter-
+action, knowledge, learning, participant, performance, problem, skills, student and
+study. This cluster is related to the line of research on the use of chatbots in education,
+including their impact on students.
+-
+Cluster 3 (green). The cluster marked in green has 18 items, including accuracy, analy-
+sis, answer, conversation, conversational agent, ﬁeld, higher education, information,
+model, order, paper, question, response, system, time, university, user and work. This
+cluster is related to research on the impact of the chatbot on teaching and learning
+processes, including factors such as the socioeconomic, cultural, institutional and
+technological environment in which it is developed.
+5. Discussion
+To address the research questions posed in the study, the ﬁndings obtained through
+the qualitative and quantitative content analysis conducted in the 12 selected research will
+be explored.
+Q1: What is the general state of scientiﬁc research on the use of ChatGPT in education?
+The general state of scientiﬁc research on the use of ChatGPT in education is limited
+due to the recent implementation of this application in the educational setting, being still in
+its initial stages. A total of 12 relevant articles were collected for a systematic review, all
+published in the year 2023. This is because the use of ChatGPT in the educational setting is
+a relatively new practice, since its launch occurred at the end of 2022, so there has not been
+enough time to conduct long-term studies and collect meaningful data on the impact on
+education until the ﬁrst months of the following year [26].
+In terms of geographic focus, a greater representation of studies belonging to the
+Asian continent was observed. The predominance of research from Asian countries may be
+related to the early adoption of technology in these regions and their focus on educational
+research. Other factors such as the availability of research funds and collaboration between
+university institutions may also inﬂuence these data. It should also be noted that in different
+countries, the use of this tool has been banned in educational centres [25].
+In relation to the methodology used in the selected articles on the impact of ChatGPT
+in education, a high predominance of theoretical articles stands out, as opposed to qual-
+itative and/or quantitative studies. This may be possible because the development and
+implementation of artiﬁcial intelligence technologies in education, such as ChatGPT, are
+still at a relatively early stage, so the exploration of the possibilities and challenges presents
+a mainly theoretical approach before conducting empirical research [10].
+Q2: What are the beneﬁts and challenges of implementing ChatGPT in the classroom?
+In an ever-changing society, technological advancement has taken on a fundamental
+role in our existence and, naturally, it has left its mark on the ﬁeld of education. OpenAI’s
+innovative creation, known as ChatGPT, is revolutionising the way educators and students
+approach the learning process in the classroom. The implementation of ChatGPT in schools
+brings a number of beneﬁts and challenges that educational agents need to be aware of in
+order to improve the quality of education in the classroom.
+Its use in the classroom is offered as a promising tool that offers multiple beneﬁts
+for learning. This tool allows content and activities to be customised to the speciﬁc needs
+Computers 2023, 12, 153
+10 of 13
+of each student, improving the effectiveness of teaching and learning. In other words,
+it allows students to adapt to their learning pace and provides constant support in their
+knowledge acquisition process.
+All of this results in having more individualised and personalised learning, which
+leads to an improvement in motivation and commitment on the part of students, being
+considered as a fundamental educational support for the improvement of the teaching and
+learning process [6]. At the same time, ChatGPT promotes collaboration by allowing stu-
+dents to work together to research topics and develop communication and teamwork skills,
+leveraging this tool to support the educational process. ChatGPT is also an easy-to-use and
+accessible tool for teachers and students, allowing for quick integration into the classroom.
+Finally, by providing support in the generation of content and activities, ChatGPT allows
+teachers to focus on more important aspects of teaching, such as personalised interaction
+and feedback.
+However, for an effective implementation of this tool, the importance of providing
+training appropriate to the current context is highlighted. Teachers must be provided
+with the necessary technological knowledge to be able to use this tool effectively in the
+educational environment, preventing teachers themselves from being an obstacle in the
+implementation of this tool. In this sense, teachers must not only learn how to use the
+technology itself but also understand its possibilities and limitations, as well as address the
+associated ethical and pedagogical challenges [10]. Along these lines, the implementation
+of this tool should be approached in a reﬂective manner to ensure a responsible classroom
+environment. Its use in the education system must be carefully evaluated to ensure that it is
+not used to that it is not used to replace these important skills [26]. However, there is a need
+to consider the academic misuse of ChatGPT that may be implied by using text generation
+technology for dishonest or unethical purposes in academia [19]. In addition, ChatGPT’s
+knowledge is still limited and has not yet been updated with information beyond 2021 [27].
+Therefore, its answers may not always be accurate or reliable, especially on specialised
+topics and recent events. In addition, ChatGPT may generate incorrect or even inaccurate
+information [28]. This situation can pose a challenge for students who rely on ChatGPT for
+information during their learning process. In this context, one of these speciﬁc limitations
+is the phenomenon known as “hallucinations”. In the context of chatbots such as ChatGPT,
+hallucinations refer to responses that sound plausible but are incorrect or nonsensical. That
+is, the chatbot may generate responses that appear to be well-written and coherent but are
+actually erroneous or unsubstantiated information. This phenomenon can be problematic
+in the educational context since students could receive incorrect or confusing information,
+which would negatively affect their learning and understanding of the topics. This is why
+it is important to take these limitations into account and carefully evaluate the accuracy
+and reliability of the chatbot before using it as an educational tool [29].
+Q3: What are the future trends and emerging research areas in the use of ChatGPT
+in education?
+After conducting an analysis using the VOSviewer software, a bibliometric analysis
+was performed to visualise research trends in relation to the use of ChatGPT in education.
+This analysis revealed three clusters grouping the keywords present in the titles and
+abstracts of the studies found in the databases, allowing us to identify three main emerging
+research areas and the directions that the research in this ﬁeld is taking.
+The ﬁrst is focused entirely on the role of the teacher in the educational setting driven
+by the use of artiﬁcial intelligence. The role of the teacher in the context of the use of artiﬁ-
+cial intelligence is crucial for improving educational practice and fostering new teaching
+methodologies [23]. ChatGPT is a valuable tool for trainers, providing them with a starting
+point for designing curricula, teaching materials and assessment activities [30].
+The second line of research in the ﬁeld of education focuses on the impact and use
+of artiﬁcial intelligence (AI) in the classroom, which has aroused great interest among
+educators and pedagogical experts. The incorporation of artiﬁcial intelligence as a com-
+Computers 2023, 12, 153
+11 of 13
+plementary tool in the teaching–learning process has shown promise and has generated a
+variety of research [20]. In this context, artiﬁcial intelligence, and in particular ChatGPT,
+has been highlighted for its ability to improve a student’s academic performance and foster
+the development of critical thinking. By providing quick and accurate answers to speciﬁc
+questions, ChatGPT facilitates access to relevant and up-to-date information, which can
+be particularly beneﬁcial for students in their process of inquiry and understanding of
+different topics [22]. In addition, artiﬁcial intelligence adapts to each student’s individual
+learning pace, allowing them to progress at their own pace and receive personalised sup-
+port based on their needs. This not only improves student motivation and engagement but
+also frees up time for educators to focus on more interactive and creative tasks, such as
+one-to-one tutoring and constructive feedback [21]. However, it is also important to bear in
+mind some challenges and ethical considerations when incorporating artiﬁcial intelligence
+in the classroom. For example, it is essential to ensure the privacy and security of student
+data, as well as to assess the accuracy and reliability of the answers provided by AI to avoid
+the spread of erroneous or biased information [20].
+The last line is closely related to the impact of artiﬁcial intelligence on teaching and
+learning processes, including factors such as the socioeconomic, cultural, institutional
+and technological environment [19]. In summary, AI technologies such as ChatGPT can
+help educational institutions achieve intelligent management and allocation of learning
+resources, improve the utilisation and effectiveness of educational resources, greatly change
+the shape of education quality and efﬁciency, provide better learning services to students
+and help them to better adapt to the development needs of future society.
+6. Conclusions
+The systematic literature review has shown that scientiﬁc research on the use of the
+ChatGPT tool in education is still scarce, as it turns out to be a novel tool launched in late
+2022. The use of ChatGPT in education has emerged as an innovative and promising tool
+that seeks to enhance the learning experience and foster greater interaction between stu-
+dents and teachers. As its possibilities are investigated and understood, the use of ChatGPT
+in education reveals a signiﬁcant potential to transform teaching and learning methods.
+In this sense, this artiﬁcial intelligence tool proves to be a motivating tool for students, by
+having to apply Information and Communication Technologies, and signiﬁcantly improves
+students’ academic performances, if it is used appropriately. However, it is essential to bear
+in mind that its use presents a series of challenges, which teachers must be aware of to avoid
+incorrect use. Along these lines, proper training of teachers and students can be effective to
+know how to use the application and avoid its misuse in the academic environment. With
+ethical implementation and proper supervision, this technology can open new educational
+possibilities and enrich the teaching and learning process.
+In this sense, although artiﬁcial intelligence is not something new, the emergence
+of ChatGPT has generated debate in education, questioning aspects such as traditional
+tasks, methodology and evaluation. Therefore, it is important to continue researching the
+potential of these tools and their impact, considering didactic and scientiﬁc aspects, and
+promoting an ethical and responsible integration of artiﬁcial intelligence in education.
+The main limitation of this review lies in the limited amount of literature included
+in the analysis. This is because, so far, not enough studies that address the speciﬁc use of
+ChatGPT in higher education institutions have been conducted. Educational technology,
+such as ChatGPT, is a constantly developing and evolving ﬁeld, and its implementation
+in higher education may be relatively new and therefore less researched compared to
+other levels of education. Despite this limitation, the review provides an overview of
+how ChatGPT has inﬂuenced the university level. As more research is conducted and
+knowledge about the use of ChatGPT in higher education expands, it will be useful to
+expand the study to gain a more complete understanding of its impact and beneﬁts at
+this speciﬁc educational level. In future studies, other databases such as ERIC or Dialnet,
+Computers 2023, 12, 153
+12 of 13
+among others, could be included to ensure an exhaustive and comprehensive search for
+relevant studies.
+Author Contributions: Conceptualization, M.M.-R., J.F.-C., J.M.F.-B. and E.L.-M.; data curation,
+M.M.-R., J.F.-C., J.M.F.-B. and E.L.-M.; formal analysis, M.M.-R., J.F.-C., J.M.F.-B. and E.L.-M.; investi-
+gation, M.M.-R., J.F.-C., J.M.F.-B. and E.L.-M.; methodology, M.M.-R., J.F.-C., J.M.F.-B. and E.L.-M.;
+supervision, M.M.-R., J.F.-C., J.M.F.-B. and E.L.-M.; writing—original draft, M.M.-R., J.F.-C., J.M.F.-B.
+and E.L.-M.; writing—review and editing, M.M.-R., J.F.-C., J.M.F.-B. and E.L.-M. All authors have
+read and agreed to the published version of the manuscript.
+Funding: This research is part of the R&D&I project, PID2019-108230RB-I00, funded by MCIN/AEI/
+10.13039/501100011033.
+Data Availability Statement: Not applicable.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+References
+1.
+Brazdil, P.; Jorge, A. Progress in Artiﬁcial Intelligence: Knowledge Extraction, Multi-Agent Systems, Logic Programming, and Constraint
+Solving; Springer: Berlin/Heidelberg, Germany, 2021. [CrossRef]
+2.
+Jara, I.; Ochoa, J.; Usos Y Efectos de la Inteligencia Artiﬁcial en la Educación. Sector Social División Educación. 2021. Available
+online: https://ie42003cgalbarracin.edu.pe/biblioteca/LIBR-NIV331012022134652.pdf (accessed on 3 June 2023).
+3.
+García-Peña, V.R.; Mora-Marcillo, A.B.; Ávila-Ramírez, J.A. La inteligencia artiﬁcial en la educación. Domino De Las Cienc. 2020, 6,
+648–666.
+4.
+Incio Flores, F.A.; Capuñay Sánchez, D.L.; Estela Urbina, R.O.; Valles Coral, M.A.; Vergara Medrano, S.E.; Elera Gonzáles, D.G.
+Inteligencia artiﬁcial en educación: Una revisión de la literatura en revistas cientíﬁcas internacionales. Apunt. Univ. 2021, 12,
+353–372. [CrossRef]
+5.
+Neuman, M.; Rauschenberger, M.; Schön, E.M. “We Need To Talk About ChatGPT”: The Future of AI and Higher Education.
+Hochschule Hannover 2022, 1, 1–4. [CrossRef]
+6.
+García Sánchez, O.V. Uso y Percepción de ChatGPT en la Educación Superior. Rev. De Investig. En Tecnol. De La Inf. 2023, 11,
+98–107. [CrossRef]
+7.
+Osorio, J.A.C. Explorando el potencial de ChatGPT en la escritura cientíﬁca: Ventajas, desafíos y precauciones. Sci. Et Tech. 2023,
+28, 3–5.
+8.
+Qadir, J. Engineering Education in the Era of ChatGPT: Promises and Pitfalls of Generative AI for Education. TechRxiv 2022, 1,
+1–10. [CrossRef]
+9.
+Wang, T.; Lund, B.D.; Marengo, A.; Pagano, A.; Mannuru, N.R.; Teel, Z.A.; Pange, J. Exploring the Potential Impact of Artiﬁcial
+Intelligence (AI) on International Students in Higher Education: Generative AI, Chatbots, Analytics, and International Student
+Success. Appl. Sci. 2023, 13, 6716. [CrossRef]
+10.
+García-Peñalvo, F.J. La percepción de la Inteligencia Artiﬁcial en contextos educativos tras el lanzamiento de ChatGPT: Disrupción
+o pánico. Educ. Knowl. Soc. (EKS) 2023, 24, e31279. [CrossRef]
+11.
+Page, M.J.; McKenzie, J.E.; Bossuyt, P.M.; Boutron, I.; Hoffmann, T.C.; Mulrow, C.D.; Shamseer, L.; Tetzlaff, J.M.; Akl, E.A.;
+Brennan, S.E.; et al. The PRISMA 2020 statement: An updated guideline for reporting systematic reviews. J. Clin. Epidemiol. 2021,
+134, 178–189. [CrossRef]
+12.
+Aromataris, E.; Munn, Z. JBI Manual for Evidence Synthesis; Joanna Briggs Institute: Adelaide, Australia, 2020.
+13.
+Fuchs, K. Exploring the opportunities and challenges of NLP models in higher education: Is Chat GPT a blessing or a curse?
+Front. Educ. 2023, 8, 1166682. [CrossRef]
+14.
+Sorensen, A.; Seary, A.; Riopelle, K. Alzheimer’s Disease Research: A COIN Study Using Co-authorship Network Analytics.
+Procedia Soc. Behav. Sci. 2010, 4, 6582–6586. [CrossRef]
+15.
+Nandiyanto, A.B.D.; Al Husaeni, D.F. A bibliometric analysis of materials research in Indonesian journal using VOSviewer. J. Eng.
+Res. 2021, 9, 1–16. [CrossRef]
+16.
+Mulyawati, I.B.; Ramadhan, D.F. Bibliometric and visualized analysis of scientiﬁc publications on geotechnics ﬁelds. ASEAN J.
+Sci. Eng. Educ. 2021, 1, 37–46. [CrossRef]
+17.
+Olite, F.M.D.; Suárez, I.D.R.M.; Ledo, M.J.V. Chat GPT: Origen, evolución, retos e impactos en la educación. Educ. Médica Super.
+2023, 37, e3876.
+18.
+Halaweh, M. ChatGPT in education: Strategies for responsible implementation. Contemp. Educ. Technol. 2023, 15, 421. [CrossRef]
+19.
+Rahman, M.M.; Watanobe, Y. ChatGPT for education and research: Opportunities, threats, and strategies. Appl. Sci. 2023, 13, 5783.
+[CrossRef]
+20.
+Ausat, A.; Massang, B.; Efendi, M.; Noﬁrman, N.; Riady, Y. Can Chat GPT Replace the Role of the Teacher in the Classroom: A
+Fundamental Analysis. J. Educ. 2023, 5, 16100–16106. [CrossRef]
+Computers 2023, 12, 153
+13 of 13
+21.
+Castillo, A.G.R.; Silva, G.J.S.; Arocutipa, J.P.F.; Berríos, H.Q.; Rodríguez, M.A.M.; Reyes, G.Y.; López, H.R.P.; Reves, R.M.V.; Rivera,
+H.V.H.; González, J.L.A. Effect of Chat GPT on the digitized learning process of university students. J. Namib. Studies. 2023, 33,
+1–15.
+22.
+Javaid, M.; Haleem, A.; Singh, R.P.; Kahn, S.; Khan, I.H. Unlocking the opportunities through ChatGPT Tool towards ameliorating
+the education system. BenchCouncil Trans. Benchmarks Stand. Eval. 2023, 3, 100–115. [CrossRef]
+23.
+Firat, M. What ChatGPT means for universities: Perceptions of scholars and students. J. Appl. Learn. Teach. 2023, 6, 57–63.
+24.
+Fauzi, F.; Tuhuteru, L.; Sampe, F.; Ausat, A.; Hatta, H. Analysing the Role of ChatGPT in Improving Student Productivity in
+Higher Education. J. Educ. 2023, 5, 14886–14891. [CrossRef]
+25.
+Strzelecki, A. To use or not to use ChatGPT in higher education? A study of students’ acceptance and use of technology. Interact.
+Learn. Environ. 2023, 1–14. [CrossRef]
+26.
+Alonso-Arévalo, J.; Quinde-Cordero, M. ChatGPT: La creación automática de textos académicos con Inteligencia artiﬁcial y su
+impacto en la comunicación académica y educativa. Desiderata 2023, 6, 136–142.
+27.
+Gilson, A.; Safranek, C.W.; Huang, T.; Socrates, V.; Chi, L.; Taylor, R.A.; Chartash, D. How does CHATGPT Perform on the United
+States Medical Licensing Examination? The Implications of Large Language Models for Medical Education and Knowledge Assessment.
+JMIR Med. Educ. 2023, 9, e45312.
+28.
+Megahed, F.M.; Chen, Y.J.; Ferris, J.A.; Knoth, S.; Jones-Farmer, L.A. How Generative AI Models such as ChatGPT Can be
+(Mis)Used in SPC Practice, Education, and Research? An Exploratory Study. arXiv 2023, arXiv:2302.10916. [CrossRef]
+29.
+Rudolph, J.; Tan, S.; Shannon, T. ChatGPT: Bullshit spewer or the end of traditional assessments in higher education? J. Appl.
+Learn. Teach. 2023, 6, 263–343.
+30.
+Topsakal, O.; Topsakal, E. Framework for a Foreign Language Teaching Software for Children Utilizing AR, Voicebots and
+ChatGPT (Large Language Models). J. Cogn. Syst. 2022, 7, 33–38. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

@@ -1,0 +1,3 @@
+- ferred application to open the DOCX/PDF files
+- Command usage error: `python paper_revision.py --mode mega` - invalid choice 'mega' (valid options are 'training', 'finetuning', 'final')
+- User ran `python paper_revision.py --mode finetuning`

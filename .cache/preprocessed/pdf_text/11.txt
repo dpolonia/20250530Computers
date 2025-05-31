@@ -1,0 +1,1235 @@
+Citation: Taherdoost, H.;
+Madanchian, M. Artiﬁcial
+Intelligence and Knowledge
+Management: Impacts, Beneﬁts, and
+Implementation. Computers 2023, 12,
+72. https://doi.org/10.3390/
+computers12040072
+Academic Editors: Phivos Mylonas,
+Katia Lida Kermanidis and
+Manolis Maragoudakis
+Received: 17 January 2023
+Revised: 30 March 2023
+Accepted: 30 March 2023
+Published: 31 March 2023
+Copyright:
+© 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed
+under
+the
+terms
+and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+computers
+Review
+Artiﬁcial Intelligence and Knowledge Management: Impacts,
+Beneﬁts, and Implementation
+Hamed Taherdoost 1,*
+and Mitra Madanchian 1,2
+1
+Department of Arts, Communications and Social Sciences, University Canada West,
+Vancouver, BC V6Z 0E5, Canada
+2
+Research and Development Department, Hamta Business Corporation, Vancouver, BC V6E 1C9, Canada
+*
+Correspondence: hamed.taherdoost@gmail.com or hamed@hamta.org; Tel.: +1-236-889-5359
+Abstract: The process of generating, disseminating, using, and managing an organization’s informa-
+tion and knowledge is known as knowledge management (KM). Conventional KM has undergone
+modiﬁcations throughout the years, but documentation has always been its foundation. However,
+the signiﬁcant move to remote and hybrid working has highlighted the shortcomings in current
+procedures. These gaps will be ﬁlled by artiﬁcial intelligence (AI), which will also alter how KM is
+transformed and knowledge is handled. This article analyzes studies from 2012 to 2022 that examined
+AI and KM, with a particular emphasis on how AI may support businesses in their attempts to suc-
+cessfully manage knowledge and information. This critical review examines the current approaches
+in light of the literature that is currently accessible on AI and KM, focusing on articles that address
+practical applications and the research background. Furthermore, this review provides insight into
+potential future study directions and improvements by presenting a critical evaluation.
+Keywords: artiﬁcial intelligence; knowledge management; knowledge-based system; knowledge
+acquisition; machine learning
+1. Introduction
+Through the emergence of digital documents, which are attributed to the development
+of knowledge management (KM) systems, the 20th century saw a major revolution in the
+administration of information [1,2]. Economic trends in the twenty-ﬁrst century emphasize
+the value that KM can provide to businesses. The importance of knowledge and information
+for economic prosperity has been acknowledged around the globe [3].
+Knowledge management is a novel method for locating and arranging specialized
+knowledge for efﬁcient retrieval and re-use [4]. By managing knowledge both internally
+and externally, with diverse stakeholders, the intention behind KM is to provide value
+to companies. Organizations understand the value of knowledge and how to transition
+from individual to corporate knowledge to ensure their companies thrive sustainably [5].
+Information technology, organizational behavior, and human-resource management are
+just a few of the principles that are combined in KM. Modern businesses need KM because
+it fosters institutional learning, growth, innovation, and success [6]. Knowledge-based
+businesses in the market have proven to be more resilient and competitive [7].
+Artiﬁcial intelligence (AI) has become a cornerstone of KM in the twenty-ﬁrst century
+because it has advanced information acquisition, development, and sharing, as well as
+its effective application inside businesses [8,9]. Numerous studies were carried out to
+investigate the most recent advancements in KM systems, methods, and best practices, as
+well as their effects on businesses [9–11]. Furthermore, KM techniques have shown their
+value in the adoption of instructional technology [12,13]. Various methods, including deep
+learning, neural networks, and supervised machine learning, are used by AI technologies
+to replicate human intelligence. The most efﬁcient deep-learning algorithms frequently
+Computers 2023, 12, 72. https://doi.org/10.3390/computers12040072
+https://www.mdpi.com/journal/computers
+Computers 2023, 12, 72
+2 of 18
+use a supervised approach, in which enormous amounts of labeled data are used to train
+the strengths of connections between nodes in massive, layered computational networks,
+allowing patterns in training data to be employed to produce accurate predictions on future
+unseen data [14].
+It is crucial at this point to explore how the relationship between AI and KM can
+be used to harness AI more effectively as we move toward a future driven by data and
+insight. Before determining the link between KM and AI, it is essential to understand
+how organizations apply knowledge [15]. Organizations have a variety of responsibilities,
+the meeting and competitiveness of which depend on employees’ level of expertise in
+carrying out crucial duties and their standing in the business [16]. Many KM practitioners
+and theorists neglect AI as one of the crucial building blocks in the growth, improvement,
+progression, and expansion of KM [17]. As a ﬁeld of study, AI was established before KM,
+has been based and balanced in the computer ﬁeld for decades, and is widely deployed
+across many ﬁelds [18].
+AI and machine learning, including the study of organizational and industrial net-
+works, are proven to be indispensable commercial tools [19,20]. Knowledge management
+appears to have advanced during the twenty-ﬁrst century [21]. Furthermore, AI and
+blockchain have revolutionized how information is gathered, created, shared, and utilized
+efﬁciently inside enterprises [22,23]. The ability to run centralized big-data-processing
+platforms is essential for emerging AI applications, since they manage huge volumes of
+data streams. The applications offer customized knowledge patterns for certain sets of
+systems, devices, applications, and people. Centralized KM and knowledge discovery
+support the provision of system- and application-wide intelligence [24]. The ability of AI
+to identify contexts, ideas, and meaning are emphasized, along with the emergence of
+intriguing new cooperation routes between knowledge machines and workers.
+This study attempts to integrate the literature on AI with that on KM and focuses
+primarily on establishing the degree to which AI may generate innovations for effective
+information and KM. There is an urgent need for academics to offer an overview of the
+AI-based methodologies that are currently in use in order to comprehend the complexity
+of this rapidly developing study ﬁeld. This study addresses these urgent concerns by
+describing the following conditions:
+I.
+The present state of the integration of AI and KM
+II.
+Developments in different applications of AI and KM
+III.
+Future research directions
+This critical review examines the present state of knowledge in light of the available
+literature on AI and KM, with an emphasis on papers that address practical applications
+and the background of the study. This review conducts a critical examination to give
+insights into prospective future research paths and improvements.
+2. Background of the Study
+Knowledge workers need to be connected with appropriate individuals or resources
+for knowledge at appropriate times to enable improved decision-making. There may need
+to be new divisions of labor between humans and intelligent machines that are different
+from those used previously in organizations due to the emergence of AI’s capabilities and
+how they might be applied to achieve these objectives. New human and machine design
+mindsets, as well as new skill sets and competencies, are required for these new jobs. To
+be able to beneﬁt from their artiﬁcial partners in KM while avoiding such drawbacks of
+automation as cognitive algorithmic aversion or complacency, humans need to cultivate
+perspectives, skills, and work habits. The unique possibilities of AI in KM are only lever-
+aged and realized via an efﬁcient symbiotic collaboration between intelligent systems and
+knowledge workers, which actions by companies can help to realize.
+Many see AI as the next major source of economic value, as a key technology at
+the forefront of a new technological revolution and industrial change. Its fast expansion
+presents enterprises with several possibilities inherent in and obstacles to the acquisition of
+Computers 2023, 12, 72
+3 of 18
+important AI technology [25]. The current tendency in the development of AI technology
+toward the improvement of entrepreneurs’ judgment and decision-making skills is a potent
+instrument for promoting societal growth and advancement. Consequently, AI technology
+is gaining in importance [26]. The following sections present the background of KM and AI.
+2.1. Knowledge Management (KM)
+For more than 30 years, KM has been a crucial ﬁeld that has explained how infor-
+mation is produced, developed, maintained, and utilized within organization or nations
+and encourages learning from the past and innovation [27]. As brieﬂy mentioned earlier,
+KM is now one of the essential elements ﬁn leveraging competitive advantage to achieve
+organizational success. It has long attracted interest and research indicates that it is an
+academic discipline, but it can be developed at the organizational level, where it beneﬁts
+employees and organizations. Knowledge management is an important component, but
+an organizational theory has not yet been sufﬁciently established to explain its relevance,
+nor has it been described it in a way that would capture the attention of companies. Orga-
+nizations obtain a ﬁrmer grasp of their businesses and practices through the knowledge
+they gain from their assets [28]. A business may beneﬁt from gathering information from
+its assets by comparing its results, which can help it to navigate rapidly changing industry
+environments. Similar to how corporations acquire information, people who belong to
+organizations may develop their talents and provide greater value to these organizations by
+having a thorough grasp of their organization’s knowledge. Although this interpretation is
+straightforward, pre-existing knowledge poses a hazard, since it makes it more difﬁcult for
+people and organizations to adjust to change, since they are unable to acquire new infor-
+mation or adopt new practices [29]. According to the study by Suresh et al. [30], learning
+these new procedures is necessary to enable the new processes of collecting and utilizing
+pre-existing information at both the organizational and individual levels. However, this
+can only be accomplished by changing the organizational culture and implementing these
+new KM techniques.
+The correct management of the opportunities presented by AI and the assignment of
+supporting solutions to previously taken actions raise the organizational practice of KM to
+a higher real level. This implies that solutions assisted by AI may be given to each stage
+of a KM process (KMP), enabling stakeholders to take the appropriate action or complete
+tasks that arise during the real phase more quickly, effectively, and successfully [31].
+2.2. Artiﬁcial Intelligence (AI)
+Along with being a long-standing academic ﬁeld, AI is one of the most frequently used
+phrases across a variety of economic sectors [32,33]. At the end of the 1980s and during
+the early 1990s, AI developed into a multidisciplinary ﬁeld of study that includes virtual
+reality, neural networks, expert systems, voice recognition, natural language processing,
+and robots [34].
+Haenlein and Kaplan [32] describe AI as a system’s capacity to successfully adapt
+based on certain inputs and the impact of new knowledge, in order to carry out speciﬁc tasks
+and activities. Additionally, in the same article, the researchers proposed two classiﬁcation
+schemes for AI, one of which is based on the stages of development of AI, while the
+other is based on the intelligence style shown by an AI system. Based on evolutionary
+phases, an AI system’s intelligence may also be relational, emotive, or logical. Accordingly,
+AI systems are categorized as analytical, sentient, or human-looking, depending on the
+kind of intelligence they possess. Kumar et al. [35] deﬁned AI as a platform for limitless
+potential and knowledge that might be constrained by tailored approaches. In addition,
+Jarrahi [36] deﬁned the term as a set of instruments, strategies, and practices used inside an
+organizational context in favor of ﬁrms and their stakeholders.
+Artiﬁcial intelligence gives individuals and groups the power and possibility to in-
+crease productivity and creativity at all organizational levels and makes it feasible to track
+results. It makes it easier for businesses to accomplish their objectives in several areas and
+Computers 2023, 12, 72
+4 of 18
+boosts their proﬁtability, giving them room to become more competitive, decrease expenses,
+tighten security, and continuously offer data [37]. These changes improve the approaches
+that may be used in the stages of the KMP. If successfully implemented, the adoption of AI
+technology in KM provides enormous advantages (Figure 1).
+Advantage of AI for KM
+Easier knowledge delivery
+Enhancing knowledge 
+sharing, usage, and capturing
+Removing linguistic 
+barriers
+Enhancing flexibility of 
+knowledge representation
+Enhancing intellectual 
+capital
+Knowledge based on personal 
+preferences
+A real-time knowledge 
+system
+Easy problem solving
+Figure 1. AI Advantages of AI for KM.
+3. Research Methodology
+This critical analysis aims to assess the present level of AI in KM. For this investigation,
+all current relevant literature was studied with the carefully. The review approach makes
+considerable use of structured objectives, the Scopus database, and information-gathering
+and -analysis techniques. To give a comprehensive and brief assessment of the study
+subjects, a subset of the essential reporting components for critical reviews was selected.
+3.1. Selection
+The whole research process relied heavily on data retrieved from Scopus. All possible
+sources were scoured to ensure the accuracy of the information presented here. However,
+not all outstanding research works were included in the search parameters. There have
+been 120 analyses of Scopus results thus far (10 January 2023). In total, 24 were deemed
+signiﬁcant (Figure 2). Papers were selected for the evaluation by developing inclusion and
+exclusion criteria and by identifying essential terms (see Table 1 for more detail).
+Figure 2. Research-paper selection process (PRISMA method).
+Computers 2023, 12, 72
+5 of 18
+Table 1. Search strategy.
+Key Terminology
+Inclusion Criteria
+Exclusion Criteria
+“Artiﬁcial Intelligence” AND
+“Knowledge Management”
+The combination of AI and KM
+Chapters of books, dissertations,
+conference papers, works based on
+interviews, and reviews.
+“AI” AND “Knowledge Management”
+The study may have been published at any
+time between 2012 and 2022.
+Articles in press
+“Artiﬁcial Intelligence” AND “KM”
+The study’s coverage is restricted to
+the journal.
+Non-English articles
+“AI” AND “KM”
+“Artiﬁcial Intelligence” AND “Knowledge
+based system”
+“AI” AND “Knowledge based system”
+3.2. Limitations
+Critical reviews seldom include a comprehensive examination of all relevant research.
+They are unable to assess the quality of the chosen studies, particularly qualitative studies
+that lack a design hierarchy [38]. Moreover, critical reviews frequently fail to describe the
+overall research strategy, the method used to select and exclude articles, the restrictions of
+the search strategy, the effectiveness of the search procedure, and the methodology of the
+analysis [39]. This database used for this review, Scopus, limited the review process.
+4. Results and Discussion
+4.1. Selection Results
+This critical evaluation includes 24 articles. The chosen papers are listed below, along
+with an explanation of the overall categorization ﬁndings.
+4.2. Present State
+Firms are no longer viewed as industries and are instead perceived from a knowledge
+standpoint. Knowledge is employed as a resource in the current corporate environment [40].
+This is particularly true given that successful businesses are those that recognize, assess,
+and generate knowledge, as well as turning it into assets. To ensure more value is generated
+to meet the needs of organizations and people, the knowledge life cycle, which begins
+with progress and data and develops into information, followed by knowledge, need
+to be shortened. Artiﬁcial intelligence capabilities are now added to information and
+communications technology to ensure that companies take full advantage of what these
+technologies have to offer.
+In the majority of modern businesses, AI tools and systems are utilized extensively.
+Mathematical logic, search heuristics, and pattern recognition are performed with these
+instruments. In recent years, KM has attracted a growing amount of interest from industries
+in which AI advancements are applicable [41]. Organizations can use intelligent agents
+from various AI-related technologies, such as genetic algorithms, intelligent agents, and
+neural networks, to perform tasks such as user proﬁling, semantic analysis of texts, text
+mining, and pattern matching.
+Artiﬁcial Intelligence technologies help enterprises to improve KM strategies. From
+an AI standpoint, knowledge representation requires the familiarization of organizational
+processes with this information [42]. This results in the automation of KM operations,
+enabling computer systems to extract information and draw conclusions from knowledge
+in a machine-interpretable format explored. The question of how much AI can contribute
+to KM has been explored extensively.
+This study presents a critical review obtained from the many papers released each
+year, including subject categories, keyword density, document format, and author nation
+distribution. Furthermore, this study concludes with an assessment of research publications
+on AI and KM in the stated applications that were published between 2012 and 2022.
+Computers 2023, 12, 72
+6 of 18
+Table 2 presents the number of articles created for each subject area from 2012 to 2022.
+Engineering (10 articles) and Computer Science were the major subjects (9 articles). With the
+growth that Computer Science has experienced since 2019, it is anticipated that it will even-
+tually match or surpass Engineering in terms of the number of papers, although engineering
+typically contains more papers. Furthermore, the increase in Business, Management, and
+Accounting indicates an expansion of the use of AI and KM in these ﬁelds.
+Table 2. The number of subject-speciﬁc articles published between 2012 and 2022.
+Field
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+Engineering
+-
+-
+1
+-
+-
+-
+-
+3
+1
+1
+4
+Computer Science
+-
+-
+-
+-
+-
+-
+-
+1
+-
+2
+6
+Business, Management, and Accounting
+-
+-
+-
+-
+-
+-
+-
+3
+3
+1
+3
+Mathematics
+-
+-
+-
+-
+-
+-
+-
+2
+-
+1
+2
+Physics and Astronomy
+-
+-
+-
+-
+-
+-
+-
+-
+2
+2
+3
+Chemical Engineering
+-
+-
+1
+-
+-
+-
+-
+-
+-
+-
+2
+Social Sciences
+-
+-
+-
+-
+-
+1
+-
+-
+-
+1
+1
+Materials Science
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+2
+Biochemistry, Genetics, and
+Molecular Biology
+-
+-
+1
+-
+-
+-
+-
+-
+-
+-
+-
+Decision Sciences
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+1
+Earth and Planetary Sciences
+-
+-
+-
+-
+-
+1
+-
+-
+-
+-
+-
+Economics, Econometrics, and Finance
+-
+-
+-
+-
+-
+-
+-
+-
+-
+1
+-
+Figure 3 shows the annual number of articles released from 2012 to 2022. The only
+documents accessible from 2012 to 2018 were the two in 2014 and the two in 2018. The
+following information demonstrates how publication dates have evolved throughout time:
+ﬁve articles (21%) were published in 2019, four articles (17%) in 2020, two articles (8.3%)
+in 2021, and eleven articles (46%) in 2022. It is noteworthy that in the ﬁeld of KM and
+AI research, particularly in 2022, a considerable surge occurred. The highest number of
+published studies in this ﬁeld occurred in 2022. In addition, there was a steady rise in
+the number of publications published on the role of AI in KM during the last three years,
+from 2012 to 2022. Over the years, adjustments were made to KM and the workplace. The
+importance of information technology in KM has grown over the past few years. As a
+system’s ability to use the knowledge acquired to achieve speciﬁc tasks and goals through
+ﬂexible adaptation, AI has made signiﬁcant scientiﬁc progress over the past ten years [43].
+0
+0
+1
+0
+0
+1
+0
+5
+4
+2
+11
+0
+2
+4
+6
+8
+10
+12
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+Quantity
+Year
+Figure 3. Annual publishing numbers, from 2012 until 2022.
+Computers 2023, 12, 72
+7 of 18
+Figure 4 illustrates the cloud words generated from the connection between the
+keywords of the publications chosen for the critical literature study. The review found
+that the phrases artiﬁcial intelligence, knowledge management, machine learning, and
+knowledge acquisition were the most frequently used. The rapid advancement of AI,
+especially in the application of machine learning in KM, can help organizations to optimize
+the KM systems needed by businesses [44]. Machine learning can help in the acquisition of
+complex data and the delivery of the critical solutions hidden within these assets [45].
+ 
+Figure 4. Key terms in articles (created by www.wordclouds.com, 10 January 2023).
+Figure 5 depicts the percentage of writers by nationality. China (ﬁve authors) and
+Belgium (four authors) were the two nations with the most authors. Demographics can be
+an important component in this area.
+Figure 5. The distribution of authors in each country.
+Table 3 presents the ten most frequently cited publications from 2012 to 2022. There
+is also a need for research to extend the capabilities of AI in the ﬁeld of KM. Artiﬁcial
+Intelligence and KM are similar areas, since they are both deeply tied to knowledge; the
+Computers 2023, 12, 72
+8 of 18
+distinction is in how—while AI provides computers with the capacity to learn, KM provides
+a platform through which to better comprehend information.
+Table 3. Articles with the most citations (2012–2022).
+Goal
+Year
+Cited
+Reference
+An analytical approach for integrating AI, customer relationship management, and
+KM to enhance business operations
+2020
+44
+[46]
+Putting the tacit dimension of AI and KM to the test
+2017
+32
+[18]
+A KM perspective on autonomous wireless systems using AI
+2019
+29
+[47]
+Material structure feature engineering for AI-based materials knowledge systems
+2020
+19
+[48]
+E-health AI implementation: A case study of epidemiological data management
+dashboard in Poland
+2014
+18
+[49]
+The contribution of KM to improving AI algorithms and systems
+2020
+12
+[50]
+A method using AI to aid in KM for the selection of innovation and
+creativity strategies.
+2020
+11
+[51]
+AI-employee cooperation and enterprise performance: integrating an organizational
+socialization framework, socio-technical systems, and knowledge-based perspective
+2022
+10
+[52]
+KM using AI for self-deployment of non-stationary wireless systems
+2019
+10
+[53]
+A knowledge-based AI system to aid in sales decision-making
+2019
+10
+[54]
+4.3. Developments in Different Applications
+Artiﬁcial Intelligence is a powerful tool that supports knowledge in all areas. This part-
+nership aids the KMP because AI is constantly improving with new technology. Knowledge
+is the key to both KM and AI. As a result, the efﬁciency that AI can provide to enterprises
+acts as a tool for accessibility for their requirements. Only via scientiﬁc theory, knowledge
+principles, and processes is it possible to comprehend the advantages and disadvantages of
+KM and AI. Understanding power relations is crucial to understanding how AI and KM in-
+teract, since individuals continuously debate their identities, rules, and futures while using
+AI and KM to further their own or other people’s oppressive or oppositional initiatives [55].
+There have been research studies on AI and KM, but few have been conducted on
+how the two might be combined to improve businesses, organizations, wireless systems,
+healthcare, tutorial, and innovations (Figure 6). The study by Alghanem et al. [50] illustrates
+the relationship between KM practices and AI systems from a higher perspective, offering
+various options for applying other KM practices to the same AI algorithm to mitigate
+implementation issues and increase adoption. The research’s key result was the signiﬁcant
+inﬂuence that certain KM activities, such as knowledge production and acquisition, had on
+various AI systems and algorithms, providing businesses with alternative implementation
+options. Additionally, the study reveals that the majority of studies concur that role-playing
+may improve AI algorithms and systems and that KM techniques have the same effect.
+The work by Sanzogni et al. [18] studies how AI can contribute to the KM discussion. To
+advance the knowledge discussion, it investigates the function of tacit knowledge and the
+theoretical boundaries of KM and AI. Expert knowledge can only be obtained by experience,
+since it combines collective tacit knowledge, somatic tacit knowledge, and relational tacit
+information (i.e., on-the-job learning). It is important to examine how people and AI-based
+technology interact while carrying out KM-related activities. This research expands upon
+previous works in the ﬁeld by providing a more comprehensive picture of how AI has been
+used to improve the quality of KM.
+Computers 2023, 12, 72
+9 of 18
+Figure 6. General applications of AI and KM in studied articles.
+The amount and appropriateness of the data obtained have a direct impact on the
+quality of the decisions made; thus, at this point, AI techniques may be of great assistance.
+They may be used, for example, by a company operating in a certain economic environment
+to specify the information required for attaining strategic objectives and to deliver it via the
+knowledge-production process. The conversion of enormous volumes of data into useful
+information that may be utilized proactively in decision-making is a difﬁcult task. Data
+gathering and analysis help managers to make logical strategic choices. Through synergies
+and information-processing skills, information-technology-supported KM facilitates the
+creation and use of operational efﬁciency and innovative capacities [56].
+4.3.1. Business and Organizational
+The literature currently in print describes the relevance of collaborative intelligence,
+which results from an efﬁcient collaboration between human employees and AI systems
+to produce outcomes that are important to organizations. On the elements impacting the
+AI–human relationship and its effect on company success, there is, nevertheless, a dearth of
+research ﬁndings. To close this knowledge gap, Chowdhury et al. [52] created and veriﬁed
+a unique theoretical model focusing on how knowledge sharing, trust, workers’ AI abilities,
+and job clarity relate to better business success. The model draws on the socio-technical
+systems (STS), knowledge-based view (KBV), and organizational socialization framework
+(OSF). With the aid of these discoveries, managers and the AI community will be able to
+establish collaborative intelligence capabilities inside their organizations.
+The aim of the article by Chatterjee et al. [46] is to pinpoint the key success factors
+(CSFs) for an AI-integrated customer-relationship-management system that would enhance
+KM in enterprises and boost operational efﬁciency. The suggested interpretive structural
+model serves as a thorough and efﬁcient roadmap for enhancing performance when us-
+ing AI-customer-relationship management to support KM environments. The ﬁndings
+indicate that senior-management backing is necessary for the effective implementation
+of AI-integrated customer-relationship-management systems to improve KM and, conse-
+quently, to enhance company processes. The goal of the paper by Baierle et al. [54] was
+to discuss the creation of a knowledge-based system that, with the help of rules, may
+assist the decision-making procedures of a company’s sales department. By using the
+knowledge-based system, the decision-making process may be made more reliable and
+ﬂexible, and it is also feasible to model probable future business scenarios. All of the
+study’s factors are signiﬁcant to the decision-making process in some way, and they need
+to be examined collectively to produce a trustworthy conclusion; otherwise, a poor choice
+may be made, which would harm how the implementation of the company’s plan. The
+major contribution of Baierle et al.’s case study is its revelation of how a knowledge-based
+system helped a ﬁrm in the south of Brazil’s sales sector to discover a suitable solution to a
+business issue. The goal of Bencsik’s [56] theoretical research was to create a framework
+that, beginning with the business model and using the synergy of KM and AI, outlines
+a way to predict the success of future innovations while ensuring the strategy’s viability
+through the use of appropriate managerial decisions. The study’s output is a model for
+anticipating successful innovation that, when used in the knowledge-creation stage of KM
+Computers 2023, 12, 72
+10 of 18
+with AI assistance, offers the foundation for making the best managerial choices to ensure
+the attainment of strategic objectives. The model’s actual implementation in business oper-
+ations encourages managerial foresight and judgments concerning innovative investments
+that have an impact on organizational performance.
+The goal of the study by Leoni et al. [57] is to provide and empirically test a con-
+ceptual model in which supply-chain resilience, KMPs, and AI are all taken into account
+simultaneously in terms of their reciprocal relationships and effects on manufacturing
+ﬁrms’ performance. This research shows that KMPs need to be carefully considered as a
+mediating mechanism for manufacturing enterprises interested in correctly using AI to
+improve their performance and resilience. The work by Alshadoodee et al. [58] demon-
+strates how KM-based administrative-decision-support systems may be improved using
+AI. The administration of a private college is used in the research as a variable on which
+the ﬁndings are dependent. Most methods for managing business activities that advance
+organization and administration delivery have been improved by technological advances.
+Businesses in this sector need to gradually move into the digitization of all industrial cycles,
+and business processes connected to administration; increasingly, the same can be said of
+crucial services in educational institutions. The knowledge required to form the basis of
+an efﬁcient and effective educational system still features signiﬁcant limitations due to the
+requirement for competent decision-making assistance utilizing KM for good governance
+and to enhance the reputation of particular institutions.
+4.3.2. General Innovation
+To increase the expansion of awareness of the digitalization of the construction sector,
+organizational structures and business establishments need to build creative and problem-
+solving procedures. The work by Botega and da Silva [51] aims to demonstrate a creative
+support system capable of handling this volume of data and offering insights to enhance
+the development of new products. The validation procedure conﬁrms the applicability
+of the strategy and suggests improvements for further advances. This knowledge-based
+system may be useful in teaching Design and Engineering students about crucial facets
+of creativity and the selection process for approaches, as well as in real-world-application
+situations and exchanging information on creative and innovative techniques. An AI-based
+KM fuzzy-assessment-algorithm-evaluation model was used in the research by Liu and
+Zhang [59] to assess the innovative KM of 16 universities. During the process of establishing
+the model, the network architecture, activation function, learning parameters, and neural
+network algorithm were determined. The model was trained and validated using learning-
+sample data. The ﬁndings of the assessment indicated that the suggested model for
+evaluating universities’ innovative knowledge, based on the fuzzy algorithm and the AI
+algorithm, is operable, scientiﬁc, and applicable. The results were in line with the year’s
+real assessment ﬁndings, which illustrates the fuzziness of university innovations in KM,
+according to fuzzy AI, which was used to evaluate the algorithm. The results demonstrate
+the viability of the evaluative approach. The study by Bokhari and Myeong [60] aims to
+use KM-based service-science theory and the diffusion-of-innovation theory to examine
+the quantitative link between smart-city performance, innovation, e-governance, and
+technology-oriented KM. The study revealed that the direct links are contextual because
+innovation mediates the relationship between e-service delivery and KM, and e-governance
+mediates the relationship between e-service delivery and innovation.
+Liu [61]’s work investigates the most signiﬁcant effects of AI on the management
+of knowledge innovation and the most inﬂuential variables in this process. The ﬁndings
+demonstrate that AI had a substantial effect on the dynamic components, capacity elements,
+environmental elements, and stock management of information ﬂow. Artiﬁcial Intelligence
+has endogenous effects on improvements in the ﬂow of knowledge and network diffusion.
+Artiﬁcial Intelligence technology fostered the construction of unique technical innovations
+and had a clear automatic-recognition function in new knowledge, which stimulated the
+principal internal transmission power of innovation in knowledge. Moreover, AI acti-
+Computers 2023, 12, 72
+11 of 18
+vated the energy level of original invention and progressive technological advancements,
+which were mostly derived from the innovation system’s profound ﬂowing knowledge.
+The deep-runoff-knowledge-transfer efﬁciency and retention rate were modiﬁed by the
+knowledge network. The penetration rate of AI inﬂuenced the intelligent industry’s scope
+for collaboration and the application of integrated knowledge. The goal of the study by
+Arias-Pérez and Cepeda-Cardona [62] is to examine the moderating impact of the tech-
+nological upheaval created by AI on the interaction between classic KM techniques of
+personalizing codiﬁcation (explicit knowledge) and tacit knowledge, as well as organiza-
+tional improvisation, which refers to a ﬁrm’s capacity to generate ideas and react to changes
+in the technological environment in real-time. Codiﬁcation and customization both have
+a considerably positive impact on improvisation; the effect of the former is stronger than
+that of the latter. The association between personalization and improvisation, however, is
+weaker when technological upheaval created by AI occurs, but the tie between codiﬁcation
+and improvisation is stronger.
+4.3.3. Tutorial
+Artiﬁcial Intelligence may boost the knowledge of employees through reskilling and
+upskilling, for example. Organizations may use this information to offer targeted devel-
+opment and training as AI systems become more aware of human talents and actions.
+The paper by Bilquise and Shaalan [63] examines the problems with the current advisory
+system from the viewpoint of KM and suggests an integrated AI-based framework to deal
+with primary advising duties. The study proposes three AI-based systems to improve
+the current advisory process: a rule-based expert system that recommends courses and
+generates study plans for the upcoming semester; an early machine-learning-based system
+for the detection of students at risk of failing a course; and conversational AI chatbots to
+offer students individualized digital support. All three systems work together to provide
+advisors and students with individualized help and direction using the information in
+the current information system. The tutorial by Kalidindi [48] covers the basic ideas that
+support the newly developed AI-based materials knowledge system (AI–MKS) architecture
+methodically. To capture the process–structure–property linkages across a hierarchy of
+material structure/length scales, these approaches focus on feature-engineering the internal
+structure of heterogeneous materials to generate low-dimension representations, which
+may be combined with machine-learning models to construct low-computational-cost
+surrogate models. This framework, known as materials knowledge systems (MKS), suc-
+cessfully merges current AI/machine-learning toolsets with the current experimental and
+physics-based simulation toolsets utilized by domain experts in the materials business.
+The tutorial’s main objective is to lay the groundwork for domain experts to comprehend
+and seize the opportunities that will result from the synergistic integration of AI/machine-
+learning technologies into ongoing efforts to create new materials, while also outlining a
+clear course of action for achieving this objective.
+Through the mediating impact of the learning environment in the Saudi Arabian
+service industry, Baslom and Tong [64]’s research sought to investigate the empirical link
+between awareness of AI and the strategic management of organizational knowledge. The
+data from the targeted respondents were gathered using both questionnaire and interview
+methodologies, and a structured questionnaire was produced for better comprehension.
+The results of the factor analysis show that all the indicators of the learning environment,
+strategic KM, and awareness of AI had excellent factor loadings. The results from a struc-
+tural equation model of the strategic management of information and awareness of AI show
+that knowledge distribution, knowledge acquisition, and knowledge responsiveness all
+signiﬁcantly and favorably inﬂuence AI awareness. The association between AI and knowl-
+edge acquisition, as well as the relationship between information dissemination and AI,
+are both considerably mediated by the learning climate (LC), according to research on the
+mediating inﬂuence of the LC. However, the LC’s role as a mediator between knowledge re-
+sponsiveness and AI is minimal. Yang et al. [65] suggested an intelligent-knowledge-based
+Computers 2023, 12, 72
+12 of 18
+recommender system (IKRS) for smart education utilizing AI. The suggestions were created
+via the evolutionary algorithm and the K-nearest neighbor algorithm (KNN) by applying
+the optimal weights to attribute vectors that reﬂect the learner’s viewpoints. The experi-
+mental results showed that the suggested IKRS model improves learning quality, student
+engagement levels, and student–teacher interactions, and predicts students’ learning styles
+when compared to other existing methodologies. Based on their ﬁndings, Sun and Gu [66]
+conclude that a knowledge graph for AI-assisted smart education has the potential to bring
+together the subject-matter expertise of discipline experts and teaching experience, enhance
+the machine’s ability to communicate with humans, and provide knowledge-driven and
+data-driven information-processing techniques.
+4.3.4. Wireless Systems
+Artiﬁcial Intelligence may be used to improve a wide range of wireless-technology
+capabilities. Gacanin [47] provides a vision for knowledge-driven wireless operations
+using AI techniques, including active learning, KM, reasoning, and sense. The purpose of
+combining KM with active learning, reasoning, and sense is to give readers inspiration,
+as well as a huge general data-independent AI approach for autonomous agents in the
+context of real-time self-organization. In another study, Gacanin et al. [53] provide a brand-
+new idea for a KM framework to allow self-learning and self-optimization for real-time
+wireless-system operation. An AI-based self-deployment framework was tested in several
+indoor situations, including residential and business settings with dense deployments
+of nearby access points that caused interference and contention, using the testbed and
+standard compliance simulator, ns-3. The agent gained sufﬁcient information from previous
+activities, enhancing the caliber of judgments made in the future. The agent was given
+domain knowledge to use as a guide while discovering and taking advantage of a range of
+potential behaviors in the environment. To deal with the non-deterministic polynomial-
+time hardness problem of combining channel and location optimization in a wireless
+system, the agent ensures that learning is low-cost and creates a network setup that is
+close to optimal. For non-stationary wireless extenders, Gacanin et al. [67] provide a self-
+deployment technique in which both back-haul and front-haul connections are optimized.
+Intelligent Channel Assignment and Location Optimization (ICALO) is a self-optimization
+approach for wireless extenders in wireless-mesh networks that use a learning framework
+powered by AI. The ICALO method optimizes the operating channels and locations of
+extenders by achieving a balance between their back-haul and front-haul performance while
+taking into account the inﬂuence of uncoordinated adjacent networks, learning cost, and
+network dynamics. Gacanin et al.’s ﬁndings demonstrate considerable throughput increases
+through a variety of different channel-assignment techniques, as well as a considerably
+quicker convergence to peak performance, with fewer actions than unguided reinforcement
+learning. The authors offer a case-based reasoning framework for AI that allows self-
+deployment with environment learning via sensing and perception. By balancing the
+exploration and exploitation of the search space, problem-speciﬁc optimization and semi-
+supervised learning generate new actions or extender positions.
+4.3.5. Healthcare
+Knowledge management is essential to the healthcare industry because it fosters
+improved practitioner cooperation and enhances patient outcomes. To reduce the strain on
+healthcare workers and, eventually, save them money, AI can automate certain operations.
+A healthcare KM system is presented by Phan et al. [68] to enable the systematic generation
+of knowledge on varied data in hospitals. The outcomes of their research show that the
+system ensures the knowledge-generation process, allowing knowledge exploitation and
+exploration to improve healthcare-decision making. The knowledge system was used for
+the identiﬁcation and categorization of cerebral bleeding and high blood pressure in text and
+CT/MRI image formats, respectively, using hospital medical data. It may assist physicians
+in correctly diagnosing ailments so they can provide effective treatment plans. The purpose
+Computers 2023, 12, 72
+13 of 18
+of Ziuzianski et al. [49]’s study was to outline the dashboard implementation technique
+in e-health KM and to illustrate the current status of e-health AI systems. Performance
+dashboards link data sources and show data to enable quicker and more precise decision-
+making. According to their dashboard project using epidemiological data in Poland,
+Ziuzanski et al. described the various epidemiological data sources and presented a
+case study. As shown by the examples given by the authors, the use of these kinds of
+systems in e-health has considerably increased in recent years. Given the gaps in healthcare
+systems shown by the COVID-19 pandemic, Nasseef et al. [69] explored the consequences
+of using an AI-driven public-healthcare framework to enhance decision-making concerning
+the effect of government-to-government (G2G) interactions. The issue representation in
+Knowledge-based Exchange on AI-based COVID-19 Diagnosis (AI-D) demonstrates how
+the solver was cognitively active in processing knowledge about the target problem while
+using an AI-based COVID-19 task solution. The solver’s present comprehension of the
+issue’s substance is closely tied to this representation as a consequence of the external
+AI-based COVID-19 problem representations.
+Table 4 provides a summary of the papers reviewed in this study, listed from top to
+bottom by citation. This is based on the papers’ areas of focus, including general innova-
+tion, healthcare, businesses and organizations, wireless systems, and tutorials. Artiﬁcial
+Intelligence has already made a signiﬁcant contribution to the excellence and effectiveness
+of KM in terms of thinking and problem-solving methods, as well as through optimization
+systems, scheduling, decision-support systems, planning, intelligent tutors, modeling and
+processing, and knowledge acquisition, as evidenced by the aforementioned examples [70].
+Table 4. An overview of main applications in the articles included in this review.
+Citation
+General Innovation
+Healthcare
+Business and
+Organizational
+Wireless Systems
+Tutorial
+Source
+44
+✓
+[46]
+32
+✓
+[18]
+29
+✓
+[47]
+19
+✓
+[48]
+18
+✓
+[49]
+12
+✓
+[50]
+11
+✓
+[51]
+10
+✓
+[52]
+10
+✓
+[53]
+10
+✓
+[54]
+6
+✓
+[69]
+6
+✓
+[56]
+4
+✓
+[68]
+3
+✓
+[66]
+3
+✓
+[67]
+2
+✓
+[62]
+1
+✓
+[60]
+1
+✓
+[65]
+1
+✓
+[59]
+1
+✓
+[64]
+0
+✓
+[58]
+0
+✓
+[57]
+0
+✓
+[63]
+0
+✓
+[61]
+Computers 2023, 12, 72
+14 of 18
+4.4. Future Directions
+As mentioned in the literature, KMP is crucial to the success of ﬁrms, since it ulti-
+mately leads to a competitive advantage. The integration KM with machine learning and
+natural language algorithms connected to AI technology is quite beneﬁcial. This may
+facilitate corporate operations and save expenses. It is recommended that the public sector
+implement this technology to minimize the time required for assigning and recording
+customer-service data.
+The digital age is the fourth industrial revolution to affect the construction sector.
+Building-information modeling, virtual reality, unmanned aerial vehicles, and AI are
+employed and integrated into the industry’s daily responsibilities to facilitate more efﬁcient
+operations. Knowledge management originated during the early and mid-1990s, as a
+corporate technique to increase productivity and quality. After decades of study on KM, it
+was found that the research on AI and KM complement one another in terms of generating
+better procedures to facilitate better KM.
+The use of knowledge management as a business strategy offers ﬁrms a competitive
+advantage that enables them to outperform their rivals. The successful use of KM can
+enhance revenues, reduce resource exploitation, boost savings, and provide a noticeable
+increase in user acceptance [71]. Knowledge management supports the formation of an
+atmosphere conducive to education and learning, both of which are considered advantages
+to businesses, since workers are encouraged continue their education, acquire new skills,
+and assume leadership positions, and are often rewarded as a result. To become more
+competitive, organizations need to make fundamental adjustments to their strategic plans
+to better meet the needs of local markets. When implemented into a strategic conﬁguration,
+KM facilitates the comprehension of local environments by discriminating between diverse
+institutions, entity demands, and consumer preferences [72]. Today’s global economies are
+changing at an unprecedented rate. In this changing environment, whether on a local or
+global scale, ﬁrms want personnel who are precisely taught to detect critical information
+and expertise. Consequently, businesses may increase their production via the strategic
+use of KM [56]. The patterns found in the study by Cantu-Ortiz et al. [73] indicate that
+autonomous systems and other AI technologies, including robotics, computer vision, voice
+recognition, IoT, and other related ﬁelds, have little interaction with KM at present, but
+have high potential to fertilize KM, particularly in the period covering 2026–2030, after an
+incubation period spanning 2020–2025.
+The availability of authorized data is one of the major issues facing the present AI
+sector. Internet systems with decentralized, publicly accessible databases offer the ability
+to solve this problem. The analysis and processing of the data inherited by blockchain
+led to the creation of a priceless body of knowledge and the monetization of blockchain
+information for both enterprises and AI developers. Many opportunities exist to put this
+information to use in the real world to produce innovations in or revolutionize business
+models, including infrastructure for electric vehicles, intelligent autonomous supply chains,
+smart homes, smart cities, decentralized banking, and the exchange of commodities [74].
+Despite the lack of acceptance of AI and effective KM tools, the digitization of the
+construction sector has led to the use of AI tools. This demonstrates that AI will soon be
+utilized to support KM across sectors; nevertheless, there are greater applications for AI in
+the context of KM that may have a signiﬁcant effect and help organizations and enterprises.
+Recent research reveals that the great majority of AI expenditures have little to no effect [75].
+Decades of studies suggest that organizational changes need to accompany IT deployment
+for the latter to be effective. These are called organizational supplements [76].
+5. Conclusions
+Knowledge management is the process of creating, using, sharing, and managing an
+organization’s information and knowledge. Traditional KM has evolved over the years, but
+documentation has always served as its base. Nonetheless, the considerable shift toward
+remote and hybrid labor has shown deﬁciencies in present practices. These voids will
+Computers 2023, 12, 72
+15 of 18
+be ﬁlled by AI, which will also affect how KM is converted and operated. Although AI
+has been implemented by few businesses because of the initial investment required, ﬁrms
+hesitate because they are unaware of the full advantages of AI and how it may improve
+KM inside teams. To determine the difference between business processes without AI for
+KM and those that use AI to aid KM, it is necessary to conduct a study of the use of AI to
+beneﬁt KM across various industries. This article examines research published between
+2012 and 2022 on AI and KM, with a focus on how AI may assist enterprises in their efforts
+to properly manage knowledge and information. Based on the ﬁndings of this study, KM
+has been intensively studied over the years, but there is still much to learn and no single
+approach can be stated to be the best for managing knowledge inside organizations or
+companies. Recent years have seen a rise in industry interest in AI, as the construction
+industry has entered its fourth industrial revolution and becomes more digitized. Most
+organizations in the construction sector have been hesitant to implement AI because it
+requires a substantial initial investment, including the hiring of personnel who are capable
+of interacting with the machines. Moreover, these businesses have struggled to adopt
+efﬁcient KM systems. Accordingly, the number of works on AI and KM is increasing in
+various areas, such as engineering, computer science, business, management, etc.
+This study reviewed how the combination of AI and KM could enhance innovations,
+wireless networks, education, healthcare, businesses, and organizations. The results of
+numerous studies demonstrate that AI has already greatly improved the quality and
+effectiveness of KM with regard to knowledge acquisition, problem-solving strategies,
+knowledgeable tutors, optimal solution systems, organization, modeling, etc. However,
+there are more advanced potential applications for AI in the context of KM, which may
+have a signiﬁcant impact and aid groups and enterprises. Artiﬁcial Intelligence will
+soon be used as a support for KM across sectors. To improve the uses and efﬁcacy of
+these ﬁelds, more research is required in the future. Blockchain may be able to solve the
+aforementioned problems and enhance KM. As the organizations’ knowledge capacity
+improves, the problem of knowledge storage may be solved and the sharing of knowledge
+may be improved. This could serve as a beneﬁcial research topic for further study.
+Author Contributions: Conceptualization, H.T.; methodology, H.T.; validation, H.T.; formal analysis,
+H.T. and M.M.; resources, H.T. and M.M.; data curation, H.T.; writing—original draft preparation,
+M.M. and H.T.; writing—review and editing, M.M.; visualization, H.T. and M.M.; supervision, H.T.
+All authors have read and agreed to the published version of the manuscript.
+Funding: This research received no external funding.
+Data Availability Statement: Data sharing not applicable.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+References
+1.
+Salloum, S.A.; Alhamad, A.Q.M.; Al-Emran, M.; Monem, A.A.; Shaalan, K. Exploring Students’ Acceptance of E-Learning
+Through the Development of a Comprehensive Technology Acceptance Model. IEEE Access 2019, 7, 128445–128462. [CrossRef]
+2.
+Salloum, S.A.; Shaalan, K. Adoption of e-book for university students. In International Conference on Advanced Intelligent Systems
+and Informatics; Springer: Berlin/Heidelberg, Germany, 2018.
+3.
+Cooke, P.; Leydesdorff, L. Regional Development in the Knowledge-Based Economy: The Construction of Advantage. J. Technol.
+Transf. 2006, 31, 5–15. [CrossRef]
+4.
+Lee, C.; Lee, G.; Lin, H. The role of organizational capabilities in successful e-business implementation. Bus. Process. Manag. J.
+2007, 13, 677–693. [CrossRef]
+5.
+Liebowitz, J. Knowledge management and its link to artiﬁcial intelligence. Expert Syst. Appl. 2001, 20, 1–6. [CrossRef]
+6.
+Lee, J.-C.; Shiue, Y.-C.; Chen, C.-Y. Examining the impacts of organizational culture and top management support of knowledge
+sharing on the success of software process improvement. Comput. Hum. Behav. 2016, 54, 462–474. [CrossRef]
+7.
+Metaxiotis, K.; Ergazakis, K.; Samouilidis, E.; Psarras, J. Decision support through knowledge management: The role of the
+artiﬁcial intelligence. Inf. Manag. Comput. Secur. 2003, 11, 216–221. [CrossRef]
+8.
+Alhashmi, S.F.S.; Salloum, S.A.; Abdallah, S. Critical success factors for implementing artiﬁcial intelligence (AI) projects in
+Dubai Government United Arab Emirates (UAE) health sector: Applying the extended technology acceptance model (TAM). In
+International Conference on Advanced Intelligent Systems and Informatics; Springer: Berlin/Heidelberg, Germany, 2019.
+Computers 2023, 12, 72
+16 of 18
+9.
+Salloum, S.A.; Al-Emran, M.; Shaalan, K. The impact of knowledge sharing on information systems: A review. In International
+conference on knowledge Management in Organizations; Springer: Berlin/Heidelberg, Germany, 2018.
+10.
+Santoro, G.; Vrontis, D.; Thrassou, A.; Dezi, L. The Internet of Things: Building a knowledge management system for open
+innovation and knowledge management capacity. Technol. Forecast. Soc. Change 2018, 136, 347–354. [CrossRef]
+11.
+Al-Emran, M.; Mezhuyev, V.; Kamaludin, A.; Shaalan, K. The impact of knowledge management processes on information
+systems: A systematic review. Int. J. Inf. Manag. 2018, 43, 173–187. [CrossRef]
+12.
+Al-Emran, M.; Teo, T. Do knowledge acquisition and knowledge sharing really affect e-learning adoption? An empirical study.
+Educ. Inf. Technol. 2020, 25, 1983–1998. [CrossRef]
+13.
+Al-Emran, M.; Mezhuyev, V.; Kamaludin, A. An innovative approach of applying knowledge management in M-learning
+application development: A pilot study. Int. J. Inf. Commun. Technol. Educ. 2019, 15, 94–112. [CrossRef]
+14.
+Brynjolfsson, E.; Mitchell, T. What can machine learning do? Workforce implications. Science 2017, 358, 1530–1534. [CrossRef]
+[PubMed]
+15.
+Pereira, T.; Santos, H. The Matrix of Quality Dimensions of Knowledge Management: Knowledge Management Assessment
+Models Review. Knowl. Manag. Int. J. 2013, 12, 33–41. [CrossRef]
+16.
+Liebowitz, J. Knowledge management receptivity at a major pharmaceutical company. J. Knowl. Manag. 2000, 4, 252–258.
+[CrossRef]
+17.
+Wu, L.; Hu, Y.-P. Open innovation based knowledge management implementation: A mediating role of knowledge management
+design. J. Knowl. Manag. 2018, 8, 1736–1756. [CrossRef]
+18.
+Sanzogni, L.; Guzman, G.; Busch, P. Artiﬁcial intelligence and knowledge management: Questioning the tacit dimension.
+Prometheus 2017, 35, 37–56. [CrossRef]
+19.
+Chen, Z.; Liu, B. Lifelong machine learning. Synth. Lect. Artif. Intell. Mach. Learn. 2018, 12, 1–207.
+20.
+Taherdoost, H. Machine Learning Algorithms: Features and Applications. In Encyclopedia of Data Science and Machine Learning; IGI
+Global: Hershey, PA, USA, 2023; pp. 938–960.
+21.
+Lei, Z.; Wang, L. Construction of organisational system of enterprise knowledge management networking module based on
+artiﬁcial intelligence. Knowl. Manag. Res. Pract. 2020, 1–13. [CrossRef]
+22.
+Qi, G.; Zhu, Z. Blockchain and Artiﬁcial Intelligence Applications. J. Artif. Intell. Technol. 2021, 1, 83. [CrossRef]
+23.
+Taherdoost, H. Blockchain Technology and Artiﬁcial Intelligence Together: A Critical Review on Applications. Appl. Sci. 2022,
+12, 12948. [CrossRef]
+24.
+van Zelst, S.J.; van Dongen, B.F.; van der Aalst, W.M. Event stream-based process discovery using abstract representations. Knowl.
+Inf. Syst. 2018, 54, 407–435. [CrossRef]
+25.
+Bughin, J.; Hazan, E.; Ramaswamy, S.; Chui, M.; Allas, T.; Dahlstrom, P.; Henke, N.; Trench, M. Artiﬁcial Intelligence: The Next
+Digital Frontier? McKinsey Global Institute: New York, NY, USA, 2017.
+26.
+Townsend, D.M.; Hunt, R.A.; McMullen, J.S.; Sarasvathy, S.D. Uncertainty, knowledge problems, and entrepreneurial action.
+Acad. Manag. Ann. 2018, 12, 659–687. [CrossRef]
+27.
+Soto-Acosta, P.; Popa, S.; Palacios-Marqués, D. E-business, organizational innovation and ﬁrm performance in manufacturing
+SMEs: An empirical study in Spain. Technol. Econ. Dev. Econ. 2016, 22, 885–904. [CrossRef]
+28.
+Nickerson, J.A.; Zenger, T.R. A Knowledge-Based Theory of the Firm—The Problem-Solving Perspective. Organ. Sci. 2004,
+15, 617–632. [CrossRef]
+29.
+Tsang, E.W.; Zahra, S.A. Organizational unlearning. Hum. Relations 2008, 61, 1435–1462. [CrossRef]
+30.
+Suresh, S.; Olayinka, R.; Chinyo, E.; Renukappa, S. Impact of knowledge management on construction projects. Proc. Inst. Civ.
+Eng. Manag. Procure. Law 2016, 170, 27–43. [CrossRef]
+31.
+Alani, E.; Kamarudin, S.; Alrubaiee, L.; Tavakoli, R. A model of the relationship between strategic orientation and product
+innovation under the mediating effect of customer knowledge management. J. Int. Stud. 2019, 12, 232–242. [CrossRef]
+32.
+Haenlein, M.; Kaplan, A. A Brief History of Artiﬁcial Intelligence: On the Past, Present, and Future of Artiﬁcial Intelligence. Calif.
+Manag. Rev. 2019, 61, 5–14. [CrossRef]
+33.
+Taherdoost, H.; Madanchian, M. Artiﬁcial Intelligence and Sentiment Analysis: A Review in Competitive Research. Computers
+2023, 12, 37. [CrossRef]
+34.
+Ertel, W. Introduction to Artiﬁcial Intelligence; Springer: Berlin/Heidelberg, Germany, 2018.
+35.
+Kumar, V.; Rajan, B.; Venkatesan, R.; Lecinski, J. Understanding the Role of Artiﬁcial Intelligence in Personalized Engagement
+Marketing. Calif. Manag. Rev. 2019, 61, 135–155. [CrossRef]
+36.
+Jarrahi, M.H. Artiﬁcial intelligence and the future of work: Human-AI symbiosis in organizational decision making. Bus. Horizons
+2018, 61, 577–586. [CrossRef]
+37.
+Yano, K. How artiﬁcial intelligence will change HR. People Strategy 2017, 40, 42–47.
+38.
+Taherdoost, H. Towards Nuts and Bolts of Conducting Literature Review: A Typology of Literature Review. Electronics 2023,
+12, 800. [CrossRef]
+39.
+Snyder, H. Literature review as a research methodology: An overview and guidelines. J. Bus. Res. 2019, 104, 333–339. [CrossRef]
+40.
+Wang, H.; Xu, Z.; Fujita, H.; Liu, S. Towards felicitous decision making: An overview on challenges and trends of Big Data. Inf.
+Sci. 2016, 367–368, 747–765. [CrossRef]
+Computers 2023, 12, 72
+17 of 18
+41.
+Serenko, A.; Dumay, J. Citation classics published in knowledge management journals. Part I: Articles and their characteristics.
+J. Knowl. Manag. 2015, 19, 401–431. [CrossRef]
+42.
+Inkinen, H.T.; Kianto, A.; Vanhala, M. Knowledge management practices and innovation performance in Finland. Balt. J. Manag.
+2015, 10, 432–455. [CrossRef]
+43.
+Perifanis, N.-A.; Kitsios, F. Investigating the Inﬂuence of Artiﬁcial Intelligence on Business Value in the Digital Era of Strategy: A
+Literature Review. Information 2023, 14, 85. [CrossRef]
+44.
+Nyame, G.; Qin, Z.; Obour Agyekum, K.O.-B.; Sifah, E.B. An ECDSA Approach to Access Control in Knowledge Management
+Systems Using Blockchain. Information 2020, 11, 111. [CrossRef]
+45.
+Kolisetty, V.; Rajput, D. A Review on the Signiﬁcance of Machine Learning for Data Analysis in Big Data. Jordanian J. Comput. Inf.
+Technol. 2020, 6, 155–171. [CrossRef]
+46.
+Chatterjee, S.; Ghosh, S.K.; Chaudhuri, R. Knowledge management in improving business process: An interpretative framework
+for successful implementation of AI–CRM–KM system in organizations. Bus. Process. Manag. J. 2020, 26, 1261–1281. [CrossRef]
+47.
+Gacanin, H. Autonomous Wireless Systems with Artiﬁcial Intelligence: A Knowledge Management Perspective. IEEE Veh. Technol.
+Mag. 2019, 14, 51–59. [CrossRef]
+48.
+Kalidindi, S.R. Feature engineering of material structure for AI-based materials knowledge systems. J. Appl. Phys. 2020,
+128, 041103. [CrossRef]
+49.
+Ziuzianski, P.; Furmankiewicz, M.; Soltysik-Piorunkiewicz, A. E-health artiﬁcial intelligence system implementation: Case study
+of knowledge management dashboard of epidemiological data in Poland. Int. J. Biol. Biomed. Eng. 2014, 8, 164–171.
+50.
+AlGhanem, H.; Shanaa, M.; Salloum, S.; Shaalan, K. The Role of KM in Enhancing AI Algorithms and Systems. Adv. Sci. Technol.
+Eng. Syst. J. 2020, 5, 388–396. [CrossRef]
+51.
+Botega, L.F.C.; da Silva, J.C. An artiﬁcial intelligence approach to support knowledge management on the selection of creativity
+and innovation techniques. J. Knowl. Manag. 2020, 24, 1107–1130. [CrossRef]
+52.
+Chowdhury, S.; Budhwar, P.; Dey, P.K.; Joel-Edgar, S.; Abadie, A. AI-employee collaboration and business performance: Integrating
+knowledge-based view, socio-technical systems and organisational socialisation framework. J. Bus. Res. 2022, 144, 31–49.
+[CrossRef]
+53.
+Gacanin, H.; Perenda, E.; Atawia, R. Self-Deployment of Non-Stationary Wireless Systems by Knowledge Management with
+Artiﬁcial Intelligence. IEEE Trans. Cogn. Commun. Netw. 2019, 5, 1004–1018. [CrossRef]
+54.
+Baierle, I.C.; Sellitto, M.A.; Frozza, R.; Schaefer, J.L.; Habekost, A.F. An Artiﬁcial Intelligence and Knowledge-Based System to
+Support the Decision- Making Process in Sales. South Afr. J. Ind. Eng. 2019, 30, 17–25. [CrossRef]
+55.
+Courpasson, D.; Golsorkhi, D.; Sallaz, J.J. Rethinking Power in Organizations, Institutions, and Markets: Classical Perspectives, Current
+Research, and the Future Agenda; Emerald Group Publishing Limited: Bingley, UK, 2012.
+56.
+Bencsik, A. The sixth generation of knowledge management–the headway of artiﬁcial intelligence. J. Int. Stud. 2021, 14, 84–101.
+[CrossRef]
+57.
+Leoni, L.; Ardolino, M.; El Baz, J.; Gueli, G.; Bacchetti, A. The mediating role of knowledge management processes in the effective
+use of artiﬁcial intelligence in manufacturing ﬁrms. Int. J. Oper. Prod. Manag. 2022, 42, 411–437. [CrossRef]
+58.
+Alshadoodee, H.A.A.; Mansoor, M.S.G.; Kuba, H.K.; Gheni, H.M. The role of artiﬁcial intelligence in enhancing administrative
+decision support systems by depend on knowledge management. Bull. Electr. Eng. Informatics 2022, 11, 3577–3589. [CrossRef]
+59.
+Liu, R.; Zhang, H. Artiﬁcial-Intelligence-Based Fuzzy Comprehensive Evaluation of Innovative Knowledge Management in
+Universities. Math. Probl. Eng. 2022, 2022, 5655269. [CrossRef]
+60.
+Bokhari, S.A.A.; Myeong, S. Artiﬁcial Intelligence-Based Technological-Oriented Knowledge Management, Innovation, and
+E-Service Delivery in Smart Cities: Moderating Role of E-Governance. Appl. Sci. 2022, 12, 8732. [CrossRef]
+61.
+Liu, Q. Analysis of Collaborative Driving Effect of Artiﬁcial Intelligence on Knowledge Innovation Management. Sci. Program.
+2022, 2022, 8223724. [CrossRef]
+62.
+Arias-Pérez, J.; Cepeda-Cardona, J. Knowledge management strategies and organizational improvisation: What changed after the
+emergence of technological turbulence caused by artiﬁcial intelligence? Balt. J. Manag. 2022, 17, 250–265. [CrossRef]
+63.
+Bilquise, G.; Shaalan, K. AI-based Academic Advising Framework: A Knowledge Management Perspective. Int. J. Adv. Comput.
+Sci. Appl. 2022, 13, 193–203. [CrossRef]
+64.
+Baslom, M.M.M.; Tong, S. Strategic Management of Organizational Knowledge and Employee’s Awareness about Artiﬁcial
+Intelligence with Mediating Effect of Learning Climate. Int. J. Comput. Intell. Syst. 2019, 12, 1585–1591. [CrossRef]
+65.
+Yang, H.; Anbarasan, M.; Vadivel, T. Knowledge-Based Recommender System Using Artiﬁcial Intelligence for Smart Education.
+J. Interconnect. Networks 2022, 22 (Suppl. S2). [CrossRef]
+66.
+Sun, P.; Gu, L. Fuzzy knowledge graph system for artiﬁcial intelligence-based smart education. J. Intell. Fuzzy Syst. 2021,
+40, 2929–2940. [CrossRef]
+67.
+Gacanin, H.; Perenda, E.; Karunaratne, S.; Atawia, R. Self-Optimization of Wireless Systems with Knowledge Management: An
+Artiﬁcial Intelligence Approach. IEEE Trans. Veh. Technol. 2019, 68, 9682–9697. [CrossRef]
+68.
+Phan, A.-C.; Phan, T.-C.; Trieu, T.-N. A Systematic Approach to Healthcare Knowledge Management Systems in the Era of Big
+Data and Artiﬁcial Intelligence. Appl. Sci. 2022, 12, 4455. [CrossRef]
+69.
+Nasseef, O.A.; Baabdullah, A.M.; Alalwan, A.A.; Lal, B.; Dwivedi, Y.K. Artiﬁcial intelligence-based public healthcare systems:
+G2G knowledge-based exchange to enhance the decision-making process. Gov. Inf. Q. 2022, 39, 101618. [CrossRef]
+Computers 2023, 12, 72
+18 of 18
+70.
+Mercier-Laurent, E. Artiﬁcial intelligence for successful Kﬂow. In IFIP International Workshop on Artiﬁcial Intelligence for Knowledge
+Management; Springer: Berlin/Heidelberg, Germany, 2016.
+71.
+Manesh, M.F.; Pellegrini, M.M.; Marzi, G.; Dabic, M. Knowledge Management in the Fourth Industrial Revolution: Mapping the
+Literature and Scoping Future Avenues. IEEE Trans. Eng. Manag. 2019, 68, 289–300. [CrossRef]
+72.
+Kot, S.; Hussain, H.I.; Bilan, S.; Haseeb, M.; Mihardjo, L.W.W. The Role of Artiﬁcial Intelligence Recruitment and Quality to
+Explain the Phenomenon of Employer Reputation. J. Bus. Econ. Manag. 2021, 22, 867–883. [CrossRef]
+73.
+Cantu-Ortiz, F.J. Knowledge management and artiﬁcial intelligence analytics: A bibliometric study of research trends. In A
+Research Agenda for Knowledge Management and Analytics; Edward Elgar Publishing: Cheltenham, UK, 2021; pp. 67–88. [CrossRef]
+74.
+Zareravasan, A.; Krˇcál, M.; Ashraﬁ, A. The Implications of Blockchain for Knowledge Sharing. In Proceedings of the International
+Forum on Knowledge Asset Dynamics (IFKAD 2020), Matera, Italy, 9–11 September 2020.
+75.
+Ransbotham, S.; Khodabandeh, S.; Fehling, R.; Lafountain, B.; Kiron, D. Winning with AI. MIT Sloan Manag. Rev. 2019, 61180.
+76.
+Brynjolfsson, E.; Rock, D.; Syverson, C. Artiﬁcial Intelligence and the Modern Productivity Paradox: A Clash of Expectations and
+Statistics. In The Economics of Artiﬁcial Intelligence: An Agenda; University of Chicago Press: Chicago, IL, USA, 2017. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
