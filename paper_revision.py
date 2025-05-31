@@ -562,12 +562,12 @@ class PaperRevisionTool:
         self.workflow_db.create_run(self.run_id, provider, model_name, operation_mode, settings)
         
         # Calculate token limits for prompts
-        high_quality = operation_mode.lower() == "final"  # High quality for final mode
+        self.high_quality = operation_mode.lower() == "final"  # Store high quality flag as instance variable
         self.token_limits = calculate_tokens_per_prompt(
             provider, 
             model_name, 
             use_safe_limit=True,  # Default to 90% safe limit
-            use_max_safe=high_quality  # Use 99% max safe limit for high quality runs
+            use_max_safe=self.high_quality  # Use 99% max safe limit for high quality runs
         )
         self.max_tokens_per_prompt = self.token_limits["max_per_prompt"]
         
